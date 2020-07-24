@@ -62,6 +62,7 @@ namespace EthosClient
                 }
             }), "Moves the main menu button up within the UI", Color.red, Color.white);
             new MainMenu();
+            DiscordRPC.Start();
             for (int i = 0; i < Modules.Count; i++) Modules[i].OnUiLoad();
         }
 
@@ -71,8 +72,6 @@ namespace EthosClient
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-            Directory.CreateDirectory("Dependencies");
-            DiscordRPC.Start();
             PatchManager.ApplyPatches();
             ConsoleUtil.SetTitle("Ethos Client = Developed by Yaekith & 404#0004");
             Configuration.CheckExistence();

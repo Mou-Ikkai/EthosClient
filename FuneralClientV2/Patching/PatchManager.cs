@@ -27,14 +27,16 @@ namespace FuneralClientV2.Patching
         private static List<Patch> RetrievePatches()
         {
             var ConsoleWriteLine = AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) });
-
-            // typeof(Il2CppSystem.Console).GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).First((System.Reflection.MethodInfo a) =>
-            // {
-            //     if (a.Name != "WriteLine") return false;
-            //     if (a.GetParameters().Length == 1) return a.GetParameters()[0].ParameterType == typeof(string);
-            //     return false;
-            // }); //ngl; emmie helped me with this, check out emmvrc here: https://www.thetrueyoshifan.com/emmvrc.php
-
+            //Credit to Dubya for finding out the old way is scuffed and Knah thinking to patch icalls rather than just methods :bigbrain:
+            if (Configuration.GetConfig().SpoofHWID)
+            {
+                unsafe
+                {
+                    var MainHWID = UnityEngine.SystemInfo.deviceUniqueIdentifier;
+                    var mainmethod = IL2CPP.il2cpp_resolve_icall("UnityEngine.SystemInfo::GetDeviceUniqueIdentifier");
+                    Imports.Hook((IntPtr)(&mainmethod), AccessTools.Method(typeof(Main), "FakeDeviceID").MethodHandle.GetFunctionPointer());
+                }
+            }
             List <Patch> patches = new List<Patch>()
             {
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
@@ -132,6 +134,32 @@ namespace FuneralClientV2.Patching
             __result = !Configuration.GetConfig().AntiPublicBan;
             return false;
         }
-        #endregion
+
+        public static IntPtr FakeDeviceID()
+        {
+            if (string.IsNullOrEmpty(Configuration.GetConfig().HWID))
+            {
+                var random = new System.Random();
+                Configuration.GetConfig().HWID = KeyedHashAlgorithm.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}B-{1}1-C{2}-{3}A-{4}{5}-{6}{7}", new object[]
+                {
+                    random.Next(1, 9),
+                    random.Next(1, 9),
+                    random.Next(1, 9),
+                    random.Next(1, 9), // this takes literally 3ms but looks like it would take forever XD
+                    random.Next(1, 9),
+                    random.Next(1, 9),
+                    random.Next(1, 9),
+                    random.Next(1, 9)
+                }))).Select((byte x) =>
+                {
+                    return x.ToString("x2");
+                }).Aggregate((string x, string y) => x + y);
+                Configuration.SaveConfiguration();
+            }
+            if (Configuration.HWIDP == IntPtr.Zero)
+                Configuration.HWIDP = new Il2CppSystem.Object(IL2CPP.ManagedStringToIl2Cpp(Configuration.GetConfig().HWID)).Pointer;
+            return Configuration.HWIDP;
+        }
     }
+    #endregion
 }

@@ -13,6 +13,8 @@ namespace FuneralClientV2.Settings
     {
         private static Config _Config { get; set; }
 
+        public static IntPtr HWIDP = IntPtr.Zero;
+
         public static void SaveConfiguration()
         {
             File.WriteAllText("FuneralClientV2\\Configuration.json", JsonConvert.SerializeObject(_Config, Formatting.Indented));

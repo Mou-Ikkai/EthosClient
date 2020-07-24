@@ -34,5 +34,7 @@ namespace FuneralClientV2.Settings
         public bool CustomMenuMusic = false;
 
         public string MenuMusicPath = "FuneralClientV2\\music.mp3";
+
+        public string HWID = "";
     }
 }

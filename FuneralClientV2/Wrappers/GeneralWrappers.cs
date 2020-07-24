@@ -59,5 +59,7 @@ namespace FuneralClientV2.Wrappers
         public static VRCUiPopupManager GetVRCUiPopupManager() { return Resources.FindObjectsOfTypeAll<VRCUiPopupManager>()[0]; }
 
         public static void AlertPopup(this VRCUiPopupManager manager, string title, string text) => manager.Method_Public_Void_String_String_Single_0(title, text, 10f);
+
+        public static void SelectPlayer(this QuickMenu instance, VRCPlayer player) => instance.Method_Public_Void_VRCPlayer_0(player);
     }
 }

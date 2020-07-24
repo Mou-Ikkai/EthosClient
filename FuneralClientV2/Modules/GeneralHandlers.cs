@@ -1,4 +1,5 @@
-﻿using FuneralClientV2.Utils;
+﻿using FuneralClientV2.Settings;
+using FuneralClientV2.Utils;
 using FuneralClientV2.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,25 @@ namespace FuneralClientV2.Modules
         {
             try
             {
+                //if (Configuration.GetConfig().CustomMenuMusic)
+                //{
+                //    if (GeneralUtils.Source == null)
+                //    {
+                //        var www = new WWW($"file://{Configuration.GetConfig().CustomMenuMusic}");
+                //        var ss = www.GetAudioClip();
+                //        while (ss.loadState != AudioDataLoadState.Loaded)
+                //        {
+                //            ConsoleUtil.Info("Waiting for Custom Audio Clip to Load..");
+                //        }
+                //        var audioSource = new AudioSource();
+                //        audioSource.clip = ss;
+                //        audioSource.Play();
+                //        GeneralUtils.Source = audioSource;
+                //        ConsoleUtil.Info("Playing Audio.");
+                //    }
+                //}
+                //else if (GeneralUtils.Source != null) GeneralUtils.Source = null;
+                //to-do: ^^ fix that
                 if (GeneralUtils.SpinBot) PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
                 {

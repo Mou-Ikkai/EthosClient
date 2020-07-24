@@ -1,5 +1,6 @@
 ﻿using FuneralClientV2.Settings;
 using FuneralClientV2.Utils;
+using FuneralClientV2.Wrappers;
 using Il2CppSystem.Threading;
 using RubyButtonAPI;
 using System;
@@ -51,7 +52,27 @@ namespace FuneralClientV2.Menu
             {
                 Configuration.GetConfig().CleanConsole = false;
                 Configuration.SaveConfiguration();
-            }, "Decide whether you want your console to be clean constantly", Color.red, Color.white).setToggleState(Configuration.GetConfig().CleanConsole);
+            }, "Decide whether you want your console to be spammed by useless game information or not.", Color.red, Color.white).setToggleState(Configuration.GetConfig().CleanConsole);
+            new QMSingleButton(this, 3, 2, "Select\nYourself", new Action(() =>
+            {
+                GeneralWrappers.GetQuickMenu().SelectPlayer(PlayerWrappers.GetCurrentPlayer());
+            }), "Select your own current player and do some stuff to yourself, I don't know lol.", Color.red, Color.white);
+            new QMToggleButton(this, 4, 2, "Hide\nYourself", new Action(() =>
+            {
+                PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(false);
+            }), "Unhide\nYourself", new Action(() =>
+            {
+                PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
+            }), "Hide/Unhide yourself, for safety reasons maybe, who knows.", Color.red, Color.white);
+            new QMToggleButton(this, 2, 2, "Enable\nMenu Music", delegate
+            {
+                Configuration.GetConfig().CustomMenuMusic = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nMenu Music", delegate
+            {
+                Configuration.GetConfig().CustomMenuMusic = false;
+                Configuration.SaveConfiguration();
+            }, "(EXPERIMENTAL)\nEnable custom menu music to play whenever you open your UI.", Color.red, Color.white).setToggleState(Configuration.GetConfig().CustomMenuMusic);
         }
     }
 }

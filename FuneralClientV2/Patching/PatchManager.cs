@@ -37,6 +37,8 @@ namespace FuneralClientV2.Patching
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
                 new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null),
                 new Patch("AntiKick", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
+                new Patch("CanEnterWorld", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_0"), GetLocalPatch("CanEnterWorldPatch"), null),
+                new Patch("AntiPublicBan", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("AntiBlock", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
                 new Patch("ForceClone", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("CleanConsole", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
@@ -111,13 +113,6 @@ namespace FuneralClientV2.Patching
 
         private static bool IL2CPPConsoleWriteLine(string __0) { return !Configuration.GetConfig().CleanConsole; }
 
-        private static bool VoidPatchFalse(ref bool __result)
-        {
-            __result = false;
-            return false;
-            //Credit: Four_DJ for finding the exact methods :3
-        }
-
         private static bool AntiIpLogImage(string __0)
         {
             if (__0.StartsWith("https://api.vrchat.cloud/api/1/file/") || __0.StartsWith("https://api.vrchat.cloud/api/1/image/") || __0.StartsWith("https://d348imysud55la.cloudfront.net/thumbnails/") || __0.StartsWith("https://files.vrchat.cloud/thumbnails/")) return true;
@@ -127,6 +122,18 @@ namespace FuneralClientV2.Patching
         private static bool AntiVideoPlayerHijacking(ref string __0)
         {
             if (Configuration.GetConfig().AntiIpLog && GeneralUtils.IsGrabifyLink(__0)) return false;
+            return true;
+        }
+
+        private static bool CanEnterWorldPatch(ref bool __result, ref string __0, ref string __1, string __2)
+        {
+            __result = !Configuration.GetConfig().AntiKick;
+            return true;
+        }
+
+        private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
+        {
+            __result = !Configuration.GetConfig().AntiPublicBan;
             return true;
         }
         #endregion

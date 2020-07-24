@@ -25,7 +25,7 @@ namespace FuneralClientV2
             {
                 ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
                 Modules.ForEach(y => y.OnStart());
-                new QMSingleButton("CameraMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
+                new QMSingleButton("UIElementsMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonX != 1)
                     {
@@ -34,7 +34,7 @@ namespace FuneralClientV2
                         GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
                     }
                 }), "Moves the main menu button to the left within the UI", Color.red, Color.white);
-                new QMSingleButton("CameraMenu", 1, 2, "Move Menu Button\nRight", new Action(() =>
+                new QMSingleButton("UIElementsMenu", 1, 2, "Move Menu Button\nRight", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonX != 1)
                     {
@@ -43,7 +43,7 @@ namespace FuneralClientV2
                         GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
                     }
                 }), "Moves the main menu button to the right within the UI", Color.red, Color.white);
-                new QMSingleButton("CameraMenu", 2, 1, "Move Menu Button\nUp", new Action(() =>
+                new QMSingleButton("UIElementsMenu", 2, 1, "Move Menu Button\nUp", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonY != 0)
                     {
@@ -52,7 +52,7 @@ namespace FuneralClientV2
                         GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
                     }
                 }), "Moves the main menu button up within the UI", Color.red, Color.white);
-                new QMSingleButton("CameraMenu", 2, 2, "Move Menu Button\nDown", new Action(() =>
+                new QMSingleButton("UIElementsMenu", 2, 2, "Move Menu Button\nDown", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonY != 4)
                     {

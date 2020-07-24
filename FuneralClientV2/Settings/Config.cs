@@ -30,5 +30,9 @@ namespace FuneralClientV2.Settings
         public int MainMenuButtonX = 5;
 
         public int MainMenuButtonY = 2;
+
+        public bool CustomMenuMusic = false;
+
+        public string MenuMusicPath = "FuneralClientV2\\music.mp3";
     }
 }

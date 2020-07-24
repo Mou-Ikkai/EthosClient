@@ -11,7 +11,7 @@ namespace FuneralClientV2.Menu
 {
     public class TargetVRMenu : QMNestedButton
     {
-        public TargetVRMenu() : base("UserInteractMenu", 3, 3, "Player\nOptions", "Open this menu and control what you want of other players.", Color.red, Color.white, Color.red, Color.cyan)
+        public TargetVRMenu() : base("UserInteractMenu", 1, 2, "Player\nOptions", "Open this menu and control what you want of other players.", Color.red, Color.white, Color.red, Color.cyan)
         {
             new QMSingleButton(this, 1, 0, "Teleport", new Action(() =>
             {

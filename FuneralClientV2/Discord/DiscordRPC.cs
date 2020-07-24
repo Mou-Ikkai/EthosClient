@@ -1,4 +1,5 @@
-﻿using FuneralClientV2.Utils;
+﻿using FuneralClientV2.Settings;
+using FuneralClientV2.Utils;
 using FuneralClientV2.Wrappers;
 using Il2CppSystem.IO;
 using Il2CppSystem.Threading;
@@ -27,7 +28,7 @@ namespace FuneralClientV2.Discord
                 }).Start();
             }
             eventHandlers = default(DiscordRpc.EventHandlers);
-            presence.details = "A very cool public free cheat";
+            presence.details = "A publicly available free VRChat Client";
             presence.state = "Starting Game...";
             presence.largeImageKey = "funeral_logo";
             presence.smallImageKey = "big_pog";
@@ -47,13 +48,60 @@ namespace FuneralClientV2.Discord
         public static void Update(object sender, ElapsedEventArgs args)
         {
             var room = RoomManagerBase.field_Internal_Static_ApiWorld_0;
-            presence.state = $"In a(n) {room.currentInstanceAccess} instance";
-            if (room.currentInstanceAccess == VRC.Core.ApiWorldInstance.AccessType.InviteOnly) presence.largeImageKey = "big_pog";
-            else presence.largeImageKey = "even_more_pog";
-            presence.smallImageKey = "funeral_logo";
-            presence.partySize = 1;
-            presence.partyMax = GeneralWrappers.GetPlayerManager().GetAllPlayers().Count;
-            presence.largeImageText = $"As {PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().displayName}";
+            if (room != null)
+            {
+                presence.partySize = 1;
+                presence.partyMax = GeneralWrappers.GetPlayerManager().GetAllPlayers().Count;
+                switch (room.currentInstanceAccess)
+                {
+                    default:
+                        presence.state = $"Transitioning to another Instance";
+                        presence.partySize = 0;
+                        presence.partyMax = 0;
+                        presence.largeImageKey = "big_pog";
+                        presence.smallImageKey = "funeral_logo";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.Counter:
+                        presence.state = $"In a Counter Instance";
+                        presence.smallImageKey = "funeral_logo";
+                        presence.largeImageKey = "funeral_logo";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.InviteOnly:
+                        presence.state = "In an Invite Only Instance";
+                        presence.largeImageKey = "even_more_pog";
+                        presence.smallImageKey = "funeral_logo";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.InvitePlus:
+                        presence.state = "In an Invite+ Instance";
+                        presence.largeImageKey = "even_more_pog";
+                        presence.smallImageKey = "funeral_logo";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.Public:
+                        presence.state = "In a Public Instance";
+                        presence.largeImageKey = "funeral_logo";
+                        presence.smallImageKey = "even_more_pog";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.FriendsOfGuests:
+                        presence.state = "In a Friends Of Guests Instance";
+                        presence.largeImageKey = "funeral_logo";
+                        presence.smallImageKey = "funeral_logo";
+                        break;
+                    case VRC.Core.ApiWorldInstance.AccessType.FriendsOnly:
+                        presence.state = "In a Friends Only Instance";
+                        presence.largeImageKey = "funeral_logo";
+                        presence.smallImageKey = "funeral_logo";
+                        break;
+                }
+            } 
+            else
+            {
+                presence.state = $"Transitioning to another Instance";
+                presence.partySize = 0;
+                presence.partyMax = 0;
+                presence.largeImageKey = "big_pog";
+                presence.smallImageKey = "funeral_logo";
+            }
+            presence.largeImageText = $"As {PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().displayName} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
             presence.smallImageText = GeneralUtils.Version;
             DiscordRpc.UpdatePresence(ref presence);
         }

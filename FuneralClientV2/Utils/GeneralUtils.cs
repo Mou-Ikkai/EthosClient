@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VRCSDK2;
@@ -31,7 +32,11 @@ namespace FuneralClientV2.Utils
 
         private static System.Random random = new System.Random();
 
-        public static string Version = "Pre Release v1.2";
+        public static string Version = "Pre Release v1.3";
+
+        public static AudioSource Source = null;
+
+        public static bool IsDevBranch = true;
 
         public static void InformHudText(Color color, string text)
         {

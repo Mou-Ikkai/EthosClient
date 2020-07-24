@@ -87,7 +87,7 @@ namespace EthosClient
         {
             try
             {
-
+                Directory.CreateDirectory("Dependencies");
                 PatchManager.ApplyPatches(); // Switch for earliest possible patching.
             } catch(Exception c)
             {

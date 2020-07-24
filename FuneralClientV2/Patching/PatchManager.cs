@@ -29,29 +29,17 @@ namespace FuneralClientV2.Patching
         {
             var ConsoleWriteLine = AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) });
             //Credit to Dubya for finding out the old way is scuffed and Knah thinking to patch icalls rather than just methods :bigbrain:
-            if (Configuration.GetConfig().SpoofHWID)
-            {
-                unsafe
-                {
-                    var MainHWID = UnityEngine.SystemInfo.deviceUniqueIdentifier;
-                    var mainmethod = IL2CPP.il2cpp_resolve_icall("UnityEngine.SystemInfo::GetDeviceUniqueIdentifier");
-                    Imports.Hook((IntPtr)(&mainmethod), AccessTools.Method(typeof(Main), "FakeDeviceID").MethodHandle.GetFunctionPointer());
-                    ConsoleUtil.Info($"Old HWID: {MainHWID}\nNew HWID: {UnityEngine.SystemInfo.deviceUniqueIdentifier}");
-                }
-            }
             List <Patch> patches = new List<Patch>()
             {
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
-                //new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null), // Removed because it actually won't protect you at all.
+                new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null), // Removed because it actually won't protect you at all.
                 new Patch("AntiKick", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
                 new Patch("AntiPublicBan", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("AntiBlock", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
                 new Patch("ForceClone", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("CleanConsole", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
                 new Patch("DownloadImage", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
-                new Patch("PhotonViewSerialisation", typeof(PhotonView).GetMethod("Method_Public_Void_1"), GetLocalPatch("CustomSerialisation"), null),
                 new Patch("VideoPlayers", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null),
-                new Patch("EmoteMenuFix", typeof(VRCUiCurrentRoom).GetMethod("Method_Private_Void_17"), GetLocalPatch("NonExistentPrefix"), null) //stupid fix to fix emote menu not working :(
             };
             return patches;
         }
@@ -138,7 +126,7 @@ namespace FuneralClientV2.Patching
             return false;
         }
 
-        public static IntPtr FakeDeviceID()
+        public static void SpoofDeviceID(string __result)
         {
             if (string.IsNullOrEmpty(Configuration.GetConfig().HWID))
             {
@@ -159,14 +147,7 @@ namespace FuneralClientV2.Patching
                 }).Aggregate((string x, string y) => x + y);
                 Configuration.SaveConfiguration();
             }
-            if (Configuration.HWIDP == IntPtr.Zero)
-                Configuration.HWIDP = new Il2CppSystem.Object(IL2CPP.ManagedStringToIl2Cpp(Configuration.GetConfig().HWID)).Pointer;
-            return Configuration.HWIDP;
-        }
-
-        private static bool CustomSerialisation()
-        {
-            return !GeneralUtils.DontSerialise;
+            __result = Configuration.GetConfig().HWID;
         }
     }
     #endregion

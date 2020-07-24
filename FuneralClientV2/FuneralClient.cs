@@ -26,7 +26,6 @@ namespace FuneralClientV2
             try
             {
                 ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
-                PatchManager.ApplyPatches();
                 new QMSingleButton("UIElementsMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonX != 1)
@@ -64,10 +63,11 @@ namespace FuneralClientV2
                     }
                 }), "Moves the main menu button up within the UI", Color.red, Color.white);
                 new MainMenu();
+                PatchManager.ApplyPatches();
                 for (int i = 0; i < Modules.Count; i++)
                     Modules[i].OnUiLoad();
             }
-            catch (Exception e) { ConsoleUtil.Exception(e); }
+            catch (Exception) { }
         }
 
         public override void OnApplicationQuit()
@@ -81,7 +81,6 @@ namespace FuneralClientV2
             {
                 ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith & 404#0004");
                 Configuration.CheckExistence();
-                //DiscordRPC.Start();
                 ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
                 for (int i = 0; i < Modules.Count; i++)
                     Modules[i].OnStart();

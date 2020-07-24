@@ -8,7 +8,9 @@ using MelonLoader;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -24,7 +26,7 @@ namespace FuneralClientV2
             try
             {
                 ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
-                
+                PatchManager.ApplyPatches();
                 new QMSingleButton("UIElementsMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonX != 1)
@@ -65,7 +67,7 @@ namespace FuneralClientV2
                 for (int i = 0; i < Modules.Count; i++)
                     Modules[i].OnUiLoad();
             }
-            catch (Exception) { }
+            catch (Exception e) { ConsoleUtil.Exception(e); }
         }
 
         public override void OnApplicationQuit()
@@ -75,25 +77,16 @@ namespace FuneralClientV2
         }
         public override void OnApplicationStart()
         {
-            ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith");
-            Configuration.CheckExistence();
             try
             {
-                PatchManager.ApplyPatches(); // Applying patches early to prevent any problems.
+                ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith & 404#0004");
+                Configuration.CheckExistence();
+                //DiscordRPC.Start();
+                ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
+                for (int i = 0; i < Modules.Count; i++)
+                    Modules[i].OnStart();
             }
-            catch (Exception c)
-            {
-                //Maybe add some logging here.
-            }
-            try
-            {
-                DiscordRPC.Start();
-            }
-            catch { }
-            Modules.Add(new GeneralHandlers());
-            ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
-            for (int i = 0; i < Modules.Count; i++)
-                Modules[i].OnStart();
+            catch (Exception e) { ConsoleUtil.Exception(e); }
         }
 
         public override void OnUpdate()

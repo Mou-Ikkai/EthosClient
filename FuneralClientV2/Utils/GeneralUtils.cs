@@ -26,6 +26,8 @@ namespace FuneralClientV2.Utils
 
         public static bool SpinBot = false;
 
+        public static bool DontSerialise = false;
+
         public static List<string> Deafened = new List<string>();
 
         public static Vector3 SavedGravity = Physics.gravity;

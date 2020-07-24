@@ -5,6 +5,7 @@ using Harmony;
 using Il2CppSystem.Runtime.Remoting.Messaging;
 using Il2CppSystem.Security.Cryptography;
 using MelonLoader;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace FuneralClientV2.Patching
                 new Patch("ForceClone", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("CleanConsole", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
                 new Patch("DownloadImage", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
+                new Patch("PhotonViewSerialisation", typeof(PhotonView).GetMethod("Method_Public_Void_1"), GetLocalPatch("CustomSerialisation"), null),
                 new Patch("VideoPlayers", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null),
                 new Patch("EmoteMenuFix", typeof(VRCUiCurrentRoom).GetMethod("Method_Private_Void_17"), GetLocalPatch("NonExistentPrefix"), null) //stupid fix to fix emote menu not working :(
             };
@@ -160,6 +162,11 @@ namespace FuneralClientV2.Patching
             if (Configuration.HWIDP == IntPtr.Zero)
                 Configuration.HWIDP = new Il2CppSystem.Object(IL2CPP.ManagedStringToIl2Cpp(Configuration.GetConfig().HWID)).Pointer;
             return Configuration.HWIDP;
+        }
+
+        private static bool CustomSerialisation()
+        {
+            return !GeneralUtils.DontSerialise;
         }
     }
     #endregion

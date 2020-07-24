@@ -27,6 +27,13 @@ namespace FuneralClientV2.Utils
             {
                 GeneralUtils.WorldTriggers = false;
             }, "Decide whether you want other people to see your interactions with \"local\" triggers.", Color.red, Color.white).setToggleState(GeneralUtils.WorldTriggers);
+            new QMToggleButton(this, 3, 0, "Enable\nCustom Serialisation", delegate
+            {
+                GeneralUtils.DontSerialise = true;
+            }, "Disable\nCustom Serialisation", delegate
+            {
+                GeneralUtils.DontSerialise = false;
+            }, "(EXPERIMENTAL) Enable/Disable Custom PhotonView Serialisation", Color.red, Color.white).setToggleState(GeneralUtils.WorldTriggers);
         }
     }
 }

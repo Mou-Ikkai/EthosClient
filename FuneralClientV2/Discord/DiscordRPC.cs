@@ -19,14 +19,11 @@ namespace FuneralClientV2.Discord
 
         public static void Start()
         {
-            Directory.CreateDirectory("Dependencies");
-            if (!File.Exists("Dependencies/discord-rpc.dll"))
+            new System.Threading.Thread(() =>
             {
-                new System.Threading.Thread(() =>
-                {
-                    new WebClient().DownloadFile("https://cdn-20.anonfiles.com/ZfN5JdHfo5/9db29b29-1595523322/discord-rpc.dll", "Dependencies/discord-rpc.dll");
-                }).Start();
-            }
+                Directory.CreateDirectory("Dependencies");
+                if (!File.Exists("Dependencies/discord-rpc.dll")) new WebClient().DownloadFile("https://cdn-20.anonfiles.com/ZfN5JdHfo5/9db29b29-1595523322/discord-rpc.dll", "Dependencies/discord-rpc.dll");
+            }).Start();
             eventHandlers = default(DiscordRpc.EventHandlers);
             presence.details = "A publicly available free VRChat Client";
             presence.state = "Starting Game...";

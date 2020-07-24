@@ -68,12 +68,10 @@ namespace FuneralClientV2
                     Modules[i].OnUiLoad();
                 try
                 {
-                    //DiscordCRPC.Start();
-                    //DiscordRPC.Start();
+                    DiscordRPC.Start();
                 }
                 catch(Exception c)
                 {
-                    ConsoleUtil.Error(c.ToString());
                     ConsoleUtil.Exception(c);
                 }
             }
@@ -82,8 +80,6 @@ namespace FuneralClientV2
 
         public override void OnApplicationQuit()
         {
-            //if (DiscordCRPC.client != null)
-            //    DiscordCRPC.client.Dispose();
             for (int i = 0; i < Modules.Count; i++)
                 Modules[i].OnAppQuit();
         }

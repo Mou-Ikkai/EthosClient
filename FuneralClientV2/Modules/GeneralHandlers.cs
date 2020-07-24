@@ -17,31 +17,14 @@ namespace FuneralClientV2.Modules
 
         public override string Description => "Handlers for flight, input, etc";
 
+        public override bool RequiresUpdate => true;
+
         public override void OnStart() { }
 
         public override void OnUpdate()
         {
             try
             {
-                //if (Configuration.GetConfig().CustomMenuMusic)
-                //{
-                //    if (GeneralUtils.Source == null)
-                //    {
-                //        var www = new WWW($"file://{Configuration.GetConfig().CustomMenuMusic}");
-                //        var ss = www.GetAudioClip();
-                //        while (ss.loadState != AudioDataLoadState.Loaded)
-                //        {
-                //            ConsoleUtil.Info("Waiting for Custom Audio Clip to Load..");
-                //        }
-                //        var audioSource = new AudioSource();
-                //        audioSource.clip = ss;
-                //        audioSource.Play();
-                //        GeneralUtils.Source = audioSource;
-                //        ConsoleUtil.Info("Playing Audio.");
-                //    }
-                //}
-                //else if (GeneralUtils.Source != null) GeneralUtils.Source = null;
-                //to-do: ^^ fix that
                 if (GeneralUtils.SpinBot) PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
                 if (GeneralUtils.Autism)
                 {

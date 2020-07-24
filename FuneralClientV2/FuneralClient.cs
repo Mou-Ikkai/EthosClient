@@ -4,6 +4,7 @@ using FuneralClientV2.Modules;
 using FuneralClientV2.Patching;
 using FuneralClientV2.Settings;
 using FuneralClientV2.Utils;
+using Il2CppSystem.Reflection;
 using MelonLoader;
 using RubyButtonAPI;
 using System;
@@ -81,6 +82,7 @@ namespace FuneralClientV2
             {
                 ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith & 404#0004");
                 Configuration.CheckExistence();
+                Modules.Add(new GeneralHandlers());
                 ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
                 for (int i = 0; i < Modules.Count; i++)
                     Modules[i].OnStart();

@@ -37,7 +37,7 @@ namespace FuneralClientV2.Menu
             }), "Gather information about the latest notice in the Discord", Color.red, Color.white);
             new QMSingleButton(this, 4, 0, "Credits", new Action(() =>
             {
-                GeneralUtils.InformHudText(Color.yellow, "Yaekith - Developer");
+                GeneralUtils.InformHudText(Color.yellow, "Yaekith - Developer\n404 - Developer");
             }), "Displays who made this cheat", Color.red, Color.white);
             new UtilsVRMenu(this);
             new FunVRMenu(this);

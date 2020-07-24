@@ -225,3 +225,6 @@ FuneralClientV2/obj/Debug/FuneralClientV2.pdb
 FuneralClientV2/obj/Debug/FuneralClientV2.csprojAssemblyReference.cache
 FuneralClientV2/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 FuneralClientV2/obj/Debug/FuneralClientV2.csproj.FileListAbsolute.txt
+*.cache
+*.dll
+*.pdb

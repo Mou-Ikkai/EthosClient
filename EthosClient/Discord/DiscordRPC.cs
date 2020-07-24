@@ -27,6 +27,7 @@ namespace EthosClient.Discord
                     // Added await to avoid errors.
                     File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
                 }
+
                 eventHandlers = default(DiscordRpc.EventHandlers);
                 presence.details = "A very cool public free cheat";
                 presence.state = "Starting Game...";
@@ -42,7 +43,6 @@ namespace EthosClient.Discord
                 timer.Elapsed += Update;
                 timer.AutoReset = true;
                 timer.Enabled = true;
-
             }).Start();
         }
 

@@ -9,15 +9,15 @@ namespace EthosClient.Utils
 {
     public static class ConsoleUtil
     {
-        public static void Info(string text) => MelonModLogger.Log(ConsoleColor.Cyan, $"[Funeral V2] [INFO] {text}");
+        public static void Info(string text) => MelonModLogger.Log(ConsoleColor.Cyan, $"[Ethos] [INFO] {text}");
 
-        public static void Error(string text) => MelonModLogger.Log(ConsoleColor.Red, $"[Funeral V2] [ERROR] {text}");
+        public static void Error(string text) => MelonModLogger.Log(ConsoleColor.Red, $"[Ethos] [ERROR] {text}");
 
-        public static void Success(string text) => MelonModLogger.Log(ConsoleColor.Green, $"[Funeral V2] [SUCCESS] {text}");
+        public static void Success(string text) => MelonModLogger.Log(ConsoleColor.Green, $"[Ethos] [SUCCESS] {text}");
 
         public static void Exception(Exception e)
         {
-            MelonModLogger.Log(ConsoleColor.Yellow, $"[Funeral V2] [EXCEPTION (REPORT TO YAEKITH)]: ");
+            MelonModLogger.Log(ConsoleColor.Yellow, $"[Ethos] [EXCEPTION (REPORT TO YAEKITH)]: ");
             MelonModLogger.Log(ConsoleColor.Red, $"============= STACK TRACE ====================");
             MelonModLogger.Log(ConsoleColor.White, e.StackTrace.ToString());
             MelonModLogger.Log(ConsoleColor.Red, "===============================================");

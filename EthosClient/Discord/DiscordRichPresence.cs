@@ -18,9 +18,6 @@ internal class DiscordRpc
     [DllImport("Dependencies/discord-rpc.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_ClearPresence")]
     public static extern void ClearPresence();
 
-    [DllImport("Dependencies/discord-rpc.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Respond")]
-    public static extern void Respond(string userId, DiscordRpc.Reply reply);
-
     public struct EventHandlers
     {
         public ReadyCallback readyCallback;
@@ -28,12 +25,6 @@ internal class DiscordRpc
         public DisconnectedCallback disconnectedCallback;
 
         public ErrorCallback errorCallback;
-
-        public JoinCallback joinCallback;
-
-        public SpectateCallback spectateCallback;
-
-        public RequestCallback requestCallback;
     }
 
     [Serializable]
@@ -70,25 +61,6 @@ internal class DiscordRpc
         public bool instance;
     }
 
-    [Serializable]
-    public struct JoinRequest
-    {
-        public string userId;
-
-        public string username;
-
-        public string discriminator;
-
-        public string avatar;
-    }
-
-    public enum Reply
-    {
-        No,
-        Yes,
-        Ignore
-    }
-
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ReadyCallback();
 
@@ -97,13 +69,4 @@ internal class DiscordRpc
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ErrorCallback(int errorCode, string message);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void JoinCallback(string secret);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void SpectateCallback(string secret);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void RequestCallback(ref DiscordRpc.JoinRequest request);
 }

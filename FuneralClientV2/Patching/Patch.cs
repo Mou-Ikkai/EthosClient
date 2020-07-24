@@ -11,6 +11,7 @@ namespace FuneralClientV2.Patching
 {
     public class Patch
     {
+        public static Dictionary<string, HarmonyInstance> PatchIDS = new Dictionary<string, HarmonyInstance>();
         public string ID { get; set; }
 
         public MethodBase TargetMethod { get; set; }
@@ -29,8 +30,12 @@ namespace FuneralClientV2.Patching
 
         public void ApplyPatch()
         {
-            HarmonyInstance instance = HarmonyInstance.Create(ID);
-            instance.Patch(TargetMethod, Prefix, Postfix);
+            if (PatchIDS.ContainsKey(ID))
+                PatchIDS[ID].Patch(TargetMethod, Prefix, Postfix); else
+            {
+                PatchIDS.Add(ID, HarmonyInstance.Create(ID));
+                PatchIDS[ID].Patch(TargetMethod, Prefix, Postfix);
+            }
         }
     }
 }

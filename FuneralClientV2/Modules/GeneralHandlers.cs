@@ -45,10 +45,20 @@ namespace FuneralClientV2.Modules
                 //else if (GeneralUtils.Source != null) GeneralUtils.Source = null;
                 //to-do: ^^ fix that
                 if (GeneralUtils.SpinBot) PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
+                if (GeneralUtils.Autism)
+                {
+                    var randomPlr = PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager())[new System.Random().Next(0, PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager()).Count)];
+                    PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.position = randomPlr.transform.position;
+                }
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
                 {
                     GeneralUtils.SpinBot = !GeneralUtils.SpinBot;
                     GeneralUtils.ToggleUIButton("Spin Bot", GeneralUtils.SpinBot);
+                }
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
+                {
+                    GeneralUtils.Autism = !GeneralUtils.Autism;
+                    GeneralUtils.ToggleUIButton("Autistic", GeneralUtils.Autism);
                 }
                 if (GeneralUtils.Flight)
                 {

@@ -44,6 +44,7 @@ namespace FuneralClientV2.Menu
             new ProtectionsVRMenu(this);
             new TargetVRMenu();
             new FavoritesVRMenu(this);
+            if (GeneralUtils.IsDevBranch) new DeveloperVRMenu();
             new QMToggleButton(this, 1, 2, "Clear\nConsole", delegate
             {
                 Configuration.GetConfig().CleanConsole = true;

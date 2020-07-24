@@ -38,6 +38,8 @@ namespace FuneralClientV2.Utils
 
         public static bool IsDevBranch = false;
 
+        public static bool Autism = false;
+
         public static void InformHudText(Color color, string text)
         {
             var NormalColor = VRCUiManager.prop_VRCUiManager_0.hudMessageText.color;

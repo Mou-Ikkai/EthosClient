@@ -19,6 +19,7 @@ namespace EthosClient.Discord
         {
             new Thread(async () =>
             {
+                Directory.CreateDirectory("Dependencies");
                 if (!File.Exists("Dependencies/discord-rpc.dll"))
                 {
                     //HTTP CLIENT BECAUSE WEB CLIENTS ARE FUCKING STUPID *COUGH BAD YAEKITH*

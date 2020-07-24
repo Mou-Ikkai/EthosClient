@@ -37,7 +37,6 @@ namespace FuneralClientV2.Patching
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
                 new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null),
                 new Patch("AntiKick", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
-                new Patch("CanEnterWorld", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_0"), GetLocalPatch("CanEnterWorldPatch"), null),
                 new Patch("AntiPublicBan", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("AntiBlock", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
                 new Patch("ForceClone", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
@@ -125,16 +124,10 @@ namespace FuneralClientV2.Patching
             return true;
         }
 
-        private static bool CanEnterWorldPatch(ref bool __result, ref string __0, ref string __1, string __2)
-        {
-            __result = !Configuration.GetConfig().AntiKick;
-            return true;
-        }
-
         private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
         {
             __result = !Configuration.GetConfig().AntiPublicBan;
-            return true;
+            return false;
         }
         #endregion
     }

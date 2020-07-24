@@ -11,6 +11,8 @@ namespace EthosClient.Patching
 {
     public class Patch
     {
+        public static Dictionary<string, HarmonyInstance> PatchIDs = new Dictionary<string, HarmonyInstance>();
+
         public string ID { get; set; }
 
         public MethodBase TargetMethod { get; set; }
@@ -29,8 +31,12 @@ namespace EthosClient.Patching
 
         public void ApplyPatch()
         {
-            HarmonyInstance instance = HarmonyInstance.Create(ID);
-            instance.Patch(TargetMethod, Prefix, Postfix);
+            if (!PatchIDs.ContainsKey(ID))
+            {
+                HarmonyInstance instance = HarmonyInstance.Create(ID);
+                PatchIDs.Add(ID, instance);
+            }
+            PatchIDs[ID].Patch(TargetMethod, Prefix, Postfix);
         }
     }
 }

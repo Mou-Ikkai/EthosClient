@@ -1,10 +1,9 @@
 ﻿using FuneralClientV2.Settings;
 using FuneralClientV2.Utils;
 using FuneralClientV2.Wrappers;
-using Il2CppSystem.IO;
-using Il2CppSystem.Threading;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -20,6 +19,7 @@ namespace FuneralClientV2.Discord
 
         public static void Start()
         {
+            Directory.CreateDirectory("Dependencies");
             if (!File.Exists("Dependencies/discord-rpc.dll"))
             {
                 new System.Threading.Thread(() =>
@@ -51,7 +51,7 @@ namespace FuneralClientV2.Discord
             if (room != null)
             {
                 presence.partySize = 1;
-                presence.partyMax = GeneralWrappers.GetPlayerManager().GetAllPlayers().Count;
+                presence.partyMax = GeneralWrappers.GetPlayerManager().GetAllPlayers().Length;
                 switch (room.currentInstanceAccess)
                 {
                     default:

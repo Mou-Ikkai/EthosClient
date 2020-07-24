@@ -17,8 +17,6 @@ namespace FuneralClientV2.Modules
 
         public override string Description => "Handlers for flight, input, etc";
 
-        public override bool RequiresUpdate => true;
-
         public override void OnStart() { }
 
         public override void OnUpdate()

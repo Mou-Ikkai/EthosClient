@@ -16,7 +16,7 @@ namespace FuneralClientV2.Wrappers
     {
         public static VRCPlayer GetCurrentPlayer() { return VRCPlayer.field_Internal_Static_VRCPlayer_0; }
 
-        public static Il2CppReferenceArray<Player> GetAllPlayers(this PlayerManager instance) { return instance.prop_ArrayOf_Player_0;  }
+        public static Player[] GetAllPlayers(this PlayerManager instance) { return instance.prop_ArrayOf_Player_0;  }
 
         public static APIUser GetAPIUser(this Player player) { return player.field_Private_APIUser_0; }
 
@@ -30,7 +30,7 @@ namespace FuneralClientV2.Wrappers
         {
             var Players = instance.GetAllPlayers();
             Player FoundPlayer = null;
-            for (int i = 0; i < Players.Count; i++)
+            for (int i = 0; i < Players.Length; i++)
             {
                 var player = Players[i];
                 if (player.GetAPIUser().id == UserID) FoundPlayer = player;

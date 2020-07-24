@@ -20,6 +20,8 @@ namespace FuneralClientV2.Utils
 
         public static bool Flight = false;
 
+        public static bool Autism = false;
+
         public static bool ESP = false;
 
         public static bool SpinBot = false;
@@ -51,7 +53,7 @@ namespace FuneralClientV2.Utils
         public static void ToggleColliders(bool toggle)
         {
             Collider[] array = UnityEngine.Object.FindObjectsOfType<Collider>();
-            Component component = PlayerWrappers.GetCurrentPlayer().GetComponents(Collider.Il2CppType).FirstOrDefault<Component>(); //Fix this later but im lazy ok
+            Component component = PlayerWrappers.GetCurrentPlayer().GetComponents<Collider>().FirstOrDefault<Component>(); //Fix this later but im lazy ok
 
             for (int i = 0; i < array.Length; i++)
             {

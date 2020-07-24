@@ -64,20 +64,39 @@ namespace FuneralClientV2
                     }
                 }), "Moves the main menu button up within the UI", Color.red, Color.white);
                 new MainMenu();
-                PatchManager.ApplyPatches();
                 for (int i = 0; i < Modules.Count; i++)
                     Modules[i].OnUiLoad();
+                try
+                {
+                    //DiscordCRPC.Start();
+                    //DiscordRPC.Start();
+                }
+                catch(Exception c)
+                {
+                    ConsoleUtil.Error(c.ToString());
+                    ConsoleUtil.Exception(c);
+                }
             }
             catch (Exception) { }
         }
 
         public override void OnApplicationQuit()
         {
+            //if (DiscordCRPC.client != null)
+            //    DiscordCRPC.client.Dispose();
             for (int i = 0; i < Modules.Count; i++)
                 Modules[i].OnAppQuit();
         }
         public override void OnApplicationStart()
         {
+            try
+            {
+
+                PatchManager.ApplyPatches(); // Switch for earliest possible patching.
+            } catch(Exception c)
+            {
+                ConsoleUtil.Exception(c);
+            }
             try
             {
                 ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith & 404#0004");

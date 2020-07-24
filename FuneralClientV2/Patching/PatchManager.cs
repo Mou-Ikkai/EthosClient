@@ -28,11 +28,10 @@ namespace FuneralClientV2.Patching
         private static List<Patch> RetrievePatches()
         {
             var ConsoleWriteLine = AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) });
-            //Credit to Dubya for finding out the old way is scuffed and Knah thinking to patch icalls rather than just methods :bigbrain:
             List <Patch> patches = new List<Patch>()
             {
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
-                new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null), // Removed because it actually won't protect you at all.
+                //new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null), // Removed because it actually won't protect you at all.
                 new Patch("AntiKick", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
                 new Patch("AntiPublicBan", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("AntiBlock", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
@@ -54,15 +53,8 @@ namespace FuneralClientV2.Patching
         #region Patches
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
-            if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered) if (!GeneralUtils.WorldTriggers) return false;
-            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
-            return true;
-        }
-
-        private static bool SpoofDeviceID(ref string __result)
-        {
-            __result = GeneralUtils.RandomString(50);
-            ConsoleUtil.Info($"[HWID Spoofer] New HWID: {__result}"); // removed rn
+            if (GeneralUtils.WorldTriggers)
+                __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
             return true;
         }
 
@@ -122,32 +114,12 @@ namespace FuneralClientV2.Patching
 
         private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
         {
-            __result = !Configuration.GetConfig().AntiPublicBan;
-            return false;
-        }
-
-        public static void SpoofDeviceID(string __result)
-        {
-            if (string.IsNullOrEmpty(Configuration.GetConfig().HWID))
+            if (Configuration.GetConfig().AntiPublicBan)
             {
-                var random = new System.Random();
-                Configuration.GetConfig().HWID = KeyedHashAlgorithm.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}B-{1}1-C{2}-{3}A-{4}{5}-{6}{7}", new object[]
-                {
-                    random.Next(1, 9),
-                    random.Next(1, 9),
-                    random.Next(1, 9),
-                    random.Next(1, 9), // this takes literally 3ms but looks like it would take forever XD
-                    random.Next(1, 9),
-                    random.Next(1, 9),
-                    random.Next(1, 9),
-                    random.Next(1, 9)
-                }))).Select((byte x) =>
-                {
-                    return x.ToString("x2");
-                }).Aggregate((string x, string y) => x + y);
-                Configuration.SaveConfiguration();
-            }
-            __result = Configuration.GetConfig().HWID;
+                __result = false;
+                return false;
+            } else
+            { return true; }
         }
     }
     #endregion

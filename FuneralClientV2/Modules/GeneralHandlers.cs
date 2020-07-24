@@ -25,7 +25,8 @@ namespace FuneralClientV2.Modules
         {
             try
             {
-                if (GeneralUtils.SpinBot) PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
+                if (GeneralUtils.SpinBot)
+                    PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
                 if (GeneralUtils.Autism)
                 {
                     var randomPlr = PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager())[new System.Random().Next(0, PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager()).Count())];

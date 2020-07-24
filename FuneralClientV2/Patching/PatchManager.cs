@@ -35,6 +35,7 @@ namespace FuneralClientV2.Patching
                     var MainHWID = UnityEngine.SystemInfo.deviceUniqueIdentifier;
                     var mainmethod = IL2CPP.il2cpp_resolve_icall("UnityEngine.SystemInfo::GetDeviceUniqueIdentifier");
                     Imports.Hook((IntPtr)(&mainmethod), AccessTools.Method(typeof(Main), "FakeDeviceID").MethodHandle.GetFunctionPointer());
+                    ConsoleUtil.Info($"Old HWID: {MainHWID}\nNew HWID: {UnityEngine.SystemInfo.deviceUniqueIdentifier}");
                 }
             }
             List <Patch> patches = new List<Patch>()

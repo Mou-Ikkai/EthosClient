@@ -1,8 +1,8 @@
 ﻿using FuneralClientV2.Utils;
-using Il2CppSystem.IO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +20,9 @@ namespace FuneralClientV2.Settings
 
         public static void CheckExistence()
         {
-            if (!Directory.Exists("FuneralClientV2")) Directory.CreateDirectory("FuneralClientV2");
-            if (!File.Exists($"FuneralClientV2\\Configuration.json")) File.WriteAllText("FuneralClientV2\\Configuration.json", JsonConvert.SerializeObject(new Config(), Formatting.Indented));
+            Directory.CreateDirectory("FuneralClientV2");
+            if (!File.Exists($"FuneralClientV2\\Configuration.json"))
+                File.WriteAllText("FuneralClientV2\\Configuration.json", JsonConvert.SerializeObject(new Config(), Formatting.Indented));
             LoadConfiguration();
         }
 

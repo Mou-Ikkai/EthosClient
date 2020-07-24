@@ -22,6 +22,7 @@ namespace FuneralClientV2.Utils
         private bool DeleteMode = false;
         private int X = 1;
         private int Y = 0;
+        public static PageAvatar PAviSaved = new PageAvatar() { avatar = new SimpleAvatarPedestal() };
         public FavoritesVRMenu(QMNestedButton parent) : base(parent, 4, 1, "Extended\nFavorites", "Open up the extended favorites menu and add more avatars than the default limit of 16", Color.red, Color.white, Color.red, Color.cyan)
         {
             new QMSingleButton(this, 0, 0, "Next", delegate
@@ -74,17 +75,11 @@ namespace FuneralClientV2.Utils
                             }
                             else
                             {
-                                VRC.Core.API.SendRequest($"avatars/{avatar.ID}", VRC.Core.BestHTTP.HTTPMethods.Get, new ApiModelContainer<ApiAvatar>(), null, true, true, 3600f, 2, null);
-                                new PageAvatar
+                                new ApiAvatar() { id = avatar.ID }.Get(new Action<ApiContainer>(x =>
                                 {
-                                    avatar = new SimpleAvatarPedestal
-                                    {
-                                        field_Internal_ApiAvatar_0 = new ApiAvatar
-                                        {
-                                            id = avatar.ID
-                                        }
-                                    }
-                                }.ChangeToSelectedAvatar();
+                                    PAviSaved.avatar.field_Internal_ApiAvatar_0 = x.Model.Cast<ApiAvatar>(); // can fix better later.
+                                    PAviSaved.ChangeToSelectedAvatar();
+                                }), null, null, false);
                             }
                         }, $"by {avatar.Author}\nSwitch into this avatar.", Color.red, Color.white);
                     }
@@ -102,17 +97,11 @@ namespace FuneralClientV2.Utils
                         }
                         else
                         {
-                            VRC.Core.API.SendRequest($"avatars/{avatar.ID}", VRC.Core.BestHTTP.HTTPMethods.Get, new ApiModelContainer<ApiAvatar>(), null, true, true, 3600f, 2, null);
-                            new PageAvatar
+                            new ApiAvatar() { id = avatar.ID }.Get(new Action<ApiContainer>(x =>
                             {
-                                avatar = new SimpleAvatarPedestal
-                                {
-                                    field_Internal_ApiAvatar_0 = new ApiAvatar
-                                    {
-                                        id = avatar.ID
-                                    }
-                                }
-                            }.ChangeToSelectedAvatar();
+                                PAviSaved.avatar.field_Internal_ApiAvatar_0 = x.Model.Cast<ApiAvatar>(); // can fix better later.
+                                PAviSaved.ChangeToSelectedAvatar();
+                            }), null, null, false);
                         }
                     }, $"by {avatar.Author}\nSwitch into this avatar.", Color.red, Color.white);
                     X++;

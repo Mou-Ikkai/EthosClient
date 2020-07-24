@@ -24,7 +24,7 @@ namespace FuneralClientV2
             try
             {
                 ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
-                Modules.ForEach(y => y.OnStart());
+                
                 new QMSingleButton("UIElementsMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
                 {
                     if (Configuration.GetConfig().MainMenuButtonX != 1)
@@ -62,24 +62,44 @@ namespace FuneralClientV2
                     }
                 }), "Moves the main menu button up within the UI", Color.red, Color.white);
                 new MainMenu();
-                PatchManager.ApplyPatches();
+                for (int i = 0; i < Modules.Count; i++)
+                    Modules[i].OnUiLoad();
             }
             catch (Exception) { }
         }
 
+        public override void OnApplicationQuit()
+        {
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnAppQuit();
+        }
         public override void OnApplicationStart()
         {
             ConsoleUtil.SetTitle("Funeral Client V2 = Developed by Yaekith");
             Configuration.CheckExistence();
-            DiscordRPC.Start();
+            try
+            {
+                PatchManager.ApplyPatches(); // Applying patches early to prevent any problems.
+            }
+            catch (Exception c)
+            {
+                //Maybe add some logging here.
+            }
+            try
+            {
+                DiscordRPC.Start();
+            }
+            catch { }
             Modules.Add(new GeneralHandlers());
             ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnStart();
         }
 
         public override void OnUpdate()
         {
-            List<VRCMod> Mods = Modules.Where(y => y.RequiresUpdate).ToList();
-            Mods.ForEach(x => x.OnUpdate());
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnUpdate();
         }
     }
 }

@@ -26,16 +26,19 @@ namespace FuneralClientV2.Patching
 
         private static List<Patch> RetrievePatches()
         {
-            var ConsoleWriteLine = typeof(Il2CppSystem.Console).GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).First((System.Reflection.MethodInfo a) =>
-            {
-                if (a.Name != "WriteLine") return false;
-                if (a.GetParameters().Length == 1) return a.GetParameters()[0].ParameterType == typeof(string);
-                return false;
-            }); //ngl; emmie helped me with this, check out emmvrc here: https://www.thetrueyoshifan.com/emmvrc.php
+            var ConsoleWriteLine = AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) });
+
+            // typeof(Il2CppSystem.Console).GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).First((System.Reflection.MethodInfo a) =>
+            // {
+            //     if (a.Name != "WriteLine") return false;
+            //     if (a.GetParameters().Length == 1) return a.GetParameters()[0].ParameterType == typeof(string);
+            //     return false;
+            // }); //ngl; emmie helped me with this, check out emmvrc here: https://www.thetrueyoshifan.com/emmvrc.php
+
             List <Patch> patches = new List<Patch>()
             {
                 new Patch("WorldTriggers", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
-                new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null),
+                //new Patch("HWIDSpoofer", typeof(VRC.Core.API).GetMethod("get_DeviceID"), GetLocalPatch("SpoofDeviceID"), null), // Removed because it actually won't protect you at all.
                 new Patch("AntiKick", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
                 new Patch("AntiPublicBan", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("AntiBlock", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
@@ -59,14 +62,14 @@ namespace FuneralClientV2.Patching
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
             if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered) if (!GeneralUtils.WorldTriggers) return false;
-            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
+            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
             return true;
         }
 
         private static bool SpoofDeviceID(ref string __result)
         {
             __result = GeneralUtils.RandomString(50);
-            ConsoleUtil.Info($"[HWID Spoofer] New HWID: {__result}");
+            ConsoleUtil.Info($"[HWID Spoofer] New HWID: {__result}"); // removed rn
             return true;
         }
 
@@ -76,10 +79,10 @@ namespace FuneralClientV2.Patching
             return !Configuration.GetConfig().AntiKick;
         }
 
-        private static bool AntiBlock(ref string __0, ref bool __1, ref Player __2)
+        private static bool AntiBlockAntiBlock(ref string __0, ref bool __1, ref Player __2)
         {
             //to-do; add support for moderation logging
-            var us = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
             return !Configuration.GetConfig().AntiBlock;
         }

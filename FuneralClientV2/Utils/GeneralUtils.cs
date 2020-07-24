@@ -36,7 +36,7 @@ namespace FuneralClientV2.Utils
 
         public static AudioSource Source = null;
 
-        public static bool IsDevBranch = true;
+        public static bool IsDevBranch = false;
 
         public static void InformHudText(Color color, string text)
         {

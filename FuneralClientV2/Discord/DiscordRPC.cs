@@ -101,7 +101,7 @@ namespace FuneralClientV2.Discord
                 presence.largeImageKey = "big_pog";
                 presence.smallImageKey = "funeral_logo";
             }
-            presence.largeImageText = $"As {PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().displayName} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
+            presence.largeImageText = $"As {PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().displayName} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(!VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
             presence.smallImageText = GeneralUtils.Version;
             DiscordRpc.UpdatePresence(ref presence);
         }

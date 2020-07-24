@@ -244,6 +244,7 @@
     <Compile Include="Discord\DiscordRichPresence.cs" />
     <Compile Include="Discord\DiscordRPC.cs" />
     <Compile Include="FuneralClient.cs" />
+    <Compile Include="Menu\DeveloperVRMenu.cs" />
     <Compile Include="Menu\FavoritesVRMenu.cs" />
     <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Menu\ProtectionsVRMenu.cs" />

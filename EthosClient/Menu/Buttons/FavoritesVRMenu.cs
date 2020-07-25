@@ -24,7 +24,7 @@ namespace EthosClient.Utils
         private int X = 1;
         private int Y = 0;
         public static PageAvatar PAviSaved = new PageAvatar() { avatar = new SimpleAvatarPedestal() };
-        public FavoritesVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
+        public FavoritesVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, GeneralUtils.GetColor(config.ColorScheme.Colors[0]), GeneralUtils.GetColor(config.ColorScheme.Colors[1]), GeneralUtils.GetColor(config.ColorScheme.Colors[2]), GeneralUtils.GetColor(config.ColorScheme.Colors[3]))
         {
             new QMSingleButton(this, 0, 0, "Next", delegate
             {

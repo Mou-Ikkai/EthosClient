@@ -42,7 +42,7 @@ namespace EthosClient.Utils
 
         public static AudioSource Source = null;
 
-        public static bool IsDevBranch = true;
+        public static bool IsDevBranch = false;
 
         public static void InformHudText(Color color, string text)
         {
@@ -107,5 +107,9 @@ namespace EthosClient.Utils
             }
             return null;
         }
+
+        public static EthosColor GetEthosColor(Color color) { return new EthosColor(color.r, color.g, color.b); }
+
+        public static Color GetColor(EthosColor color) { return new Color(color.R, color.G, color.B); }
     }
 }

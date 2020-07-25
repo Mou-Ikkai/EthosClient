@@ -16,7 +16,7 @@ namespace EthosClient.Menu
 {
     public class MainMenu : QMNestedButton
     {
-        public MainMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
+        public MainMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, GeneralUtils.GetColor(config.ColorScheme.Colors[0]), GeneralUtils.GetColor(config.ColorScheme.Colors[1]), GeneralUtils.GetColor(config.ColorScheme.Colors[2]), GeneralUtils.GetColor(config.ColorScheme.Colors[3]))
         {
             new QMSingleButton(this, 1, 0, "GitHub", new Action(() =>
             {
@@ -65,13 +65,13 @@ namespace EthosClient.Menu
             {
                 PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
             }), "Hide/Unhide yourself, for safety reasons maybe, who knows.", Color.red, Color.white);
-            new QMToggleButton(this, 4, 2, "Enable\nDeveloper Mode", new Action(() =>
-            {
-                GeneralUtils.IsDevBranch = true;
-            }), "Disable\nDeveloper Mode", new Action(() =>
-            {
-                GeneralUtils.IsDevBranch = false;
-            }), "Ethos Developer Stuff ok", Color.red, Color.white).setToggleState(GeneralUtils.IsDevBranch);
+            //new QMToggleButton(this, 4, 2, "Enable\nDeveloper Mode", new Action(() =>
+            //{
+            //    GeneralUtils.IsDevBranch = true;
+            //}), "Disable\nDeveloper Mode", new Action(() =>
+            //{
+            //    GeneralUtils.IsDevBranch = false;
+            //}), "Ethos Developer Stuff ok", Color.red, Color.white).setToggleState(GeneralUtils.IsDevBranch);
         }
     }
 }

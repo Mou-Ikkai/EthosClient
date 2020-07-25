@@ -1,4 +1,5 @@
-﻿using EthosClient.Wrappers;
+﻿using EthosClient.Utils;
+using EthosClient.Wrappers;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace EthosClient.Menu
 {
     public class TargetVRMenu : QMNestedButton
     {
-        public TargetVRMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
+        public TargetVRMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, GeneralUtils.GetColor(config.ColorScheme.Colors[0]), GeneralUtils.GetColor(config.ColorScheme.Colors[1]), GeneralUtils.GetColor(config.ColorScheme.Colors[2]), GeneralUtils.GetColor(config.ColorScheme.Colors[3]))
         {
             new QMSingleButton(this, 1, 0, "Teleport", new Action(() =>
             {

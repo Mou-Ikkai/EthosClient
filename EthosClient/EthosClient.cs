@@ -62,7 +62,7 @@ namespace EthosClient
                 }
             }), "Moves the main menu button up within the UI", Color.red, Color.white);
             new MainMenu();
-            DiscordRPC.Start();
+            if (Configuration.GetConfig().UseRichPresence) DiscordRPC.Start();
             
             for (int i = 0; i < Modules.Count; i++)
                 Modules[i].OnUiLoad();

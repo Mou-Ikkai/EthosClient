@@ -27,7 +27,7 @@ namespace EthosClient.Discord
                     // Added await to avoid errors.
                     File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
                 }
-
+                 
                 eventHandlers = default(DiscordRpc.EventHandlers);
                 presence.details = "A very cool public free cheat";
                 presence.state = "Starting Game...";

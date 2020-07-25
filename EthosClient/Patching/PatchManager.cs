@@ -72,7 +72,10 @@ namespace EthosClient.Patching
             //to-do; add support for moderation logging
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __4.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been kicked by {them.displayName}");
 
             return !Configuration.GetConfig().AntiKick;
         }
@@ -82,7 +85,10 @@ namespace EthosClient.Patching
             //to-do; add support for moderation logging
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
 
             return !Configuration.GetConfig().AntiBlock;
         }
@@ -144,7 +150,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __1.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt logged out by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt logged out by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been logged out by {them.displayName}");
 
             return false;
         }
@@ -153,7 +162,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been public banned by {them.displayName}");
 
             return !Configuration.GetConfig().AntiPublicBan;
         }
@@ -162,7 +174,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were banned by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were banned by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been banned by {them.displayName}");
 
             return true;
         }
@@ -171,7 +186,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __1.GetAPIUser();
-            if(Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were friended/unfriended by {them.displayName}"); //no real way to check either lol
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were friended/unfriended by {them.displayName}"); //no real way to check either lol
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been friended/unfriended by {them.displayName}");
 
             return true;
         }
@@ -180,7 +198,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if(Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "muted" : "unmuted")} by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "muted" : "unmuted")} by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "muted" : "unmuted")} by {them.displayName}");
 
             return true;
         }
@@ -189,7 +210,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "shown" : "hidden")} by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "shown" : "hidden")} by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "shown" : "hidden")} by {them.displayName}");
 
             return true;
         }
@@ -198,7 +222,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were warned by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were warned by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been warned by {them.displayName}");
 
             return true;
         }
@@ -207,7 +234,10 @@ namespace EthosClient.Patching
         {
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __1.GetAPIUser();
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"Your microphone was attempt forced off by {them.displayName}");
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"Your microphone was attempt forced off by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has had their microphone forced off by {them.displayName}");
 
             return false;
         }

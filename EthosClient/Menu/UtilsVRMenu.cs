@@ -89,10 +89,12 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().UseRichPresence = true;
                 Configuration.SaveConfiguration();
+                Discord.DiscordRPC.StartClient();
             }, "Disable\nRich Presence", delegate
             {
                 Configuration.GetConfig().UseRichPresence = false;
                 Configuration.SaveConfiguration();
+                Discord.DiscordRPC.StartClient();
             }, "Enable/Disable the discord rich presence status", Color.red, Color.white).setToggleState(Configuration.GetConfig().UseRichPresence);
         }
     }

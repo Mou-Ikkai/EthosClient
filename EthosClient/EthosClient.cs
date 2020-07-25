@@ -63,10 +63,16 @@ namespace EthosClient
             }), "Moves the main menu button up within the UI", Color.red, Color.white);
             new MainMenu();
             DiscordRPC.Start();
-            for (int i = 0; i < Modules.Count; i++) Modules[i].OnUiLoad();
+            
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnUiLoad();
         }
 
-        public override void OnApplicationQuit() { for (int i = 0; i < Modules.Count; i++) Modules[i].OnAppQuit(); }
+        public override void OnApplicationQuit()
+        {
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnAppQuit(); 
+        }
 
         public override void OnApplicationStart()
         {
@@ -76,11 +82,17 @@ namespace EthosClient
             Configuration.CheckExistence();
             Modules.Add(new GeneralHandlers());
             ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
-            for (int i = 0; i < Modules.Count; i++) Modules[i].OnStart();
+
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnStart();
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) => ConsoleUtil.Exception(e.ExceptionObject as Exception);
 
-        public override void OnUpdate() { for (int i = 0; i < Modules.Count; i++) Modules[i].OnUpdate(); }
+        public override void OnUpdate() 
+        { 
+            for (int i = 0; i < Modules.Count; i++)
+                Modules[i].OnUpdate();
+        }
     }
 }

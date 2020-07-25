@@ -1,10 +1,12 @@
 ﻿using EthosClient.API;
+using EthosClient.Menu;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
@@ -92,6 +94,18 @@ namespace EthosClient.Utils
             if (url.Contains("youtube.com")) return true;
             else if (url.Contains("youtu.be")) return true;
             return false;
+        }
+
+        public static EthosVRButton GetEthosVRButton(string ID)
+        {
+            foreach(var button in Configuration.GetConfig().Buttons)
+            {
+                if (button.ID == ID)
+                {
+                    return button;
+                }
+            }
+            return null;
         }
     }
 }

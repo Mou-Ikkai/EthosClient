@@ -16,7 +16,7 @@ namespace EthosClient.Menu
 {
     public class MainMenu : QMNestedButton
     {
-        public MainMenu() : base("ShortcutMenu", Configuration.GetConfig().MainMenuButtonX, Configuration.GetConfig().MainMenuButtonY, "Ethos\nClient", "A client for vrchat's il2cpp system, hopefully just an updated version of my old publicly sold client, with more features and fixed bugs of course.", Color.red, Color.white, Color.red, Color.cyan)
+        public MainMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMSingleButton(this, 1, 0, "GitHub", new Action(() =>
             {
@@ -39,12 +39,12 @@ namespace EthosClient.Menu
             {
                 GeneralUtils.InformHudText(Color.yellow, "Yaekith - Developer\n404 - Developer");
             }), "Displays who made this cheat", Color.red, Color.white);
-            new UtilsVRMenu(this);
-            new FunVRMenu(this);
-            new ProtectionsVRMenu(this);
-            new TargetVRMenu();
-            new FavoritesVRMenu(this);
-            if (GeneralUtils.IsDevBranch) new DeveloperVRMenu();
+            new UtilsVRMenu(this, GeneralUtils.GetEthosVRButton("Utils"));
+            new FunVRMenu(this, GeneralUtils.GetEthosVRButton("Fun"));
+            new ProtectionsVRMenu(this, GeneralUtils.GetEthosVRButton("Protections"));
+            new TargetVRMenu(GeneralUtils.GetEthosVRButton("PlayerOptions"));
+            new FavoritesVRMenu(this, GeneralUtils.GetEthosVRButton("ExtendedFavorites"));
+            if (GeneralUtils.IsDevBranch) new DeveloperVRMenu(GeneralUtils.GetEthosVRButton("Developer"));
             new QMToggleButton(this, 1, 2, "Clear\nConsole", delegate
             {
                 Configuration.GetConfig().CleanConsole = true;

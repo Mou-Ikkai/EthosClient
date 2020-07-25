@@ -16,7 +16,7 @@ namespace EthosClient.Menu
 {
     public class DeveloperVRMenu : QMNestedButton
     {
-        public DeveloperVRMenu() : base("UIElementsMenu", 3, 0, "Developer\nOnly", "Just some experimental features I guess", Color.red, Color.white, Color.red, Color.cyan)
+        public DeveloperVRMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMToggleButton(this, 1, 0, "Go\nAutistic", new Action(() =>
             {

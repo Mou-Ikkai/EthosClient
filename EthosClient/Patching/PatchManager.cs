@@ -122,7 +122,7 @@ namespace EthosClient.Patching
 
         private static bool AntiVideoPlayerHijacking(ref string __0)
         {
-            if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) return false;
+            if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) __0 = "";
             return true;
         }
 

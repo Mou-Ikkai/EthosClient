@@ -25,44 +25,9 @@ namespace EthosClient
         public override void VRChat_OnUiManagerInit()
         {
             ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
-            new QMSingleButton("UIElementsMenu", 1, 1, "Move Menu Button\nLeft", new Action(() =>
-            {
-                if (Configuration.GetConfig().MainMenuButtonX != 1)
-                {
-                    Configuration.GetConfig().MainMenuButtonX--;
-                    Configuration.SaveConfiguration();
-                    GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
-                }
-            }), "Moves the main menu button to the left within the UI", Color.red, Color.white);
-            new QMSingleButton("UIElementsMenu", 1, 2, "Move Menu Button\nRight", new Action(() =>
-            {
-                if (Configuration.GetConfig().MainMenuButtonX != 1)
-                {
-                    Configuration.GetConfig().MainMenuButtonX++;
-                    Configuration.SaveConfiguration();
-                    GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
-                }
-            }), "Moves the main menu button to the right within the UI", Color.red, Color.white);
-            new QMSingleButton("UIElementsMenu", 2, 1, "Move Menu Button\nUp", new Action(() =>
-            {
-                if (Configuration.GetConfig().MainMenuButtonY != 0)
-                {
-                    Configuration.GetConfig().MainMenuButtonY--;
-                    Configuration.SaveConfiguration();
-                    GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
-                }
-            }), "Moves the main menu button up within the UI", Color.red, Color.white);
-            new QMSingleButton("UIElementsMenu", 2, 2, "Move Menu Button\nDown", new Action(() =>
-            {
-                if (Configuration.GetConfig().MainMenuButtonY != 4)
-                {
-                    Configuration.GetConfig().MainMenuButtonY++;
-                    Configuration.SaveConfiguration();
-                    GeneralUtils.InformHudText(Color.yellow, "Successfully saved menu button position\nRestart your game for it to take effect.");
-                }
-            }), "Moves the main menu button up within the UI", Color.red, Color.white);
-            new MainMenu();
-            if (Configuration.GetConfig().UseRichPresence) DiscordRPC.Start();
+            //new ButtonRepositionVRMenu(); soon :tm:
+            new MainMenu(GeneralUtils.GetEthosVRButton("MainMenu"));
+            if (Configuration.GetConfig().UseRichPresence) DiscordRPC.Start(); //temp fix ok 404, not everyone can run without this line lol
             
             for (int i = 0; i < Modules.Count; i++)
                 Modules[i].OnUiLoad();

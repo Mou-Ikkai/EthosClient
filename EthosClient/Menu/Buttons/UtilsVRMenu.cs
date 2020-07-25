@@ -1,4 +1,5 @@
 ﻿using BestHTTP;
+using EthosClient.Menu;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
 using RubyButtonAPI;
@@ -18,7 +19,7 @@ namespace EthosClient.Utils
 {
     public class UtilsVRMenu : QMNestedButton
     {
-        public UtilsVRMenu(QMNestedButton parent) : base(parent, 1, 1, "Utils", "Extended utilities you can use to manage the game better", Color.red, Color.white, Color.red, Color.cyan)
+        public UtilsVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMToggleButton(this, 1, 0, "Enable\nFlight", delegate
             {

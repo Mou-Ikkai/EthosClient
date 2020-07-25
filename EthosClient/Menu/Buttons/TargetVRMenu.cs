@@ -11,7 +11,7 @@ namespace EthosClient.Menu
 {
     public class TargetVRMenu : QMNestedButton
     {
-        public TargetVRMenu() : base("UserInteractMenu", 1, 2, "Player\nOptions", "Open this menu and control what you want of other players.", Color.red, Color.white, Color.red, Color.cyan)
+        public TargetVRMenu(EthosVRButton config) : base(config.Menu, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMSingleButton(this, 1, 0, "Teleport", new Action(() =>
             {

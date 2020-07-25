@@ -241,11 +241,13 @@
     <Compile Include="Discord\DiscordRichPresence.cs" />
     <Compile Include="Discord\DiscordRPC.cs" />
     <Compile Include="EthosClient.cs" />
-    <Compile Include="Menu\DeveloperVRMenu.cs" />
-    <Compile Include="Menu\FavoritesVRMenu.cs" />
-    <Compile Include="Menu\MainMenu.cs" />
-    <Compile Include="Menu\ProtectionsVRMenu.cs" />
-    <Compile Include="Menu\TargetVRMenu.cs" />
+    <Compile Include="Menu\Buttons\ButtonRepositionVRMenu.cs" />
+    <Compile Include="Menu\Buttons\DeveloperVRMenu.cs" />
+    <Compile Include="Menu\EthosVRButton.cs" />
+    <Compile Include="Menu\Buttons\FavoritesVRMenu.cs" />
+    <Compile Include="Menu\Buttons\MainMenu.cs" />
+    <Compile Include="Menu\Buttons\ProtectionsVRMenu.cs" />
+    <Compile Include="Menu\Buttons\TargetVRMenu.cs" />
     <Compile Include="Modules\GeneralHandlers.cs" />
     <Compile Include="Modules\VRCMod.cs" />
     <Compile Include="Patching\Patch.cs" />
@@ -254,9 +256,9 @@
     <Compile Include="Settings\Config.cs" />
     <Compile Include="Settings\Configuration.cs" />
     <Compile Include="Utils\ConsoleUtil.cs" />
-    <Compile Include="Menu\FunVRMenu.cs" />
+    <Compile Include="Menu\Buttons\FunVRMenu.cs" />
     <Compile Include="Utils\GeneralUtils.cs" />
-    <Compile Include="Menu\UtilsVRMenu.cs" />
+    <Compile Include="Menu\Buttons\UtilsVRMenu.cs" />
     <Compile Include="Wrappers\GeneralWrappers.cs" />
     <Compile Include="Wrappers\PlayerWrappers.cs" />
   </ItemGroup>

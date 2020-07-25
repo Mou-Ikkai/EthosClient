@@ -1,4 +1,5 @@
-﻿using EthosClient.Wrappers;
+﻿using EthosClient.Menu;
+using EthosClient.Wrappers;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace EthosClient.Utils
 {
     public class FunVRMenu : QMNestedButton
     {
-        public FunVRMenu(QMNestedButton parent) : base(parent, 2, 1, "Fun", "A menu full of fun stuff!", Color.red, Color.white, Color.red, Color.cyan)
+        public FunVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMToggleButton(this, 1, 0, "Enable\nSpin Bot", delegate
             {

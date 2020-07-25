@@ -1,4 +1,5 @@
-﻿using EthosClient.Settings;
+﻿using EthosClient.Menu;
+using EthosClient.Settings;
 using EthosClient.Wrappers;
 using RubyButtonAPI;
 using System;
@@ -12,7 +13,7 @@ namespace EthosClient.Utils
 {
     public class ProtectionsVRMenu : QMNestedButton
     {
-        public ProtectionsVRMenu(QMNestedButton parent) : base(parent, 3, 1, "Protections", "A menu full of protection options against moderation, and other safety related features.", Color.red, Color.white, Color.red, Color.cyan)
+        public ProtectionsVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMToggleButton(this, 1, 0, "Enable\nAnti Kick", delegate
             {
@@ -36,7 +37,7 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().PortalSafety = true;
                 Configuration.SaveConfiguration();
-            }, "Disable\nAnti Public Ban", delegate
+            }, "Disable\nPortal Safety", delegate
             {
                 Configuration.GetConfig().PortalSafety = false;
                 Configuration.SaveConfiguration();
@@ -59,16 +60,7 @@ namespace EthosClient.Utils
                 Configuration.GetConfig().LogModerations = false;
                 Configuration.SaveConfiguration();
             }, "This feature, when enabled, logs all actions of Moderation against you and other players.", Color.red, Color.white).setToggleState(Configuration.GetConfig().LogModerations);
-            new QMToggleButton(this, 1, 2, "Enable\nVideo Player Safety", delegate
-            {
-                Configuration.GetConfig().VideoPlayerSafety = true;
-                Configuration.SaveConfiguration();
-            }, "Disable\nVideo Player Safety", delegate
-            {
-                Configuration.GetConfig().VideoPlayerSafety = false;
-                Configuration.SaveConfiguration();
-            }, "This feature, when enabled, protects you from certain urls people try play via video players", Color.red, Color.white).setToggleState(Configuration.GetConfig().VideoPlayerSafety);
-            new QMToggleButton(this, 2, 1, "Enable\nAnti Public Ban", delegate
+            new QMToggleButton(this, 1, 2, "Enable\nAnti Public Ban", delegate
             {
                 Configuration.GetConfig().AntiPublicBan = true;
                 Configuration.SaveConfiguration();
@@ -77,7 +69,7 @@ namespace EthosClient.Utils
                 Configuration.GetConfig().AntiPublicBan = false;
                 Configuration.SaveConfiguration();
             }, "This feature, when enabled, allows you to enter any public instance when you're actually public banned.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiPublicBan);
-            new QMToggleButton(this, 2, 2, "Enable\nAnti World Triggers", delegate
+            new QMToggleButton(this, 2, 1, "Enable\nAnti World Triggers", delegate
             {
                 Configuration.GetConfig().AntiWorldTriggers = true;
                 Configuration.SaveConfiguration();
@@ -85,7 +77,7 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().AntiWorldTriggers = false;
                 Configuration.SaveConfiguration();
-            }, "This feature, when enabled, allows you to enter any public instance when you're actually public banned.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
+            }, "This feature, when enabled, prevents other people from using world triggers.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
         }
     }
 }

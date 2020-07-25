@@ -1,5 +1,6 @@
 ﻿using BestHTTP;
 using EthosClient.API;
+using EthosClient.Menu;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
 using RubyButtonAPI;
@@ -23,7 +24,7 @@ namespace EthosClient.Utils
         private int X = 1;
         private int Y = 0;
         public static PageAvatar PAviSaved = new PageAvatar() { avatar = new SimpleAvatarPedestal() };
-        public FavoritesVRMenu(QMNestedButton parent) : base(parent, 4, 1, "Extended\nFavorites", "Open up the extended favorites menu and add more avatars than the default limit of 16", Color.red, Color.white, Color.red, Color.cyan)
+        public FavoritesVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, config.ColorScheme[0], config.ColorScheme[1], config.ColorScheme[2], config.ColorScheme[3])
         {
             new QMSingleButton(this, 0, 0, "Next", delegate
             {

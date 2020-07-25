@@ -1,4 +1,5 @@
-﻿using EthosClient.Utils;
+﻿using EthosClient.Settings;
+using EthosClient.Utils;
 using EthosClient.Wrappers;
 using System;
 using System.IO;
@@ -43,7 +44,7 @@ namespace EthosClient.Discord
                 timer.Elapsed += Update;
                 timer.AutoReset = true;
                 timer.Enabled = true;
-
+                ConsoleUtil.Info("Using Rich Presence");
             }).Start();
         }
         public static void Update(object sender, ElapsedEventArgs args)

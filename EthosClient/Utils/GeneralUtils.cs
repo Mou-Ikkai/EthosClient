@@ -26,7 +26,7 @@ namespace EthosClient.Utils
 
         public static bool SpinBot = false;
 
-        public static bool DontSerialise = false;
+        public static bool ForceClone = false;
 
         public static List<string> Deafened = new List<string>();
 
@@ -40,13 +40,13 @@ namespace EthosClient.Utils
 
         public static AudioSource Source = null;
 
-        public static bool IsDevBranch = false;
+        public static bool IsDevBranch = true;
 
         public static void InformHudText(Color color, string text)
         {
             var NormalColor = VRCUiManager.prop_VRCUiManager_0.hudMessageText.color;
             VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = color;
-            VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[FUNERAL V2] {text}");
+            VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[ETHOS] {text}");
             VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = NormalColor;
         }
 
@@ -87,20 +87,10 @@ namespace EthosClient.Utils
             return null;
         }
 
-        public static bool IsGrabifyLink(string url)
+        public static bool SuitableVideoURL(string url)
         {
-            List<string> Domains = new List<string>()
-            {
-                "grabify.link",
-                "leancoding.co",
-                "stopify.co",
-                "freegiftcards.co",
-                "joinmy.site",
-                "curiouscat.club",
-                "catsnthings.fun",
-                "catsnthing.com"
-            };
-            foreach (var domain in Domains) if (url.ToLower().Contains(domain.ToLower())) return true;
+            if (url.Contains("youtube.com")) return true;
+            else if (url.Contains("youtu.be")) return true;
             return false;
         }
     }

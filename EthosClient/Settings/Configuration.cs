@@ -13,12 +13,7 @@ namespace EthosClient.Settings
     {
         private static Config _Config { get; set; }
 
-        public static IntPtr HWIDP = IntPtr.Zero;
-
-        public static void SaveConfiguration()
-        {
-            File.WriteAllText("EthosClient\\Configuration.json", JsonConvert.SerializeObject(_Config, Formatting.Indented));
-        }
+        public static void SaveConfiguration() => File.WriteAllText("EthosClient\\Configuration.json", JsonConvert.SerializeObject(_Config, Formatting.Indented));
 
         public static void CheckExistence()
         {

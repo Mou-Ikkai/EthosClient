@@ -32,7 +32,43 @@ namespace EthosClient.Utils
                 Configuration.GetConfig().AntiBlock = false;
                 Configuration.SaveConfiguration();
             }, "Decide whether you want to see people who you've blocked and/or people who have blocked you.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiBlock);
-            new QMToggleButton(this, 3, 0, "Enable\nAnti Public Ban", delegate
+            new QMToggleButton(this, 3, 0, "Enable\nPortal Safety", delegate
+            {
+                Configuration.GetConfig().PortalSafety = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nAnti Public Ban", delegate
+            {
+                Configuration.GetConfig().PortalSafety = false;
+                Configuration.SaveConfiguration();
+            }, "This feature enables/disables safety for portals, when enabled it asks you if you want to enter any portal, saves you from ip logging portals, etc.", Color.red, Color.white).setToggleState(Configuration.GetConfig().PortalSafety);
+            new QMToggleButton(this, 4, 0, "Enable\nVideo Player Safety", delegate
+            {
+                Configuration.GetConfig().VideoPlayerSafety = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nVideo Player Safety", delegate
+            {
+                Configuration.GetConfig().VideoPlayerSafety = false;
+                Configuration.SaveConfiguration();
+            }, "This feature, when enabled, protects you from certain urls people try play via video players", Color.red, Color.white).setToggleState(Configuration.GetConfig().VideoPlayerSafety);
+            new QMToggleButton(this, 1, 1, "Enable\nModeration Logger", delegate
+            {
+                Configuration.GetConfig().LogModerations = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nModeration Logger", delegate
+            {
+                Configuration.GetConfig().LogModerations = false;
+                Configuration.SaveConfiguration();
+            }, "This feature, when enabled, logs all actions of Moderation against you and other players.", Color.red, Color.white).setToggleState(Configuration.GetConfig().LogModerations);
+            new QMToggleButton(this, 1, 2, "Enable\nVideo Player Safety", delegate
+            {
+                Configuration.GetConfig().VideoPlayerSafety = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nVideo Player Safety", delegate
+            {
+                Configuration.GetConfig().VideoPlayerSafety = false;
+                Configuration.SaveConfiguration();
+            }, "This feature, when enabled, protects you from certain urls people try play via video players", Color.red, Color.white).setToggleState(Configuration.GetConfig().VideoPlayerSafety);
+            new QMToggleButton(this, 2, 1, "Enable\nAnti Public Ban", delegate
             {
                 Configuration.GetConfig().AntiPublicBan = true;
                 Configuration.SaveConfiguration();
@@ -40,34 +76,16 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().AntiPublicBan = false;
                 Configuration.SaveConfiguration();
-            }, "This feature is actually supposed to allow you to enter public instances when you're public banned, nice game VRChat.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiPublicBan);
-            new QMToggleButton(this, 4, 0, "Enable\nOptimization", delegate
+            }, "This feature, when enabled, allows you to enter any public instance when you're actually public banned.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiPublicBan);
+            new QMToggleButton(this, 2, 2, "Enable\nAnti World Triggers", delegate
             {
-                Configuration.GetConfig().Optimization = true;
+                Configuration.GetConfig().AntiWorldTriggers = true;
                 Configuration.SaveConfiguration();
-            }, "Disable\nOptimization", delegate
+            }, "Disable\nAnti World Triggers", delegate
             {
-                Configuration.GetConfig().Optimization = false;
+                Configuration.GetConfig().AntiWorldTriggers = false;
                 Configuration.SaveConfiguration();
-            }, "This feature, when enabled, auto-hides players when they're far away from you.", Color.red, Color.white).setToggleState(Configuration.GetConfig().Optimization);
-            new QMToggleButton(this, 1, 1, "Enable\nHWID Spoofer", delegate
-            {
-                Configuration.GetConfig().SpoofHWID = true;
-                Configuration.SaveConfiguration();
-            }, "Disable\nHWID Spoofer", delegate
-            {
-                Configuration.GetConfig().SpoofHWID = false;
-                Configuration.SaveConfiguration();
-            }, "This feature, when enabled, spoofs your deviceId upon game launch, to bypass bans and stuff.", Color.red, Color.white).setToggleState(Configuration.GetConfig().SpoofHWID);
-            new QMToggleButton(this, 1, 2, "Enable\nAnti Ip Logging", delegate
-            {
-                Configuration.GetConfig().AntiIpLog = true;
-                Configuration.SaveConfiguration();
-            }, "Disable\nAnti Ip Logging", delegate
-            {
-                Configuration.GetConfig().AntiIpLog = false;
-                Configuration.SaveConfiguration();
-            }, "This feature, when enabled, prevents your ip from being logged from pathetic grabbing videos on video players.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiIpLog);
+            }, "This feature, when enabled, allows you to enter any public instance when you're actually public banned.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
         }
     }
 }

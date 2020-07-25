@@ -54,26 +54,24 @@ namespace EthosClient.Menu
                 Configuration.GetConfig().CleanConsole = false;
                 Configuration.SaveConfiguration();
             }, "Decide whether you want your console to be spammed by useless game information or not.", Color.red, Color.white).setToggleState(Configuration.GetConfig().CleanConsole);
-            new QMSingleButton(this, 3, 2, "Select\nYourself", new Action(() =>
+            new QMSingleButton(this, 2, 2, "Select\nYourself", new Action(() =>
             {
                 GeneralWrappers.GetQuickMenu().SelectPlayer(PlayerWrappers.GetCurrentPlayer());
             }), "Select your own current player and do some stuff to yourself, I don't know lol.", Color.red, Color.white);
-            new QMToggleButton(this, 4, 2, "Hide\nYourself", new Action(() =>
+            new QMToggleButton(this, 3, 2, "Hide\nYourself", new Action(() =>
             {
                 PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(false);
             }), "Unhide\nYourself", new Action(() =>
             {
                 PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
             }), "Hide/Unhide yourself, for safety reasons maybe, who knows.", Color.red, Color.white);
-            new QMToggleButton(this, 2, 2, "Enable\nMenu Music", delegate
+            new QMToggleButton(this, 4, 2, "Enable\nDeveloper Mode", new Action(() =>
             {
-                Configuration.GetConfig().CustomMenuMusic = true;
-                Configuration.SaveConfiguration();
-            }, "Disable\nMenu Music", delegate
+                GeneralUtils.IsDevBranch = true;
+            }), "Disable\nDeveloper Mode", new Action(() =>
             {
-                Configuration.GetConfig().CustomMenuMusic = false;
-                Configuration.SaveConfiguration();
-            }, "(EXPERIMENTAL)\nEnable custom menu music to play whenever you open your UI.", Color.red, Color.white).setToggleState(Configuration.GetConfig().CustomMenuMusic);
+                GeneralUtils.IsDevBranch = false;
+            }), "Ethos Developer Stuff ok", Color.red, Color.white).setToggleState(GeneralUtils.IsDevBranch);
         }
     }
 }

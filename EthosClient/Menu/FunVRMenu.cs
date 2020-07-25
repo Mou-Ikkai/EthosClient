@@ -27,13 +27,13 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.WorldTriggers = false;
             }, "Decide whether you want other people to see your interactions with \"local\" triggers.", Color.red, Color.white).setToggleState(GeneralUtils.WorldTriggers);
-            new QMToggleButton(this, 3, 0, "Enable\nCustom Serialisation", delegate
+            new QMToggleButton(this, 3, 0, "Enable\nForce Clone", delegate
             {
-                GeneralUtils.DontSerialise = true;
-            }, "Disable\nCustom Serialisation", delegate
+                GeneralUtils.ForceClone = true;
+            }, "Disable\nForce Clone", delegate
             {
-                GeneralUtils.DontSerialise = false;
-            }, "(EXPERIMENTAL) Enable/Disable Custom PhotonView Serialisation", Color.red, Color.white).setToggleState(GeneralUtils.WorldTriggers);
+                GeneralUtils.ForceClone = false;
+            }, "(EXPERIMENTAL) Enable/Disable Force Clone, when this is enabled, any avatar can be cloned apart from private ones.", Color.red, Color.white).setToggleState(GeneralUtils.ForceClone);
         }
     }
 }

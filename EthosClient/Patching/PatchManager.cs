@@ -52,22 +52,34 @@ namespace EthosClient.Patching
         #region Patches
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
-            if (GeneralUtils.WorldTriggers)
-                __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
+            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
+            else if (Configuration.GetConfig().AntiWorldTriggers && __1 == VrcBroadcastType.Always) return false; //Anti World triggers lol
             return true;
         }
 
         private static bool AntiKick(ref string __0, ref string __1, ref string __2, ref string __3, ref Player __4)
         {
             //to-do; add support for moderation logging
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __4.GetAPIUser();
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been kicked by {them.displayName}");
+
             return !Configuration.GetConfig().AntiKick;
         }
 
-        private static bool AntiBlockAntiBlock(ref string __0, ref bool __1, ref Player __2)
+        private static bool AntiBlock(ref string __0, ref bool __1, ref Player __2)
         {
             //to-do; add support for moderation logging
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
+            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
+            else
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
+
             return !Configuration.GetConfig().AntiBlock;
         }
 
@@ -76,22 +88,25 @@ namespace EthosClient.Patching
         private static bool CloneAvatarPrefix(ref UserInteractMenu __instance)
         {
             bool result = true;
-            if (__instance.menuController.activeAvatar.releaseStatus != "private")
+            if (GeneralUtils.ForceClone)
             {
-                bool flag2 = !__instance.menuController.activeUser.allowAvatarCopying;
-                if (flag2)
+                if (__instance.menuController.activeAvatar.releaseStatus != "private")
                 {
-                    __instance.cloneAvatarButton.gameObject.SetActive(true);
-                    __instance.cloneAvatarButton.interactable = true;
-                    __instance.cloneAvatarButtonText.color = new Color(0.8117647f, 0f, 0f, 1f);
-                    result = false;
-                }
-                else
-                {
-                    __instance.cloneAvatarButton.gameObject.SetActive(true);
-                    __instance.cloneAvatarButton.interactable = true;
-                    __instance.cloneAvatarButtonText.color = new Color(0.470588237f, 0f, 0.8117647f, 1f);
-                    result = false;
+                    bool flag2 = !__instance.menuController.activeUser.allowAvatarCopying;
+                    if (flag2)
+                    {
+                        __instance.cloneAvatarButton.gameObject.SetActive(true);
+                        __instance.cloneAvatarButton.interactable = true;
+                        __instance.cloneAvatarButtonText.color = new Color(0.8117647f, 0f, 0f, 1f);
+                        result = false;
+                    }
+                    else
+                    {
+                        __instance.cloneAvatarButton.gameObject.SetActive(true);
+                        __instance.cloneAvatarButton.interactable = true;
+                        __instance.cloneAvatarButtonText.color = new Color(0.470588237f, 0f, 0.8117647f, 1f);
+                        result = false;
+                    }
                 }
             }
             return result;
@@ -102,12 +117,12 @@ namespace EthosClient.Patching
         private static bool AntiIpLogImage(string __0)
         {
             if (__0.StartsWith("https://api.vrchat.cloud/api/1/file/") || __0.StartsWith("https://api.vrchat.cloud/api/1/image/") || __0.StartsWith("https://d348imysud55la.cloudfront.net/thumbnails/") || __0.StartsWith("https://files.vrchat.cloud/thumbnails/")) return true;
-            return !Configuration.GetConfig().AntiIpLog;
+            return !Configuration.GetConfig().PortalSafety;
         }
 
         private static bool AntiVideoPlayerHijacking(ref string __0)
         {
-            if (Configuration.GetConfig().AntiIpLog && GeneralUtils.IsGrabifyLink(__0)) return false;
+            if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) return false;
             return true;
         }
 

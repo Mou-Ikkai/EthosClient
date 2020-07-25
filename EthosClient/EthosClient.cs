@@ -25,7 +25,7 @@ namespace EthosClient
         public override void VRChat_OnUiManagerInit()
         {
             ConsoleUtil.Info("[DEBUG] VRChat_OnUiManagerInit callback was fired.");
-            //new ButtonRepositionVRMenu(); soon :tm:
+            new ButtonRepositionVRMenu();
             new MainMenu(GeneralUtils.GetEthosVRButton("MainMenu"));
             if (Configuration.GetConfig().UseRichPresence) DiscordRPC.Start(); //temp fix ok 404, not everyone can run without this line lol
             

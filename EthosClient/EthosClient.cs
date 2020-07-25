@@ -71,7 +71,6 @@ namespace EthosClient
         public override void OnApplicationStart()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             PatchManager.ApplyPatches();
             ConsoleUtil.SetTitle("Ethos Client = Developed by Yaekith & 404#0004");
             Configuration.CheckExistence();
@@ -79,8 +78,6 @@ namespace EthosClient
             ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
             for (int i = 0; i < Modules.Count; i++) Modules[i].OnStart();
         }
-
-        private void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e) => ConsoleUtil.Exception(e.Exception);
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) => ConsoleUtil.Exception(e.ExceptionObject as Exception);
 

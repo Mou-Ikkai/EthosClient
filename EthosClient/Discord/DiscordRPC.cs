@@ -26,24 +26,24 @@ namespace EthosClient.Discord
                     var bytes = await new HttpClient().GetByteArrayAsync("https://cdn-20.anonfiles.com/ZfN5JdHfo5/9db29b29-1595523322/discord-rpc.dll");
                     // Added await to avoid errors.
                     File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
+
+                    System.Timers.Timer timer = new System.Timers.Timer(15000.0);
+                    timer.Elapsed += Update;
+                    timer.AutoReset = true;
+                    timer.Enabled = true;
                 }
-
-                eventHandlers = default(DiscordRpc.EventHandlers);
-                presence.details = "A very cool public free cheat";
-                presence.state = "Starting Game...";
-                presence.largeImageKey = "funeral_logo";
-                presence.smallImageKey = "big_pog";
-                presence.partySize = 0;
-                presence.partyMax = 0;
-                presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-                DiscordRpc.Initialize("735902136629592165", ref eventHandlers, true, "");
-                DiscordRpc.UpdatePresence(ref presence);
-
-                System.Timers.Timer timer = new System.Timers.Timer(15000.0);
-                timer.Elapsed += Update;
-                timer.AutoReset = true;
-                timer.Enabled = true;
             }).Start();
+
+            eventHandlers = default(DiscordRpc.EventHandlers);
+            presence.details = "A very cool public free cheat";
+            presence.state = "Starting Game...";
+            presence.largeImageKey = "funeral_logo";
+            presence.smallImageKey = "big_pog";
+            presence.partySize = 0;
+            presence.partyMax = 0;
+            presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            DiscordRpc.Initialize("735902136629592165", ref eventHandlers, true, "");
+            DiscordRpc.UpdatePresence(ref presence);
         }
 
         public static void Update(object sender, ElapsedEventArgs args)

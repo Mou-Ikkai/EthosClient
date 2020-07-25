@@ -36,7 +36,7 @@ namespace EthosClient.Utils
 
         private static System.Random random = new System.Random();
 
-        public static string Version = "1.3";
+        public static string Version = "1.4";
 
         public static AudioSource Source = null;
 

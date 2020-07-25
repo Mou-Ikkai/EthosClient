@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using UnhollowerBaseLib;
 using UnityEngine;
 using VRC;
+using VRC.Core;
 using VRC.UI;
 using VRCSDK2;
 using static VRC.SDKBase.VRC_EventHandler;
@@ -34,6 +35,15 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ForceLogoutRPC"), GetLocalPatch("AntiLogout"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanPublicOnlyRPC"), GetLocalPatch("AntiPublicBan"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("FriendStateChangeRPC"), GetLocalPatch("FriendPatch"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanRPC"), GetLocalPatch("BanPatch"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("MuteChangeRPC"), GetLocalPatch("MutePatch"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ShowUserAvatarChangedRPC"), GetLocalPatch("AvatarShownPatch"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("WarnUserRPC"), GetLocalPatch("WarnPatch"), null),
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ModForceOffMicRPC"), GetLocalPatch("ModForceOffMicPatch"), null),
+                new Patch("Ethos_Moderation", typeof(VRC_EventDispatcherRFC).GetMethod("Method_Private_Void_Int32_VrcTargetType_GameObject_String_ArrayOf_Byte_0"), GetLocalPatch("InterceptRPC"), null),
                 new Patch("Ethos_Extras", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("Ethos_Extras", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
                 new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
@@ -62,10 +72,7 @@ namespace EthosClient.Patching
             //to-do; add support for moderation logging
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __4.GetAPIUser();
-            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {them.displayName}");
-            else
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been kicked by {them.displayName}");
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {them.displayName}");
 
             return !Configuration.GetConfig().AntiKick;
         }
@@ -75,10 +82,7 @@ namespace EthosClient.Patching
             //to-do; add support for moderation logging
             var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
             var them = __2.GetAPIUser();
-            if (target.GetAPIUser().id == PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
-            else
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {them.displayName}");
 
             return !Configuration.GetConfig().AntiBlock;
         }
@@ -134,6 +138,92 @@ namespace EthosClient.Patching
                 return false;
             } else
             { return true; }
+        }
+
+        public static bool AntiLogout(ref string __0, ref Player __1)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __1.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt logged out by {them.displayName}");
+
+            return false;
+        }
+
+        public static bool AntiPublicBan(ref string __0, ref int __1, ref Player __2)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __2.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {them.displayName}");
+
+            return !Configuration.GetConfig().AntiPublicBan;
+        }
+
+        public static bool BanPatch(ref string __0, ref int __1, ref Player __2)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __2.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were banned by {them.displayName}");
+
+            return true;
+        }
+
+        public static bool FriendPatch(ref string __0, ref Player __1)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __1.GetAPIUser();
+            if(Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were friended/unfriended by {them.displayName}"); //no real way to check either lol
+
+            return true;
+        }
+
+        public static bool MutePatch(ref string __0, ref bool __1, ref Player __2)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __2.GetAPIUser();
+            if(Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "muted" : "unmuted")} by {them.displayName}");
+
+            return true;
+        }
+
+        public static bool AvatarShownPatch(ref string __0, ref bool __1, ref Player __2)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __2.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "shown" : "hidden")} by {them.displayName}");
+
+            return true;
+        }
+
+        public static bool WarnPatch(ref string __0, ref string __1, ref Player __2)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __2.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"You were warned by {them.displayName}");
+
+            return true;
+        }
+
+        public static bool ModForceOffMicPatch(ref string __0, ref Player __1)
+        {
+            var target = GeneralWrappers.GetPlayerManager().GetPlayer(__0);
+            var them = __1.GetAPIUser();
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.red, $"Your microphone was attempt forced off by {them.displayName}");
+
+            return false;
+        }
+
+        private static bool InterceptRpc(int __0, VRC.SDKBase.VRC_EventHandler.VrcTargetType __1, string __3, Il2CppStructArray<byte> __4)
+        {
+            try
+            {
+                Player sender = PlayerManager.Method_Public_Static_Player_Int32_0(__0);
+                Il2CppSystem.Object[] array = VrcSdk2Interface.ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique.field_Public_Static_ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique_0.Method_Internal_ArrayOf_Object_ArrayOf_Byte_0(__4);
+                string receiver = APIUser.CurrentUser.id;
+                if (array.Length >= 1 && receiver.Length > 10 && receiver != "0") receiver = array[0].ToString();
+                if (Configuration.GetConfig().LogModerations) ConsoleUtil.Info($"[{__3}] Sent to {GeneralWrappers.GetPlayerManager().GetPlayer(receiver).GetAPIUser().displayName} from {sender.GetAPIUser().displayName}");
+                return true;
+            }
+            catch { return true; }
         }
     }
     #endregion

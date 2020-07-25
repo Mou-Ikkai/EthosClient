@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Timers;
 using VRC.Core;
+using static DiscordRpc;
 
 namespace EthosClient.Discord
 {
@@ -26,31 +27,30 @@ namespace EthosClient.Discord
                     var bytes = await new HttpClient().GetByteArrayAsync("https://cdn-20.anonfiles.com/ZfN5JdHfo5/9db29b29-1595523322/discord-rpc.dll");
                     // Added await to avoid errors.
                     File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
-
-                    System.Timers.Timer timer = new System.Timers.Timer(15000.0);
-                    timer.Elapsed += Update;
-                    timer.AutoReset = true;
-                    timer.Enabled = true;
                 }
+
+                eventHandlers = default;
+                presence.details = "A very cool public free cheat";
+                presence.state = "Starting Game...";
+                presence.largeImageKey = "funeral_logo"; // YAEKITH STOP TOUCHING DISCORD RPC
+                presence.smallImageKey = "big_pog";
+                presence.partySize = 0;
+                presence.partyMax = 0;
+                presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                Initialize("735902136629592165", ref eventHandlers, true, "");
+                UpdatePresence(ref presence);
+                System.Timers.Timer timer = new System.Timers.Timer(15000.0);
+                timer.Elapsed += Update;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+
             }).Start();
-
-            eventHandlers = default(DiscordRpc.EventHandlers);
-            presence.details = "A very cool public free cheat";
-            presence.state = "Starting Game...";
-            presence.largeImageKey = "funeral_logo";
-            presence.smallImageKey = "big_pog";
-            presence.partySize = 0;
-            presence.partyMax = 0;
-            presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            DiscordRpc.Initialize("735902136629592165", ref eventHandlers, true, "");
-            DiscordRpc.UpdatePresence(ref presence);
         }
-
         public static void Update(object sender, ElapsedEventArgs args)
         {
             if (APIUser.CurrentUser == null)
             {
-                eventHandlers = default(DiscordRpc.EventHandlers);
+                eventHandlers = default(EventHandlers);
                 presence.details = "A very cool public free cheat";
                 presence.state = "Starting Game...";
                 presence.largeImageKey = "funeral_logo";
@@ -59,7 +59,7 @@ namespace EthosClient.Discord
                 presence.partyMax = 0;
                 presence.largeImageKey = "Funeral Client V2";
                 presence.smallImageText = GeneralUtils.Version;
-                DiscordRpc.UpdatePresence(ref presence);
+                UpdatePresence(ref presence);
                 return;
             }
             var room = RoomManagerBase.field_Internal_Static_ApiWorld_0;
@@ -118,7 +118,7 @@ namespace EthosClient.Discord
             }
             presence.largeImageText = $"As {((APIUser.CurrentUser != null) ? APIUser.CurrentUser.displayName : "")} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(!VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
             presence.smallImageText = GeneralUtils.Version;
-            DiscordRpc.UpdatePresence(ref presence);
+            UpdatePresence(ref presence);
         }
     }
 }

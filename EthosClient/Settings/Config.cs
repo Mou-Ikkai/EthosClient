@@ -31,7 +31,7 @@ namespace EthosClient.Settings
 
         public bool AntiWorldTriggers = true;
 
-        public bool UseRichPresence = false;
+        public bool UseRichPresence = true;
 
         public List<EthosVRButton> Buttons = new List<EthosVRButton>();
     }

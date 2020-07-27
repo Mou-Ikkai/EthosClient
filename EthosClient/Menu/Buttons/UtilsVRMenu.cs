@@ -85,18 +85,6 @@ namespace EthosClient.Utils
                 string ID = Console.ReadLine();
                 Networking.GoToRoom(ID);
             }, "Joins an instance by It's ID.", Color.red, Color.white);
-
-            new QMToggleButton(this, 1, 1, "Enable\nRich Presence", delegate
-            {
-                Configuration.GetConfig().UseRichPresence = true;
-                Configuration.SaveConfiguration();
-                Discord.DiscordRPC.StartClient();
-            }, "Disable\nRich Presence", delegate
-            {
-                Configuration.GetConfig().UseRichPresence = false;
-                Configuration.SaveConfiguration();
-                Discord.DiscordRPC.StartClient();
-            }, "Enable/Disable the discord rich presence status", Color.red, Color.white).setToggleState(Configuration.GetConfig().UseRichPresence);
         }
     }
 }

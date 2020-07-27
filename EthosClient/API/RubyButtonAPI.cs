@@ -297,6 +297,7 @@ namespace RubyButtonAPI
     {
         protected QMSingleButton mainButton;
         protected QMSingleButton backButton;
+        protected Transform CachedMenu;
         protected string menuName;
         protected string btnQMLoc;
         protected string btnType;
@@ -320,10 +321,22 @@ namespace RubyButtonAPI
             Transform menu = UnityEngine.Object.Instantiate<Transform>(QMStuff.NestedMenuTemplate(), QMStuff.GetQuickMenuInstance().transform);
             menuName = QMButtonAPI.identifier + btnQMLoc + "_" + btnXLocation + "_" + btnYLocation;
             menu.name = menuName;
+            CachedMenu = menu;
 
             mainButton = new QMSingleButton(btnQMLoc, btnXLocation, btnYLocation, btnText, () => { QMStuff.ShowQuickmenuPage(menuName); }, btnToolTip, btnBackgroundColor, btnTextColor);
 
-            Il2CppSystem.Collections.IEnumerator enumerator = menu.transform.GetEnumerator();
+            ClearButtons();
+
+            if (backbtnTextColor == null)
+            {
+                backbtnTextColor = Color.yellow;
+            }
+            backButton = new QMSingleButton(this, 5, 2, "Back", () => { QMStuff.ShowQuickmenuPage(btnQMLoc); }, "Go Back", backbtnBackgroundColor, backbtnTextColor);
+        }
+
+        public void ClearButtons()
+        {
+            Il2CppSystem.Collections.IEnumerator enumerator = CachedMenu.transform.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Il2CppSystem.Object obj = enumerator.Current;
@@ -333,12 +346,6 @@ namespace RubyButtonAPI
                     UnityEngine.Object.Destroy(btnEnum.gameObject);
                 }
             }
-
-            if (backbtnTextColor == null)
-            {
-                backbtnTextColor = Color.yellow;
-            }
-            backButton = new QMSingleButton(this, 5, 2, "Back", () => { QMStuff.ShowQuickmenuPage(btnQMLoc); }, "Go Back", backbtnBackgroundColor, backbtnTextColor);
         }
 
         public string getMenuName()
@@ -447,10 +454,6 @@ namespace RubyButtonAPI
         {
             QuickMenu quickmenu = GetQuickMenuInstance();
             Transform pageTransform = quickmenu?.transform.Find(pagename);
-            if (pageTransform == null)
-            {
-                Console.WriteLine("[QMStuff] pageTransform is null !");
-            }
 
             if (currentPageGetter == null)
             {
@@ -502,6 +505,22 @@ namespace RubyButtonAPI
             else
             {
                 SetIndex(-1);
+            }
+        }
+
+        public static void ClearPage(string pagename)
+        {
+            QuickMenu quickmenu = GetQuickMenuInstance();
+            Transform pageTransform = quickmenu?.transform.Find(pagename);
+            Il2CppSystem.Collections.IEnumerator enumerator = pageTransform.transform.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Il2CppSystem.Object obj = enumerator.Current;
+                Transform btnEnum = obj.Cast<Transform>();
+                if (btnEnum != null)
+                {
+                    UnityEngine.Object.Destroy(btnEnum.gameObject);
+                }
             }
         }
 

@@ -27,26 +27,26 @@ namespace EthosClient
             #region Adding Main Menu Buttons
             new MainMenu(GeneralUtils.GetEthosVRButton("MainMenu"));
             #endregion
-            #region Creating Side UI Menu
-            Transform background = QuickMenu.prop_QuickMenu_0.transform.Find("QuickMenu_NewElements/_Background/Panel");
-            Transform sidemenu = UnityEngine.Object.Instantiate(background, QuickMenu.prop_QuickMenu_0.transform.Find("QuickMenu_NewElements/_Background"));
-            QuickMenu.prop_QuickMenu_0.GetComponent<BoxCollider>().size += QuickMenu.prop_QuickMenu_0.GetComponent<BoxCollider>().size;
-            sidemenu.GetComponent<RectTransform>().anchoredPosition -= new Vector2(sidemenu.GetComponent<RectTransform>().anchoredPosition.x * 12, -410);
-            sidemenu.transform.localScale = new Vector3(sidemenu.transform.localScale.x / 2, sidemenu.transform.localScale.y, sidemenu.transform.localScale.z);
-            #endregion
-            #region Creating Instances Of Buttons
-            var Menu = new QuickMenuButton();
-            #endregion
-            #region Modifying Button Sizes
-            Menu.getMainButton().getGameObject().GetComponent<RectTransform>().sizeDelta /= new Vector2(0.75f, 2.5f);
-            #endregion
-            #region Anchoring Button Positions
-            Menu.getMainButton().getGameObject().GetComponent<RectTransform>().anchoredPosition += Vector2.down * (-210);
-            Menu.getMainButton().getGameObject().GetComponent<RectTransform>().anchoredPosition -= Vector2.right * (420 * (0.625f)); 
-            #endregion
-            #region Setting Button Parents To Side UI
-            Menu.getMainButton().getGameObject().transform.parent = sidemenu;
-            #endregion
+            //#region Creating Side UI Menu
+            //Transform background = QuickMenu.prop_QuickMenu_0.transform.Find("QuickMenu_NewElements/_Background/Panel");
+            //Transform sidemenu = UnityEngine.Object.Instantiate(background, QuickMenu.prop_QuickMenu_0.transform.Find("QuickMenu_NewElements/_Background"));
+            //QuickMenu.prop_QuickMenu_0.GetComponent<BoxCollider>().size += QuickMenu.prop_QuickMenu_0.GetComponent<BoxCollider>().size;
+            //sidemenu.GetComponent<RectTransform>().anchoredPosition -= new Vector2(sidemenu.GetComponent<RectTransform>().anchoredPosition.x * 12, -410);
+            //sidemenu.transform.localScale = new Vector3(sidemenu.transform.localScale.x / 2, sidemenu.transform.localScale.y, sidemenu.transform.localScale.z);
+            //#endregion
+            //#region Creating Instances Of Buttons
+            //var Menu = new QuickMenuButton();
+            //#endregion
+            //#region Modifying Button Sizes
+            //Menu.getMainButton().getGameObject().GetComponent<RectTransform>().sizeDelta /= new Vector2(0.75f, 2.5f);
+            //#endregion
+            //#region Anchoring Button Positions
+            //Menu.getMainButton().getGameObject().GetComponent<RectTransform>().anchoredPosition += Vector2.down * (-210);
+            //Menu.getMainButton().getGameObject().GetComponent<RectTransform>().anchoredPosition -= Vector2.right * (420 * (0.625f)); 
+            //#endregion
+            //#region Setting Button Parents To Side UI
+            //Menu.getMainButton().getGameObject().transform.parent = sidemenu;
+            //#endregion
             #region Setting up Discord Rich Presence
             DiscordRPC.Start();
             #endregion

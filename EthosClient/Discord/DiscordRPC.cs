@@ -1,13 +1,10 @@
 ﻿using EthosClient.Settings;
 using EthosClient.Utils;
 using EthosClient.Wrappers;
-using Il2CppSystem.Threading.Tasks;
-using MelonLoader.ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using VRC.Core;
 using static EthosClient.Discord.DiscordRpc;
@@ -20,19 +17,39 @@ namespace EthosClient.Discord
         private static EventHandlers eventHandlers;
         private static bool IsStarted = false;
 
+        public static async Task DownloadDiscordDLL()
+        {
+            //HTTP CLIENT BECAUSE WEB CLIENTS ARE FUCKING STUPID *COUGH BAD YAEKITH*
+            var webclient = new HttpClient();
+            var bytes = await webclient.GetByteArrayAsync("http://yaekiths-projects.xyz/discord-rpc.dll"); //lets get it from somewhere reliable LOL
+            // Added await to avoid errors.
+            webclient.Dispose();
+            if (bytes.Length > 0)
+            {
+                File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
+                ConsoleUtil.Info("[DEBUG] Downloaded Discord-rpc.dll");
+            }
+            else
+            {
+                ConsoleUtil.Error("Problem downloading Discord-rpc.dll | Contact Yaekith or 404.");
+                return;
+            }
+        }
+
         public static void Start()
         {
             Directory.CreateDirectory("Dependencies");
-            new System.Threading.Thread(async () =>
+            var DiscordT = new System.Threading.Thread(async () =>
             {
                 if (!File.Exists("Dependencies/discord-rpc.dll"))
                 {
-                    //HTTP CLIENT BECAUSE WEB CLIENTS ARE FUCKING STUPID *COUGH BAD YAEKITH*
-                    var bytes = await new HttpClient().GetByteArrayAsync("http://yaekiths-projects.xyz/discord-rpc.dll"); //lets get it from somewhere reliable LOL
-                    // Added await to avoid errors.
-                    File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
-                    Thread.Sleep(5000);
-                    ConsoleUtil.Info("[DEBUG] Downloaded Discord-rpc.dll");
+                    await DownloadDiscordDLL();
+                } else
+                {
+                    if (File.ReadAllBytes("Dependencies/discord-rpc.dll").Length <= 0)
+                    {
+                        await DownloadDiscordDLL();
+                    }
                 }
                 ConsoleUtil.Info("[DEBUG] Started Rich Presence.");
                 eventHandlers = default;
@@ -40,19 +57,19 @@ namespace EthosClient.Discord
                 presence.state = "Starting Game...";
                 presence.largeImageKey = "ethos_logo"; // YAEKITH STOP TOUCHING DISCORD RPC
                 presence.smallImageKey = "small_ethos";
+                presence.largeImageKey = "Ethos Client By Yaekith/404";
+                presence.smallImageText = GeneralUtils.Version;
                 presence.partySize = 0;
                 presence.partyMax = 0;
                 presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-                StartClient(); 
-                new Thread(() =>
-                {
-                    System.Timers.Timer timer = new System.Timers.Timer(15000.0);
-                    timer.Elapsed += Update;
-                    timer.AutoReset = true;
-                    timer.Enabled = true;
-                }).Start();
-            }).Start();
-            
+                StartClient();
+                Timer timer = new Timer(15000.0);
+                timer.Elapsed += Update;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+            });
+            DiscordT.Start();
+
         }
         public static void StartClient()
         {
@@ -61,7 +78,8 @@ namespace EthosClient.Discord
                 Initialize("735902136629592165", ref eventHandlers, true, "");
                 IsStarted = true;
             }
-            if (Configuration.GetConfig().UseRichPresence) UpdatePresence(ref presence);
+            if (Configuration.GetConfig().UseRichPresence) // STOP CHANGING MY SYNTAX YAEKITH I WILL LITERALLY END IT ALL
+                UpdatePresence(ref presence);
             else
             {
                 Shutdown();
@@ -82,7 +100,7 @@ namespace EthosClient.Discord
                     presence.smallImageKey = "small_ethos";
                     presence.partySize = 0;
                     presence.partyMax = 0;
-                    presence.largeImageKey = "Funeral Client V2";
+                    presence.largeImageKey = "Ethos Client By Yaekith/404";
                     presence.smallImageText = GeneralUtils.Version;
                     UpdatePresence(ref presence);
                     return;

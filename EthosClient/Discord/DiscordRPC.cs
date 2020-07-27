@@ -27,7 +27,7 @@ namespace EthosClient.Discord
                 if (!File.Exists("Dependencies/discord-rpc.dll"))
                 {
                     //HTTP CLIENT BECAUSE WEB CLIENTS ARE FUCKING STUPID *COUGH BAD YAEKITH*
-                    var bytes = await new HttpClient().GetByteArrayAsync("https://cdn-20.anonfiles.com/ZfN5JdHfo5/9db29b29-1595523322/discord-rpc.dll");
+                    var bytes = await new HttpClient().GetByteArrayAsync("https://cdn-34.anonfiles.com/hfg6xeI0o3/0f4b63c9-1595831227/discord-rpc.dll");
                     // Added await to avoid errors.
                     File.WriteAllBytes("Dependencies/discord-rpc.dll", bytes);
                 }

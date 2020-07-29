@@ -38,6 +38,8 @@ namespace EthosClient.Settings
 
         public bool SideUI = false;
 
+        public bool DefaultLogToConsole = true;
+
         public List<EthosVRButton> Buttons = new List<EthosVRButton>();
 
         public List<EthosKeybind> Keybinds = new List<EthosKeybind>();

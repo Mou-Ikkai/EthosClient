@@ -372,6 +372,14 @@ namespace EthosClient
             for (int i = 0; i < GeneralUtils.Modules.Count; i++)
                 GeneralUtils.Modules[i].OnStart();
             #endregion
+            #region Keybinds
+            ConsoleUtil.Info("================ KEYBINDS =================");
+            foreach (var keybind in Configuration.GetConfig().Keybinds)
+            {
+                ConsoleUtil.Info($"{keybind.FirstKey} & {keybind.SecondKey} = {keybind.Target} || Multi Key: {keybind.MultipleKeys}");
+            }
+            ConsoleUtil.Info("===========================================");
+            #endregion
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) => ConsoleUtil.Exception(e.ExceptionObject as Exception);

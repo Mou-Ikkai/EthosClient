@@ -1,4 +1,5 @@
-﻿using EthosClient.Settings;
+﻿using EthosClient.EthosInput;
+using EthosClient.Settings;
 using EthosClient.Utils;
 using EthosClient.Wrappers;
 using System;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.SDKBase;
 
 namespace EthosClient.Modules
 {
@@ -21,10 +23,60 @@ namespace EthosClient.Modules
 
         public override void OnStart() { }
 
+        private List<EthosKeybind> StoredKeybinds = new List<EthosKeybind>();
+
         public override void OnUpdate()
         {
             try
             {
+                if (StoredKeybinds.Count() == 0) StoredKeybinds.AddRange(Configuration.GetConfig().Keybinds);
+
+                foreach(var keybind in StoredKeybinds)
+                {
+                    if (Input.GetKey(keybind.FirstKey) && Input.GetKeyDown(keybind.SecondKey))
+                    {
+                        switch(keybind.Target)
+                        {
+                            default:
+                                break;
+                            case EthosFeature.Flight:
+                                GeneralUtils.Flight = !GeneralUtils.Flight;
+                                Physics.gravity = GeneralUtils.Flight ? Vector3.zero : GeneralUtils.SavedGravity;
+                                GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
+                                break;
+                            case EthosFeature.ESP:
+                                GeneralUtils.ESP = !GeneralUtils.ESP;
+                                GameObject[] array = GameObject.FindGameObjectsWithTag("Player");
+                                for (int i = 0; i < array.Length; i++)
+                                {
+                                    if (array[i].transform.Find("SelectRegion"))
+                                    {
+                                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
+                                        GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
+                                    }
+                                }
+                                break;
+                            case EthosFeature.Autism:
+                                GeneralUtils.Autism = !GeneralUtils.Autism;
+                                break;
+                            case EthosFeature.SpinBot:
+                                GeneralUtils.SpinBot = !GeneralUtils.SpinBot;
+                                break;
+                            case EthosFeature.WorldTriggers:
+                                GeneralUtils.WorldTriggers = !GeneralUtils.WorldTriggers;
+                                break;
+                            case EthosFeature.ToggleAllTriggers:
+                                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>()) if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair")) trigger.Interact();
+                                break;
+                            case EthosFeature.AntiWorldTriggers:
+                                Configuration.GetConfig().AntiWorldTriggers = !Configuration.GetConfig().AntiWorldTriggers;
+                                Configuration.SaveConfiguration();
+                                break;
+                        }
+                    }
+                }
+
                 if (GeneralUtils.SpinBot)
                     PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
 

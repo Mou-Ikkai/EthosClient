@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using VRC.SDKBase;
 
 namespace EthosClient.Utils
 {
@@ -45,6 +46,28 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.Autism = false;
             }), "Do some crazy shit idk", Color.red, Color.white).setToggleState(GeneralUtils.Autism);
+
+            new QMSingleButton(this, 1, 1, "Interact with\nAll Triggers", delegate
+            {
+                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
+                {
+                    if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair"))
+                    {
+                        trigger.Interact();
+                    }
+                }
+            }, "Interact with all triggers in the world.", Color.red, Color.white);
+
+            new QMSingleButton(this, 1, 2, "Interact with\nAll Mirrors", delegate
+            {
+                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
+                {
+                    if (trigger.name.Contains("Mirror"))
+                    {
+                        trigger.Interact();
+                    }
+                }
+            }, "Interact with all mirrors in the world.", Color.red, Color.white);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EthosClient.Menu;
+﻿using EthosClient.EthosInput;
+using EthosClient.Menu;
 using EthosClient.Utils;
 using Newtonsoft.Json;
 using System;
@@ -34,6 +35,12 @@ namespace EthosClient.Settings
                 config.Buttons.Add(new EthosVRButton("Settings", null, "Settings", "Configure the client's settings and make it more comfortable for yourself.", 4, 2, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
                 config.Buttons.Add(new EthosVRButton("Keybinds", null, "Keybinds", "Allows you to easily configure client keybinds.", 2, 2, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
                 config.Buttons.Add(new EthosVRButton("VRUtils", null, "VR\nUtils", "Allows you to do stuff that would seem harder in VR, but allows you to execute tasks quick and fast.", 3, 2, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.Flight, KeyCode.LeftAlt, KeyCode.F, true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.Autism, KeyCode.LeftAlt, KeyCode.A, true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.SpinBot, KeyCode.LeftAlt, KeyCode.S, true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.ESP, KeyCode.LeftAlt, KeyCode.E, true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.WorldTriggers, KeyCode.LeftAlt, KeyCode.W, true));
+                config.Keybinds.Add(new EthosKeybind(EthosFeature.ToggleAllTriggers, KeyCode.LeftAlt, KeyCode.T, true));
                 File.WriteAllText("EthosClient\\Configuration.json", JsonConvert.SerializeObject(config, Formatting.Indented));
             }
             LoadConfiguration();

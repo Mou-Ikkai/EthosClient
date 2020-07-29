@@ -247,6 +247,7 @@
     <Compile Include="Menu\Buttons\ButtonRepositionVRMenu.cs" />
     <Compile Include="Menu\Buttons\DeveloperVRMenu.cs" />
     <Compile Include="Menu\Buttons\KeybindVRMenu.cs" />
+    <Compile Include="Menu\Buttons\ProgramVRMenu.cs" />
     <Compile Include="Menu\Buttons\SettingsVRMenu.cs" />
     <Compile Include="Menu\Buttons\VRUtilsMenu.cs" />
     <Compile Include="Menu\EthosColorScheme.cs" />

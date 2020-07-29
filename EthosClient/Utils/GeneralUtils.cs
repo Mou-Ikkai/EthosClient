@@ -41,10 +41,14 @@ namespace EthosClient.Utils
 
         public static void InformHudText(Color color, string text)
         {
-            var NormalColor = VRCUiManager.prop_VRCUiManager_0.hudMessageText.color;
-            VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = color;
-            VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[ETHOS] {text}");
-            VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = NormalColor;
+            if (!Configuration.GetConfig().DefaultLogToConsole)
+            {
+                var NormalColor = VRCUiManager.prop_VRCUiManager_0.hudMessageText.color;
+                VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = color;
+                VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[ETHOS] {text}");
+                VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = NormalColor;
+            }
+            else ConsoleUtil.Info(text);
         }
 
         public static void ToggleColliders(bool toggle)

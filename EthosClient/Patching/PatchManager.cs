@@ -9,7 +9,7 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using VRC;
 using VRC.Core;
-using VRCSDK2;
+using VRC.SDKBase;
 using static VRC.SDKBase.VRC_EventHandler;
 
 namespace EthosClient.Patching
@@ -35,6 +35,8 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ShowUserAvatarChangedRPC"), GetLocalPatch("AvatarShownPatch"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("WarnUserRPC"), GetLocalPatch("WarnPatch"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ModForceOffMicRPC"), GetLocalPatch("ModForceOffMicPatch"), null),
+                new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerJoined"), GetLocalPatch("OnPlayerJoin"), null),
+                new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerLeft"), GetLocalPatch("OnPlayerLeave"), null),
                 new Patch("Ethos_Extras", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("Ethos_Extras", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
                 new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
@@ -63,9 +65,34 @@ namespace EthosClient.Patching
                 "SceneEventHandlerAndInstantiator",
                 "(Clone [100003] Portals/PortalInternalDynamic)"
             };
-            Console.WriteLine(__0.ParameterObject.name);
+            if (GeneralUtils.IsDevBranch) Console.WriteLine(__0.ParameterObject.name);
             if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
             if (Configuration.GetConfig().AntiWorldTriggers && !FilteredStrings.Contains(__0.ParameterObject.name.ToString())) return false;
+            return true;
+        }
+
+        private static bool OnPlayerJoin(ref VRCPlayerApi __0)
+        {
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has joined.");
+            if (GeneralUtils.ESP)
+            {
+                GameObject[] array = GameObject.FindGameObjectsWithTag("Player");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (array[i].transform.Find("SelectRegion"))
+                    {
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
+                        GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool OnPlayerLeave(ref VRCPlayerApi __0)
+        {
+            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has left.");
             return true;
         }
 

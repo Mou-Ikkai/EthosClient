@@ -45,6 +45,13 @@ namespace EthosClient.Menu
                 Configuration.GetConfig().CleanConsole = false;
                 Configuration.SaveConfiguration();
             }, "Decide whether you want your console to be spammed by useless game information or not.", Color.red, Color.white).setToggleState(Configuration.GetConfig().CleanConsole);
+            new QMToggleButton(this, 4, 0, "Log\nTo Console", delegate
+            {
+                Configuration.GetConfig().DefaultLogToConsole = true;
+            }, "Log\nTo HUD", delegate
+            {
+                Configuration.GetConfig().DefaultLogToConsole = false;
+            }, "Decide whether you want to log all moderation/other client information to your console or your hud ingame.", Color.red, Color.white).setToggleState(Configuration.GetConfig().DefaultLogToConsole);
         }
     }
 }

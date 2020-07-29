@@ -243,9 +243,12 @@
     <Compile Include="EthosClient.cs" />
     <Compile Include="EthosInput\EthosFeature.cs" />
     <Compile Include="EthosInput\EthosKeybind.cs" />
+    <Compile Include="Menu\Buttons\AudioVRMenu.cs" />
     <Compile Include="Menu\Buttons\ButtonRepositionVRMenu.cs" />
     <Compile Include="Menu\Buttons\DeveloperVRMenu.cs" />
+    <Compile Include="Menu\Buttons\KeybindVRMenu.cs" />
     <Compile Include="Menu\Buttons\SettingsVRMenu.cs" />
+    <Compile Include="Menu\Buttons\VRUtilsMenu.cs" />
     <Compile Include="Menu\EthosColorScheme.cs" />
     <Compile Include="Menu\EthosVRButton.cs" />
     <Compile Include="Menu\Buttons\FavoritesVRMenu.cs" />
@@ -261,6 +264,7 @@
     <Compile Include="Settings\Config.cs" />
     <Compile Include="Settings\Configuration.cs" />
     <Compile Include="Menu\EthosColor.cs" />
+    <Compile Include="Utils\AudioHelper.cs" />
     <Compile Include="Utils\ConsoleUtil.cs" />
     <Compile Include="Menu\Buttons\FunVRMenu.cs" />
     <Compile Include="Utils\GeneralUtils.cs" />

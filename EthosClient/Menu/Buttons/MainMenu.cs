@@ -36,6 +36,8 @@ namespace EthosClient.Menu
             new TargetVRMenu(GeneralUtils.GetEthosVRButton("PlayerOptions"));
             new FavoritesVRMenu(this, GeneralUtils.GetEthosVRButton("ExtendedFavorites"));
             new SettingsVRMenu(this, GeneralUtils.GetEthosVRButton("Settings"));
+            new KeybindVRMenu(this, GeneralUtils.GetEthosVRButton("Keybinds"));
+            new VRUtilsMenu(this, GeneralUtils.GetEthosVRButton("VRUtils"));
             if (GeneralUtils.IsDevBranch) new DeveloperVRMenu(GeneralUtils.GetEthosVRButton("Developer"));
             new QMSingleButton(this, 4, 0, "Select\nYourself", new Action(() =>
             {

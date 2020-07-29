@@ -13,6 +13,7 @@ namespace EthosClient.EthosInput
         SpinBot,
         Autism,
         WorldTriggers,
-        ToggleAllTriggers
+        ToggleAllTriggers,
+        AntiWorldTriggers
     }
 }

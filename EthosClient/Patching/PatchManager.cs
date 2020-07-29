@@ -63,6 +63,7 @@ namespace EthosClient.Patching
                 "SceneEventHandlerAndInstantiator",
                 "(Clone [100003] Portals/PortalInternalDynamic)"
             };
+            Console.WriteLine(__0.ParameterObject.name);
             if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
             if (Configuration.GetConfig().AntiWorldTriggers && !FilteredStrings.Contains(__0.ParameterObject.name.ToString())) return false;
             return true;

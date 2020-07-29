@@ -1,4 +1,5 @@
 ﻿using EthosClient.API;
+using EthosClient.EthosInput;
 using EthosClient.Menu;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,12 @@ namespace EthosClient.Settings
 
         public bool UseRichPresence = true;
 
+        public bool MenuRGB = false;
+
+        public bool SideUI = false;
+
         public List<EthosVRButton> Buttons = new List<EthosVRButton>();
+
+        public List<EthosKeybind> Keybinds = new List<EthosKeybind>();
     }
 }

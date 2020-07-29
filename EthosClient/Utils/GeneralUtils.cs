@@ -1,5 +1,6 @@
 ﻿using EthosClient.API;
 using EthosClient.Menu;
+using EthosClient.Modules;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
 using RubyButtonAPI;
@@ -30,19 +31,13 @@ namespace EthosClient.Utils
 
         public static bool ForceClone = false;
 
-        public static List<string> Deafened = new List<string>();
+        public static string Version = "1.5";
+
+        public static bool IsDevBranch = false;
 
         public static Vector3 SavedGravity = Physics.gravity;
 
-        public static List<QMButtonBase> Buttons = new List<QMButtonBase>();
-
-        private static System.Random random = new System.Random();
-
-        public static string Version = "1.4";
-
-        public static AudioSource Source = null;
-
-        public static bool IsDevBranch = false;
+        public static List<VRCMod> Modules = new List<VRCMod>();
 
         public static void InformHudText(Color color, string text)
         {
@@ -55,7 +50,7 @@ namespace EthosClient.Utils
         public static void ToggleColliders(bool toggle)
         {
             Collider[] array = UnityEngine.Object.FindObjectsOfType<Collider>();
-            Component component = PlayerWrappers.GetCurrentPlayer().GetComponents<Collider>().FirstOrDefault<Component>(); //Fix this later but im lazy ok
+            Component component = PlayerWrappers.GetCurrentPlayer().GetComponents<Collider>().FirstOrDefault<Component>();
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -69,18 +64,7 @@ namespace EthosClient.Utils
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-
-        public static void ToggleUIButton(string Name, bool state)
-        {
-            QMToggleButton Button = null;
-            foreach(var button in Buttons)
-            {
-                var button2 = (QMToggleButton)button;
-                if (button2.getOnText().ToLower().Contains(Name.ToLower())) Button = button2;
-            }
-            if (Button != null) Button.setToggleState(state);
+              .Select(s => s[new System.Random().Next(s.Length)]).ToArray());
         }
 
         public static FavoritedAvatar GetExtendedFavorite(string ID)

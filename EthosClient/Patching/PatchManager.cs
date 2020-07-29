@@ -54,8 +54,8 @@ namespace EthosClient.Patching
         #region Patches
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
-            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always; // really scuffed yaekith we need to fix this. lol - 404
-            else if (Configuration.GetConfig().AntiWorldTriggers && __1 == VrcBroadcastType.Always) return false; //Anti World triggers lol
+            Console.WriteLine(__2 + " || " + __3 + " || " + __1 + " || " + __0.ParameterString + " || " + __0.Name);
+            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
             return true;
         }
 
@@ -64,7 +64,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __4, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {sender.GetAPIUser().displayName}");
                     else
@@ -78,7 +77,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {sender.GetAPIUser().displayName}");
                     else
@@ -160,7 +158,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {sender.GetAPIUser().displayName}");
                     else
@@ -174,7 +171,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were banned by {sender.GetAPIUser().displayName}");
                     else
@@ -188,7 +184,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __1, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were friended/unfriended by {sender.GetAPIUser().displayName}"); //no real way to check either lol
                     else
@@ -202,7 +197,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
                     else
@@ -216,13 +210,11 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "shown" : "hidden")} by {sender.GetAPIUser().displayName}");
                     else
                         GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "shown" : "hidden")} by {sender.GetAPIUser().displayName}");
                 });
-
             return true;
         }
 
@@ -231,7 +223,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __2, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were warned by {sender.GetAPIUser().displayName}");
                     else
@@ -263,7 +254,6 @@ namespace EthosClient.Patching
             if (Configuration.GetConfig().LogModerations)
                 HudPrint(__0, __1, (sender, target, isyou) =>
                 {
-
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"Your microphone was attempt forced off by {sender.GetAPIUser().displayName}");
                     else

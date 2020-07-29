@@ -133,7 +133,6 @@ namespace RubyButtonAPI
                 OrigText = button.GetComponentInChildren<Text>().color;
 
             setActive(true);
-            GeneralUtils.Buttons.Add(this);
         }
 
         public void setButtonText(string buttonText)
@@ -225,7 +224,6 @@ namespace RubyButtonAPI
             btnOff.SetActive(true);
             setActive(true);
             if (defaultPosition) setToggleState(true, false);
-            GeneralUtils.Buttons.Add(this);
         }
 
         public void setAction(System.Action buttonOnAction, System.Action buttonOffAction)

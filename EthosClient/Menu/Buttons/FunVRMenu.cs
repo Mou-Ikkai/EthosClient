@@ -21,6 +21,7 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.SpinBot = false;
             }, "Toggle the spin bot and go zooming in circles lol", Color.red, Color.white).setToggleState(GeneralUtils.SpinBot);
+
             new QMToggleButton(this, 2, 0, "Enable\nWorld Triggers", delegate
             {
                 GeneralUtils.WorldTriggers = true;
@@ -28,6 +29,7 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.WorldTriggers = false;
             }, "Decide whether you want other people to see your interactions with \"local\" triggers.", Color.red, Color.white).setToggleState(GeneralUtils.WorldTriggers);
+
             new QMToggleButton(this, 3, 0, "Enable\nForce Clone", delegate
             {
                 GeneralUtils.ForceClone = true;
@@ -35,6 +37,14 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.ForceClone = false;
             }, "(EXPERIMENTAL) Enable/Disable Force Clone, when this is enabled, any avatar can be cloned apart from private ones.", Color.red, Color.white).setToggleState(GeneralUtils.ForceClone);
+
+            new QMToggleButton(this, 4, 0, "Go\nAutistic", new Action(() =>
+            {
+                GeneralUtils.Autism = true;
+            }), "Revert\nYour Autism", new Action(() =>
+            {
+                GeneralUtils.Autism = false;
+            }), "Do some crazy shit idk", Color.red, Color.white).setToggleState(GeneralUtils.Autism);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace EthosClient.Settings
                 config.Buttons.Add(new EthosVRButton("Protections", null, "Protections", "A menu full of protection options against moderation, and other safety related features.", 3, 1, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
                 config.Buttons.Add(new EthosVRButton("PlayerOptions", "UserInteractMenu", "Player\nOptions", "Open this menu and control what you want of other players.", 1, 2, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
                 config.Buttons.Add(new EthosVRButton("Utils", null, "Utils", "Extended utilities you can use to manage the game better", 1, 1, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
+                config.Buttons.Add(new EthosVRButton("Settings", null, "Settings", "Configure the client's settings and make it more comfortable for yourself", 4, 2, new EthosColorScheme(Color.red, Color.white, Color.red, Color.white), true));
                 File.WriteAllText("EthosClient\\Configuration.json", JsonConvert.SerializeObject(config, Formatting.Indented));
             }
             LoadConfiguration();

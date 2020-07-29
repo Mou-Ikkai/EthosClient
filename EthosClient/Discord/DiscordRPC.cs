@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Timers;
+using UnityEngine;
 using VRC.Core;
 using static EthosClient.Discord.DiscordRpc;
 
@@ -39,17 +40,14 @@ namespace EthosClient.Discord
         public static void Start()
         {
             Directory.CreateDirectory("Dependencies");
-            var DiscordT = new System.Threading.Thread(async () =>
+            new System.Threading.Thread(async () =>
             {
                 if (!File.Exists("Dependencies/discord-rpc.dll"))
-                {
                     await DownloadDiscordDLL();
-                } else
+                else
                 {
                     if (File.ReadAllBytes("Dependencies/discord-rpc.dll").Length <= 0)
-                    {
-                        await DownloadDiscordDLL();
-                    }
+                         await DownloadDiscordDLL();
                 }
                 ConsoleUtil.Info("[DEBUG] Started Rich Presence.");
                 eventHandlers = default;
@@ -57,8 +55,11 @@ namespace EthosClient.Discord
                 presence.state = "Starting Game...";
                 presence.largeImageKey = "ethos_logo"; // YAEKITH STOP TOUCHING DISCORD RPC
                 presence.smallImageKey = "small_ethos";
-                presence.largeImageKey = "Ethos Client By Yaekith/404";
+                presence.largeImageText = "Ethos Client By Yaekith/404";
+                presence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
+                presence.spectateSecret = "MTIzNDV8MTIzNDV8MTMyNDU0";
                 presence.smallImageText = GeneralUtils.Version;
+                presence.partyId = "ae488379-351d-4a4f-ad32 2b9b01c91657";
                 presence.partySize = 0;
                 presence.partyMax = 0;
                 presence.startTimestamp = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
@@ -67,15 +68,14 @@ namespace EthosClient.Discord
                 timer.Elapsed += Update;
                 timer.AutoReset = true;
                 timer.Enabled = true;
-            });
-            DiscordT.Start();
-
+            }).Start();
         }
+
         public static void StartClient()
         {
             if (!IsStarted)
             {
-                Initialize("735902136629592165", ref eventHandlers, true, "");
+                Initialize("735902136629592165", ref eventHandlers, true, "438100");
                 IsStarted = true;
             }
             if (Configuration.GetConfig().UseRichPresence) // STOP CHANGING MY SYNTAX YAEKITH I WILL LITERALLY END IT ALL
@@ -100,7 +100,7 @@ namespace EthosClient.Discord
                     presence.smallImageKey = "small_ethos";
                     presence.partySize = 0;
                     presence.partyMax = 0;
-                    presence.largeImageKey = "Ethos Client By Yaekith/404";
+                    presence.largeImageText = "Ethos Client By Yaekith/404";
                     presence.smallImageText = GeneralUtils.Version;
                     UpdatePresence(ref presence);
                     return;
@@ -160,7 +160,10 @@ namespace EthosClient.Discord
                     presence.smallImageKey = "small_ethos";
                 }
                 presence.largeImageText = $"As {((APIUser.CurrentUser != null) ? APIUser.CurrentUser.displayName : "")} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(!VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
-                presence.smallImageText = GeneralUtils.Version;
+                presence.smallImageText = GeneralUtils.Version + " (By Yaekith/404)";
+                presence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
+                presence.spectateSecret = "MTIzNDV8MTIzNDV8MTMyNDU0";
+                presence.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
                 UpdatePresence(ref presence);
             }
         }

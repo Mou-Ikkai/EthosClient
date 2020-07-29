@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using VRC;
 using VRC.Core;
@@ -32,7 +33,6 @@ namespace EthosClient.Utils
                 GeneralUtils.Flight = false;
                 GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
             }, "Toggle Flight and move around within the air with ease!", Color.red, Color.white).setToggleState(GeneralUtils.Flight);
-
             new QMToggleButton(this, 2, 0, "Enable\nESP", delegate
             {
                 GeneralUtils.ESP = true;
@@ -60,7 +60,6 @@ namespace EthosClient.Utils
                     }
                 }
             }, "Decide whether you want the upper game, get an advantage, and see all players anywhere within the world.", Color.red, Color.white).setToggleState(GeneralUtils.ESP);
-
             new QMSingleButton(this, 3, 0, "Avatar\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Avatar ID: ");
@@ -78,7 +77,6 @@ namespace EthosClient.Utils
                 }.ChangeToSelectedAvatar();
                 GeneralWrappers.GetVRCUiPopupManager().AlertPopup("<color=cyan>Success!</color>", "<color=green>Successfully cloned that avatar by It's Avatar ID.</color>");
             }, "Sets your current avatar using an avatar ID.", Color.red, Color.white);
-
             new QMSingleButton(this, 4, 0, "Join\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Instance ID: ");

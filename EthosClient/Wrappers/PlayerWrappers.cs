@@ -29,13 +29,15 @@ namespace EthosClient.Wrappers
         public static Player GetPlayer(this PlayerManager instance, string UserID)
         {
             var Players = instance.GetAllPlayers();
-            Player FoundPlayer = null;
             for (int i = 0; i < Players.Length; i++)
             {
                 var player = Players[i];
-                if (player.GetAPIUser().id == UserID) FoundPlayer = player;
+                if (player.GetAPIUser().id == UserID)
+                {
+                    return player;
+                }
             }
-            return FoundPlayer;
+            return null;
         }
         public static Player GetPlayer(this PlayerManager instance, int Index)
         {
@@ -44,7 +46,7 @@ namespace EthosClient.Wrappers
         }
         public static Player GetSelectedPlayer(this QuickMenu instance)
         {
-            var APIUser = instance.field_Private_APIUser_0;
+            var APIUser = instance.prop_APIUser_0;
             var playerManager = GeneralWrappers.GetPlayerManager();
             return playerManager.GetPlayer(APIUser.id);
         }

@@ -68,7 +68,7 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().AntiPublicBan = false;
                 Configuration.SaveConfiguration();
-            }, "This feature, when enabled, allows you to enter any public instance when you're actually public banned.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiPublicBan);
+            }, "This feature, when enabled, prevents any moderator from publicly banning you in an instance, basically preventing them from sending you home lol", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiPublicBan);
             new QMToggleButton(this, 2, 1, "Enable\nAnti World Triggers", delegate
             {
                 Configuration.GetConfig().AntiWorldTriggers = true;

@@ -1,4 +1,5 @@
-﻿using Harmony;
+﻿using EthosClient.Settings;
+using Harmony;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace EthosClient.Modules
     {
         float timer = 0.5f, changeColourTime = 2.0f;
         int currentIndex = 0, nextIndex = 1;
+        float r = 0, g = 0, b = 1;
 
         public List<Color> colors = new List<Color>()
         {
@@ -28,8 +30,8 @@ namespace EthosClient.Modules
             Color.gray,
         };
 
-        CanvasRenderer[] quickmenuStuff;
-        Button[] quickmenuBtn;
+        List<Image> quickmenuStuff = new List<Image>();
+        List<Button> quickmenuBtn = new List<Button>();
 
         public override string Description => "";
 
@@ -39,71 +41,127 @@ namespace EthosClient.Modules
 
         public override void OnUpdate()
         {
-            try
+            if (Configuration.GetConfig().MenuRGB)
             {
-                timer -= Time.deltaTime;
-
-                if (timer < 0)
+                try
                 {
-                    if (nextIndex > colors.Count)
+                    if (timer <= 0)
                     {
-                        currentIndex = 0;
-                        nextIndex = 1;
-                    }
-                    currentIndex++;
-                    nextIndex++;
-                    Color rainbow = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
-                    Color rainbow2 = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
-                    foreach (CanvasRenderer btn in quickmenuStuff)
-                    {
-                        try
+                        if (quickmenuStuff.Count == 0 || quickmenuBtn.Count == 0) LoadButtons();
+                        if (b > 0 && r <= 0)
                         {
-                            if (btn.GetComponent<Image>())
-                            {
-                                btn.GetComponent<Image>().color = rainbow;
-                            }
+                            b -= 0.025f;
+                            g += 0.025f;
                         }
-                        catch { }
-                    }
-                    foreach (Button btn in quickmenuBtn)
-                    {
-                        try
+                        else if (g > 0)
                         {
-                            btn.colors = new ColorBlock()
+                            g -= 0.025f;
+                            r += 0.025f;
+                        }
+                        else if (r > 0)
+                        {
+                            r -= 0.025f;
+                            b += 0.025f;
+                        }
+                        Color rainbow = new Color(r, g, b);
+                        Color rainbow2 = new Color(r, g, b, 0.6f);
+                        foreach (Image btn in quickmenuStuff)
+                        {
+                            try
                             {
-                                colorMultiplier = 1f,
-                                disabledColor = Color.grey,
-                                highlightedColor = rainbow2 * 1.5f,
-                                normalColor = rainbow2 / 1.5f,
-                                pressedColor = Color.grey * 1.5f
-                            };
-
-                            if (btn.GetComponentInChildren<CanvasRenderer>())
+                                btn.color = rainbow2;
+                            }
+                            catch { }
+                        }
+                        foreach (Button btn in quickmenuBtn)
+                        {
+                            try
                             {
-                                foreach (Image img in btn.GetComponentsInChildren<Image>(true))
+                                btn.colors = new ColorBlock()
                                 {
-                                    img.color = rainbow2;
-                                }
+                                    colorMultiplier = 1f,
+                                    disabledColor = Color.grey,
+                                    highlightedColor = rainbow * 1.5f,
+                                    normalColor = rainbow / 1.5f,
+                                    pressedColor = Color.grey * 1.5f
+                                };
                             }
+                            catch { }
                         }
-                        catch { }
+                        timer = 0.025f;
                     }
-                    timer = 0.3f;
+
+                    timer -= Time.deltaTime;
                 }
+                catch {}
             }
-            catch { }
         }
 
-        public override void OnUiLoad()
+        private void LoadButtons()
         {
             try
             {
                 GameObject UserInterface = GameObject.Find("/UserInterface/MenuContent");
-                quickmenuStuff = QuickMenu.prop_QuickMenu_0.GetComponentsInChildren<CanvasRenderer>(true);
-                quickmenuStuff.AddRangeToArray(UserInterface.GetComponentsInChildren<CanvasRenderer>(true));
-                quickmenuBtn = QuickMenu.prop_QuickMenu_0.GetComponentsInChildren<Button>(true);
-                quickmenuBtn.AddRangeToArray(UserInterface.GetComponentsInChildren<Button>(true));
-            } catch { }
+
+                foreach (CanvasRenderer btn in UserInterface.GetComponentsInChildren<CanvasRenderer>(true))
+                {
+                    try
+                    {
+                        if (btn.GetComponent<Image>())
+                        {
+                            quickmenuStuff.Add(btn.GetComponent<Image>());
+                        }
+                    }
+                    catch { }
+                }
+
+                foreach (CanvasRenderer btn in QuickMenu.prop_QuickMenu_0.GetComponentsInChildren<CanvasRenderer>(true))
+                {
+                    try
+                    {
+                        if (btn.GetComponent<Image>())
+                        {
+                            quickmenuStuff.Add(btn.GetComponent<Image>());
+                        }
+                    }
+                    catch { }
+                }
+
+                foreach (Button btn in QuickMenu.prop_QuickMenu_0.GetComponentsInChildren<Button>(true))
+                {
+                    try
+                    {
+                        quickmenuBtn.Add(btn);
+                        if (btn.GetComponentInChildren<CanvasRenderer>())
+                        {
+                            foreach (Image img in btn.GetComponentsInChildren<Image>(true))
+                            {
+                                quickmenuStuff.Add(img);
+                            }
+                        }
+
+                    }
+                    catch { }
+                }
+
+
+                foreach (Button btn in UserInterface.GetComponentsInChildren<Button>(true))
+                {
+                    try
+                    {
+                        quickmenuBtn.Add(btn);
+                        if (btn.GetComponentInChildren<CanvasRenderer>())
+                        {
+                            foreach (Image img in btn.GetComponentsInChildren<Image>(true))
+                            {
+                                quickmenuStuff.Add(img);
+                            }
+                        }
+                    }
+                    catch { }
+                }
+            }
+            catch { }
         }
     }
 }

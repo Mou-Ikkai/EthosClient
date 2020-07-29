@@ -22,7 +22,7 @@ namespace EthosClient.Settings
 
         public bool AntiPublicBan = true;
 
-        public bool AntiKick = true;
+        public bool AntiKick = false;
 
         public bool VideoPlayerSafety = true;
 

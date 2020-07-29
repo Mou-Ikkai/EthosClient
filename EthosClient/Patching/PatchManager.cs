@@ -35,7 +35,6 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ShowUserAvatarChangedRPC"), GetLocalPatch("AvatarShownPatch"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("WarnUserRPC"), GetLocalPatch("WarnPatch"), null),
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ModForceOffMicRPC"), GetLocalPatch("ModForceOffMicPatch"), null),
-                new Patch("Ethos_Moderation", typeof(VRC_EventDispatcherRFC).GetMethod("Method_Private_Void_Int32_VrcTargetType_GameObject_String_ArrayOf_Byte_0"), GetLocalPatch("InterceptRPC"), null),
                 new Patch("Ethos_Extras", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
                 new Patch("Ethos_Extras", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
                 new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
@@ -54,8 +53,19 @@ namespace EthosClient.Patching
         #region Patches
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
-            Console.WriteLine(__2 + " || " + __3 + " || " + __1 + " || " + __0.ParameterString + " || " + __0.Name);
+            List<string> FilteredStrings = new List<string>()
+            {
+                "_InstantiateObject",
+                "SetTimerRPC",
+                "_DestroyObject",
+                "_SendOnSpawn",
+                "ConfigurePortal",
+                "SceneEventHandlerAndInstantiator",
+                "(Clone [100003] Portals/PortalInternalDynamic)"
+            };
             if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
+            Console.WriteLine(__0.ParameterObject.name);
+            if (Configuration.GetConfig().AntiWorldTriggers && !FilteredStrings.Contains(__0.ParameterObject.name.ToString())) return false;
             return true;
         }
 
@@ -130,13 +140,8 @@ namespace EthosClient.Patching
 
         private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
         {
-            if (Configuration.GetConfig().AntiPublicBan)
-            {
-                __result = false;
-                return false;
-            }
-            else
-            { return true; }
+            __result = true;
+            return true;
         }
 
         private static bool AntiLogout(ref string __0, ref Player __1)
@@ -260,20 +265,6 @@ namespace EthosClient.Patching
                         GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has had their microphone forced off by {sender.GetAPIUser().displayName}");
                 });
             return false;
-        }
-
-        private static bool InterceptRpc(int __0, VRC.SDKBase.VRC_EventHandler.VrcTargetType __1, string __3, Il2CppStructArray<byte> __4)
-        {
-            try
-            {
-                Player sender = PlayerManager.Method_Public_Static_Player_Int32_0(__0);
-                Il2CppSystem.Object[] array = VrcSdk2Interface.ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique.field_Public_Static_ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique_0.Method_Internal_ArrayOf_Object_ArrayOf_Byte_0(__4);
-                string receiver = APIUser.CurrentUser.id;
-                if (array.Length >= 1 && receiver.Length > 10 && receiver != "0") receiver = array[0].ToString();
-                if (Configuration.GetConfig().LogModerations) ConsoleUtil.Info($"[{__3}] Sent to {GeneralWrappers.GetPlayerManager().GetPlayer(receiver).GetAPIUser().displayName} from {sender.GetAPIUser().displayName}");
-                return true;
-            }
-            catch { return true; }
         }
     }
     #endregion

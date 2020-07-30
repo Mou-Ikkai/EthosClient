@@ -30,7 +30,7 @@ namespace EthosClient.Settings
 
         public bool PortalSafety = true;
 
-        public bool AntiWorldTriggers = true;
+        public bool AntiWorldTriggers = false;
 
         public bool UseRichPresence = true;
 

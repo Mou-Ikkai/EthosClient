@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VRC;
+using VRC.SDKBase;
 using WebSocketSharp;
 
 namespace EthosClient.Modules
@@ -44,7 +45,7 @@ namespace EthosClient.Modules
 
         }
 
-        public virtual void OnPlayerLeft(Player player)
+        public virtual void OnPlayerLeft(VRCPlayerApi player)
         {
 
         }

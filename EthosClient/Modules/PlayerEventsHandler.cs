@@ -55,10 +55,10 @@ namespace EthosClient.Modules
             }
         }
 
-        public override void OnPlayerLeft(Player player)
+        public override void OnPlayerLeft(VRCPlayerApi player)
         {
             if (Configuration.GetConfig().LogModerations) 
-                GeneralUtils.InformHudText(Color.green, $"{player.GetAPIUser().displayName} has left.");
+                GeneralUtils.InformHudText(Color.green, $"{player.displayName} has left.");
         }
 
         public override void OnPlayerKicked(Player moderator, Player kicked)

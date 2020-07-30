@@ -13,8 +13,7 @@ namespace EthosClient.Modules
 {
     public class RGBMenu : VRCMod
     {
-        float timer = 0.5f, changeColourTime = 2.0f;
-        int currentIndex = 0, nextIndex = 1;
+        float timer = 0.5f;
         float r = 0, g = 0, b = 1;
 
         public List<Color> colors = new List<Color>()
@@ -32,6 +31,7 @@ namespace EthosClient.Modules
 
         List<Image> quickmenuStuff = new List<Image>();
         List<Button> quickmenuBtn = new List<Button>();
+        List<Renderer> Renderers = new List<Renderer>();
 
         public override string Description => "";
 
@@ -102,7 +102,6 @@ namespace EthosClient.Modules
             try
             {
                 GameObject UserInterface = GameObject.Find("/UserInterface/MenuContent");
-
                 foreach (CanvasRenderer btn in UserInterface.GetComponentsInChildren<CanvasRenderer>(true))
                 {
                     try
@@ -160,6 +159,8 @@ namespace EthosClient.Modules
                     }
                     catch { }
                 }
+
+                //foreach(var renderer in Resources.FindObjectsOfTypeAll<Renderer>()) Renderers.Add(renderer);
             }
             catch { }
         }

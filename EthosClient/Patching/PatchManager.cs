@@ -16,6 +16,8 @@ namespace EthosClient.Patching
 {
     public static class PatchManager
     {
+        private static List<string> JoinedLogs = new List<string>();
+
         private static HarmonyMethod GetLocalPatch(string name) { return new HarmonyMethod(typeof(PatchManager).GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic)); }
 
         private static List<Patch> RetrievePatches()
@@ -73,7 +75,12 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has joined.");
+            if (!JoinedLogs.Contains(__0.displayName))
+            {
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has joined.");
+                JoinedLogs.Add(__0.displayName);
+            }
+            
             if (GeneralUtils.ESP)
             {
                 GameObject[] array = GameObject.FindGameObjectsWithTag("Player");
@@ -92,7 +99,11 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerLeave(ref VRCPlayerApi __0)
         {
-            if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has left.");
+            if (JoinedLogs.Contains(__0.displayName))
+            {
+                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has left.");
+                JoinedLogs.Remove(__0.displayName);
+            }
             return true;
         }
 

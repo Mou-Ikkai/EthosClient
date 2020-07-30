@@ -41,10 +41,14 @@ namespace EthosClient.Utils
                 {
                     if (array[i].transform.Find("SelectRegion"))
                     {
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.color = Color.green;
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.color = Color.red;
                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                     }
+                }
+                foreach(var pickup in Resources.FindObjectsOfTypeAll<VRC.SDKBase.VRC_Pickup>())
+                {
+
                 }
             }, "Disable\nESP", delegate
             {
@@ -54,8 +58,8 @@ namespace EthosClient.Utils
                 {
                     if (array[i].transform.Find("SelectRegion"))
                     {
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.color = Color.green;
+                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.color = Color.red;
                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                     }
                 }

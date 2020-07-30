@@ -31,7 +31,7 @@ namespace EthosClient.Utils
 
         public static bool ForceClone = false;
 
-        public static string Version = "1.5";
+        public static string Version = "1.6";
 
         public static bool IsDevBranch = false;
 

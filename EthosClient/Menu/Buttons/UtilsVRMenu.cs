@@ -83,19 +83,19 @@ namespace EthosClient.Utils
                 string ID = Console.ReadLine();
                 Networking.GoToRoom(ID);
             }, "Joins an instance by It's ID.", Color.red, Color.white);
-            new QMToggleButton(this, 1, 1, "Infinite\nJump", delegate
-            {
-                if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
-                {
-                    VRCPlayer.field_Internal_Static_VRCPlayer_0.GetComponent<VRCMotionState>().field_Private_Boolean_0 = true;
-                }
-            }, "Finite\nJump", delegate 
-            {
-                if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
-                {
-                    VRCPlayer.field_Internal_Static_VRCPlayer_0.GetComponent<VRCMotionState>().field_Private_Boolean_0 = false;
-                }
-            }, "Enable/Disable Infinite jumping, when this is enabled, it allows you to jump as much as possible >lol", Color.red, Color.white);
+            //new QMToggleButton(this, 1, 1, "Infinite\nJump", delegate
+            //{
+            //    if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
+            //    {
+            //        VRCPlayer.field_Internal_Static_VRCPlayer_0.GetComponent<VRCMotionState>().field_Private_Boolean_0 = true;
+            //    }
+            //}, "Finite\nJump", delegate 
+            //{
+            //    if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
+            //    {
+            //        VRCPlayer.field_Internal_Static_VRCPlayer_0.GetComponent<VRCMotionState>().field_Private_Boolean_0 = false;
+            //    }
+            //}, "Enable/Disable Infinite jumping, when this is enabled, it allows you to jump as much as possible >lol", Color.red, Color.white); -- fix this LOL (will tomorrow btw)
         }
     }
 }

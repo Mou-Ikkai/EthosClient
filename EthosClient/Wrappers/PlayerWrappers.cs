@@ -28,6 +28,10 @@ namespace EthosClient.Wrappers
 
         public static VRCPlayerApi GetVRCPlayerApi(this Player player) { return player.prop_VRCPlayerApi_0; }
 
+        public static VRCAvatarManager GetVRCAvatarManager(this Player player) { return player.prop_VRCAvatarManager_0; }
+
+        public static USpeaker GetUSpeaker(this VRCPlayer player) { return player.prop_USpeaker_0; }
+
         public static Player GetPlayer(this PlayerManager instance, string UserID)
         {
             var Players = instance.GetAllPlayers();

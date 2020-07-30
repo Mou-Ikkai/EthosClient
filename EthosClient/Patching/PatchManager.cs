@@ -16,7 +16,7 @@ namespace EthosClient.Patching
 {
     public static class PatchManager
     {
-        private static List<string> JoinedLogs = new List<string>();
+        private static List<string> PlayerCache = new List<string>();
 
         private static HarmonyMethod GetLocalPatch(string name) { return new HarmonyMethod(typeof(PatchManager).GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic)); }
 
@@ -75,61 +75,41 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
-            if (!JoinedLogs.Contains(__0.displayName))
+            if (!PlayerCache.Contains(__0.displayName))
             {
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has joined.");
-                JoinedLogs.Add(__0.displayName);
-            }
-            
-            if (GeneralUtils.ESP)
-            {
-                GameObject[] array = GameObject.FindGameObjectsWithTag("Player");
-                for (int i = 0; i < array.Length; i++)
-                {
-                    if (array[i].transform.Find("SelectRegion"))
-                    {
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                        array[i].transform.Find("SelectRegion").GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Color.magenta);
-                        GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
-                    }
-                }
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerJoin(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+
+                PlayerCache.Add(__0.displayName);
             }
             return true;
         }
 
         private static bool OnPlayerLeave(ref VRCPlayerApi __0)
         {
-            if (JoinedLogs.Contains(__0.displayName))
+            if (PlayerCache.Contains(__0.displayName))
             {
-                if (Configuration.GetConfig().LogModerations) GeneralUtils.InformHudText(Color.green, $"{__0.displayName} has left.");
-                JoinedLogs.Remove(__0.displayName);
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerLeft(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+
+                PlayerCache.Remove(__0.displayName);
             }
             return true;
         }
 
         private static bool AntiKick(ref string __0, ref string __1, ref string __2, ref string __3, ref Player __4)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __4, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been kicked by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerKicked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __4);
+
             return !Configuration.GetConfig().AntiKick;
         }
 
         private static bool AntiBlock(ref string __0, bool __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "blocked" : "unblocked")} by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "blocked" : "unblocked")} by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerBlocked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+
             return !Configuration.GetConfig().AntiBlock;
         }
 
@@ -184,124 +164,65 @@ namespace EthosClient.Patching
 
         private static bool AntiLogout(ref string __0, ref Player __1)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __1, (sender, target, isyou) =>
-                {
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerLoggedOut(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
 
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt logged out by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been logged out by {sender.GetAPIUser().displayName}");
-                });
             return false;
         }
 
         private static bool AntiPublicBan(ref string __0, ref int __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been public banned by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerPublicBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
+
             return !Configuration.GetConfig().AntiPublicBan;
         }
 
         private static bool BanPatch(ref string __0, ref int __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were banned by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been banned by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
+
             return true;
         }
 
         private static bool FriendPatch(ref string __0, ref Player __1)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __1, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were friended/unfriended by {sender.GetAPIUser().displayName}"); //no real way to check either lol
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been friended/unfriended by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerFriended(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
+
             return true;
         }
 
         private static bool MutePatch(ref string __0, bool __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerMuted(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+
             return true;
         }
 
         private static bool AvatarShownPatch(ref string __0, bool __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were {(__1 ? "shown" : "hidden")} by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(__1 ? "shown" : "hidden")} by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerShown(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+
             return true;
         }
 
         private static bool WarnPatch(ref string __0, ref string __1, ref Player __2)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __2, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were warned by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been warned by {sender.GetAPIUser().displayName}");
-                });
-            return true;
-        }
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
 
-        public static void HudPrint(string uid, Player ply, Action<Player, Player, bool> dothis)
-        {
-            if (ply == null)
-                return;
-            if (APIUser.CurrentUser == null)
-                return;
-            if (string.IsNullOrEmpty(uid))
-                return;
-            if (ply.GetAPIUser() == null)
-                return;
-            var target = GeneralWrappers.GetPlayerManager().GetPlayer(uid);
-            if (target == null)
-                return;
-            if (target.GetAPIUser() == null)
-                return;
-            dothis?.Invoke(ply, target, (target.GetAPIUser().id == APIUser.CurrentUser.id));
+            return true;
         }
 
         private static bool ModForceOffMicPatch(ref string __0, ref Player __1)
         {
-            if (Configuration.GetConfig().LogModerations)
-                HudPrint(__0, __1, (sender, target, isyou) =>
-                {
-                    if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"Your microphone was attempt forced off by {sender.GetAPIUser().displayName}");
-                    else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has had their microphone forced off by {sender.GetAPIUser().displayName}");
-                });
+            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
+
             return false;
         }
     }

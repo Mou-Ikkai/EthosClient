@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VRC;
+using WebSocketSharp;
 
 namespace EthosClient.Modules
 {
@@ -44,6 +45,56 @@ namespace EthosClient.Modules
         }
 
         public virtual void OnPlayerLeft(Player player)
+        {
+
+        }
+
+        public virtual void OnPlayerBlocked(Player blocker, Player blocked, bool state)
+        {
+
+        }
+
+        public virtual void OnPlayerKicked(Player moderator, Player kicked)
+        {
+
+        }
+
+        public virtual void OnPlayerLoggedOut(Player moderator, Player target)
+        {
+
+        }
+
+        public virtual void OnPlayerPublicBanned(Player moderator, Player banned)
+        {
+
+        }
+
+        public virtual void OnPlayerBanned(Player moderator, Player banned)
+        {
+
+        }
+
+        public virtual void OnPlayerFriended(Player friender, Player friended)
+        {
+
+        }
+
+        public virtual void OnPlayerMuted(Player muter, Player muted, bool state)
+        {
+
+        }
+
+        public virtual void OnPlayerShown(Player user, Player who, bool state)
+        {
+
+        }
+
+        public virtual void OnPlayerWarned(Player moderator, Player warned)
+        {
+
+        }
+
+        public virtual void OnPlayerMicOff(Player moderator, Player target)
         {
 
         }

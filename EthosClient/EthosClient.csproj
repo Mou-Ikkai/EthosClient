@@ -258,6 +258,7 @@
     <Compile Include="Menu\Buttons\TargetVRMenu.cs" />
     <Compile Include="Modules\GeneralHandlers.cs" />
     <Compile Include="Modules\MenuRGB.cs" />
+    <Compile Include="Modules\PlayerEventsHandler.cs" />
     <Compile Include="Modules\VRCMod.cs" />
     <Compile Include="Patching\Patch.cs" />
     <Compile Include="Patching\PatchManager.cs" />

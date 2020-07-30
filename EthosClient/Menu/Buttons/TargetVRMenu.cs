@@ -21,10 +21,10 @@ namespace EthosClient.Menu
 
             new QMToggleButton(this, 2, 0, "Local\nBlock", delegate
             {
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).gameObject.SetActive(false);
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).prop_VRCAvatarManager_0.gameObject.SetActive(false);
             }, "Local\nUnblock", delegate
             {
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).gameObject.SetActive(true);
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).prop_VRCAvatarManager_0.gameObject.SetActive(true);
             }, "Decide whether you want to block this user locally, meaning, the blocking doesn't effect them but it also makes them disappear to yourself.", Color.red, Color.white);
         }
     }

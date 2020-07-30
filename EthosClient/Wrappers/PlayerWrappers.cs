@@ -26,6 +26,8 @@ namespace EthosClient.Wrappers
 
         public static VRCPlayer GetVRCPlayer(this Player player) { return player.field_Internal_VRCPlayer_0; }
 
+        public static VRCPlayerApi GetVRCPlayerApi(this Player player) { return player.prop_VRCPlayerApi_0; }
+
         public static Player GetPlayer(this PlayerManager instance, string UserID)
         {
             var Players = instance.GetAllPlayers();
@@ -43,6 +45,19 @@ namespace EthosClient.Wrappers
         {
             var Players = instance.GetAllPlayers();
             return Players[Index];
+        }
+        public static Player GetPlayer(this PlayerManager instance, VRCPlayerApi api)
+        {
+            var Players = instance.GetAllPlayers();
+            for (int i = 0; i < Players.Length; i++)
+            {
+                var player = Players[i];
+                if (player.GetVRCPlayerApi().playerId == api.playerId)
+                {
+                    return player;
+                }
+            }
+            return null;
         }
         public static Player GetSelectedPlayer(this QuickMenu instance)
         {

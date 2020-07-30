@@ -46,10 +46,6 @@ namespace EthosClient.Utils
                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                     }
                 }
-                foreach(var pickup in Resources.FindObjectsOfTypeAll<VRC.SDKBase.VRC_Pickup>())
-                {
-
-                }
             }, "Disable\nESP", delegate
             {
                 GeneralUtils.ESP = false;

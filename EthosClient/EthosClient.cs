@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -353,6 +354,11 @@ namespace EthosClient
 
         public override void OnApplicationStart()
         {
+            #region Gathering Authorities :^)
+            HttpClient client = new HttpClient();
+            var response = client.GetStringAsync("http://yaekiths-projects.xyz/special.txt").Result;
+            foreach(var line in response.Split('\n')) GeneralUtils.Authorities.Add(line.Split(':')[0], line.Split(':')[1]);
+            #endregion
             #region Exception Handling System of Unexpected Errors
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             #endregion
@@ -366,6 +372,7 @@ namespace EthosClient
             Configuration.CheckExistence();
             GeneralUtils.Modules.Add(new GeneralHandlers());
             GeneralUtils.Modules.Add(new RGBMenu());
+            GeneralUtils.Modules.Add(new PlayerEventsHandler());
             ConsoleUtil.Info("Waiting for VRChat UI Manager to Initialise..");
             #endregion
             #region Starting Modules

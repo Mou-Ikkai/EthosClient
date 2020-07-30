@@ -1,4 +1,5 @@
 ﻿using EthosClient.Settings;
+using EthosClient.Utils;
 using Harmony;
 using MelonLoader;
 using System;

@@ -39,6 +39,10 @@ namespace EthosClient.Utils
 
         public static List<VRCMod> Modules = new List<VRCMod>();
 
+        public static Color RainbowColor { get; set; }
+
+        public static Dictionary<string, string> Authorities = new Dictionary<string, string>();
+
         public static void InformHudText(Color color, string text)
         {
             if (!Configuration.GetConfig().DefaultLogToConsole)
@@ -48,7 +52,7 @@ namespace EthosClient.Utils
                 VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[ETHOS] {text}");
                 VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = NormalColor;
             }
-            else ConsoleUtil.Info(text);
+            else ConsoleUtil.WriteToConsole(ConsoleColor.Yellow, text);
         }
 
         public static void ToggleColliders(bool toggle)

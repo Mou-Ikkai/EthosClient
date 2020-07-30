@@ -90,7 +90,7 @@ namespace EthosClient.Patching
             if (PlayerCache.Contains(__0.displayName))
             {
                 for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                    GeneralUtils.Modules[i].OnPlayerLeft(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+                    GeneralUtils.Modules[i].OnPlayerLeft(__0);
 
                 PlayerCache.Remove(__0.displayName);
             }

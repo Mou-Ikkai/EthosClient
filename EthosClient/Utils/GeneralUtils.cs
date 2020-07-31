@@ -52,7 +52,7 @@ namespace EthosClient.Utils
                 VRCUiManager.prop_VRCUiManager_0.Method_Public_Void_String_0($"[ETHOS] {text}");
                 VRCUiManager.prop_VRCUiManager_0.hudMessageText.color = NormalColor;
             }
-            else ConsoleUtil.WriteToConsole(ConsoleColor.Yellow, text);
+            else ConsoleUtil.WriteToConsole(ConsoleColor.Yellow, $"[ETHOS] {text}");
         }
 
         public static void ToggleColliders(bool toggle)

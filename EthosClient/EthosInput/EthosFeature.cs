@@ -14,6 +14,7 @@ namespace EthosClient.EthosInput
         Autism,
         WorldTriggers,
         ToggleAllTriggers,
-        AntiWorldTriggers
+        AntiWorldTriggers,
+        AntiTriggers
     }
 }

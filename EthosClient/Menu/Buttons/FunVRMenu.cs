@@ -47,6 +47,14 @@ namespace EthosClient.Utils
                 GeneralUtils.Autism = false;
             }), "Do some crazy shit idk", Color.red, Color.white).setToggleState(GeneralUtils.Autism);
 
+            new QMToggleButton(this, 2, 1, "Awful\nMicrophone", new Action(() =>
+            {
+                USpeaker.field_Internal_Static_Single_1 = float.MaxValue;
+            }), "Normal\nMicrophone", new Action(() =>
+            {
+                USpeaker.field_Internal_Static_Single_1 = 1f;
+            }), "Make your microphone extremely awful to listen to", Color.red, Color.white);
+
             new QMSingleButton(this, 1, 1, "Interact with\nAll Triggers", delegate
             {
                 foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
@@ -62,7 +70,7 @@ namespace EthosClient.Utils
             {
                 foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
                 {
-                    if (trigger.name.Contains("Mirror"))
+                    if (trigger.name.ToLower().Contains("mirror"))
                     {
                         trigger.Interact();
                     }

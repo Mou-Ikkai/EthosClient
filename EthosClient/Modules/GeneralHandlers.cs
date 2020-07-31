@@ -68,10 +68,16 @@ namespace EthosClient.Modules
                                 GeneralUtils.WorldTriggers = !GeneralUtils.WorldTriggers;
                                 break;
                             case EthosFeature.ToggleAllTriggers:
-                                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>()) if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair")) trigger.Interact();
+                                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>()) 
+                                    if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair")) 
+                                        trigger.Interact();
                                 break;
                             case EthosFeature.AntiWorldTriggers:
                                 Configuration.GetConfig().AntiWorldTriggers = !Configuration.GetConfig().AntiWorldTriggers;
+                                Configuration.SaveConfiguration();
+                                break;
+                            case EthosFeature.AntiTriggers:
+                                Configuration.GetConfig().AntiTriggers = !Configuration.GetConfig().AntiTriggers;
                                 Configuration.SaveConfiguration();
                                 break;
                         }

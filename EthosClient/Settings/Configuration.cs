@@ -20,8 +20,8 @@ namespace EthosClient.Settings
             Directory.CreateDirectory("EthosClient");
             if (!File.Exists(ConfigLocation))
             {
-                Config config = new Config();
-                File.WriteAllText(ConfigLocation, JsonConvert.SerializeObject(config, Formatting.Indented));
+                _Config = new Config();
+                File.WriteAllText(ConfigLocation, JsonConvert.SerializeObject(_Config, Formatting.Indented));
             }
             else 
                 LoadConfiguration();

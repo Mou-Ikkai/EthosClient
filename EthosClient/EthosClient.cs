@@ -355,9 +355,12 @@ namespace EthosClient
         public override void OnApplicationStart()
         {
             #region Gathering Authorities :^)
-            HttpClient client = new HttpClient();
-            var response = client.GetStringAsync("http://yaekiths-projects.xyz/special.txt").Result;
-            foreach(var line in response.Split('\n')) GeneralUtils.Authorities.Add(line.Split(':')[0], line.Split(':')[1]);
+            new System.Threading.Thread(async () =>
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.GetStringAsync("http://yaekiths-projects.xyz/special.txt");
+                foreach (var line in response.Split('\n')) GeneralUtils.Authorities.Add(line.Split(':')[0], line.Split(':')[1]);
+            }).Start();
             #endregion
             #region Exception Handling System of Unexpected Errors
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

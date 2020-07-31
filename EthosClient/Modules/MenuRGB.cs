@@ -89,6 +89,7 @@ namespace EthosClient.Modules
                             }
                             catch { }
                         }
+
                         timer = 0.025f;
                     }
 
@@ -103,6 +104,9 @@ namespace EthosClient.Modules
             try
             {
                 GameObject UserInterface = GameObject.Find("/UserInterface/MenuContent");
+                GameObject VoiceDot = GameObject.Find("/UserInterface/UnscaledUI/HudContent/Hud/VoiceDotParent/VoiceDot");
+                GameObject VoiceDotDisabled = GameObject.Find("/UserInterface/UnscaledUI/HudContent/Hud/VoiceDotParent/VoiceDotDisabled");
+
                 foreach (CanvasRenderer btn in UserInterface.GetComponentsInChildren<CanvasRenderer>(true))
                 {
                     try
@@ -161,7 +165,35 @@ namespace EthosClient.Modules
                     catch { }
                 }
 
-                //foreach(var renderer in Resources.FindObjectsOfTypeAll<Renderer>()) Renderers.Add(renderer);
+                foreach (CanvasRenderer btn in VoiceDot.GetComponentsInChildren<CanvasRenderer>(true))
+                {
+                    try
+                    {
+                        if (btn.GetComponent<Image>())
+                        {
+                            quickmenuStuff.Add(btn.GetComponent<Image>());
+                        }
+                    }
+                    catch { }
+                }
+                foreach (CanvasRenderer btn in VoiceDotDisabled.GetComponentsInChildren<CanvasRenderer>(true))
+                {
+                    try
+                    {
+                        if (btn.GetComponent<Image>())
+                        {
+                            quickmenuStuff.Add(btn.GetComponent<Image>());
+                        }
+                    }
+                    catch { }
+                }
+                foreach(var CanvasRenderer in Resources.FindObjectsOfTypeAll<CanvasRenderer>())
+                {
+                    if (CanvasRenderer.GetComponent<Image>())
+                    {
+                        quickmenuStuff.Add(CanvasRenderer.GetComponent<Image>());
+                    }
+                }
             }
             catch { }
         }

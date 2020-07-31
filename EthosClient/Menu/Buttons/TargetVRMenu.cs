@@ -43,7 +43,7 @@ namespace EthosClient.Menu
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = true;
             }, "Decide whether you want this user to be able to hear you or not", Color.red, Color.white);
 
-            new QMToggleButton(this, 3, 0, "Can\nHear Whitelist", delegate
+            new QMToggleButton(this, 4, 0, "Can\nHear Whitelist", delegate
             {
                 if (GeneralUtils.CantHearOnNonFriends && !GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
                     GeneralUtils.WhitelistedCanHearUsers.Add(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi

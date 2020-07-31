@@ -51,7 +51,7 @@ namespace EthosClient.Menu
             {
                 if (GeneralUtils.CantHearOnNonFriends && GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
                     GeneralUtils.WhitelistedCanHearUsers.Remove(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi
-            }, "This is for when you enable can't hear on everyone but friends, but you also want to whitelist/blacklist this user from being able to hear you aswell. When Can't Hear on Non friends is disabled, this won't do anything when toggled.", Color.red, Color.white).setToggleState(GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName));
+            }, "This is for when you enable can't hear on everyone but friends, but you also want to whitelist/blacklist this user from being able to hear you aswell. When Can't Hear on Non friends is disabled, this won't do anything when toggled.", Color.red, Color.white);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace EthosClient.Modules
         {
             try
             {
-                if (StoredKeybinds.Count() == 0) StoredKeybinds.AddRange(Configuration.GetConfig().Keybinds);
+                if (StoredKeybinds.Count() == 0) StoredKeybinds.AddRange(Configuration.GetConfig().Keybinds.Values);
 
                 foreach(var keybind in StoredKeybinds)
                 {

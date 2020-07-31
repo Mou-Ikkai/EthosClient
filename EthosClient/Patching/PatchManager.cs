@@ -4,12 +4,9 @@ using EthosClient.Wrappers;
 using Harmony;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnhollowerBaseLib;
 using UnityEngine;
 using VRC;
-using VRC.Core;
 using VRC.SDKBase;
 using static VRC.SDKBase.VRC_EventHandler;
 
@@ -21,37 +18,31 @@ namespace EthosClient.Patching
 
         private static HarmonyMethod GetLocalPatch(string name) { return new HarmonyMethod(typeof(PatchManager).GetMethod(name, BindingFlags.Static | BindingFlags.NonPublic)); }
 
-        private static List<Patch> RetrievePatches()
+        private static void RetrievePatches()
         {
-            var ConsoleWriteLine = AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) });
-            List<Patch> patches = new List<Patch>()
-            {
-                new Patch("Ethos_Extras", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ForceLogoutRPC"), GetLocalPatch("AntiLogout"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanPublicOnlyRPC"), GetLocalPatch("AntiPublicBan"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("FriendStateChangeRPC"), GetLocalPatch("FriendPatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanRPC"), GetLocalPatch("BanPatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("MuteChangeRPC"), GetLocalPatch("MutePatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ShowUserAvatarChangedRPC"), GetLocalPatch("AvatarShownPatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("WarnUserRPC"), GetLocalPatch("WarnPatch"), null),
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ModForceOffMicRPC"), GetLocalPatch("ModForceOffMicPatch"), null),
-                new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerJoined"), GetLocalPatch("OnPlayerJoin"), null),
-                new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerLeft"), GetLocalPatch("OnPlayerLeave"), null),
-                new Patch("Ethos_Extras", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null),
-                new Patch("Ethos_Extras", ConsoleWriteLine, GetLocalPatch("IL2CPPConsoleWriteLine"), null),
-                new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null),
-                new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null),
-            };
-            return patches;
+            new Patch("Ethos_Extras", AccessTools.Method(typeof(VRC_EventHandler), "InternalTriggerEvent", null, null), GetLocalPatch("TriggerEvent"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ForceLogoutRPC"), GetLocalPatch("AntiLogout"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanPublicOnlyRPC"), GetLocalPatch("AntiPublicBan"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("FriendStateChangeRPC"), GetLocalPatch("FriendPatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanRPC"), GetLocalPatch("BanPatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("MuteChangeRPC"), GetLocalPatch("MutePatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ShowUserAvatarChangedRPC"), GetLocalPatch("AvatarShownPatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("WarnUserRPC"), GetLocalPatch("WarnPatch"), null);
+            new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ModForceOffMicRPC"), GetLocalPatch("ModForceOffMicPatch"), null);
+            new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerJoined"), GetLocalPatch("OnPlayerJoin"), null);
+            new Patch("Ethos_Moderation", typeof(VRC_TriggerInternal).GetMethod("OnPlayerLeft"), GetLocalPatch("OnPlayerLeave"), null);
+            new Patch("Ethos_Extras", typeof(UserInteractMenu).GetMethod("Update"), GetLocalPatch("CloneAvatarPrefix"), null);
+            new Patch("Ethos_Extras", AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) }), GetLocalPatch("IL2CPPConsoleWriteLine"), null);
+            new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null);
+            new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null);
         }
 
         public static void ApplyPatches()
         {
-            var patches = RetrievePatches();
-            foreach (var patch in patches) patch.ApplyPatch();
+            RetrievePatches();
             ConsoleUtil.Info("All Patches have been applied successfully.");
         }
 
@@ -77,7 +68,7 @@ namespace EthosClient.Patching
                     isFiltered = true;
             }
 
-            if (GeneralUtils.IsDevBranch) 
+            if (GeneralUtils.IsDevBranch)
                 Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
 
             if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered || __1 == VrcBroadcastType.AlwaysBufferOne)

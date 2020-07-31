@@ -92,9 +92,9 @@ namespace EthosClient.Utils
         {
             foreach(var button in Configuration.GetConfig().Buttons)
             {
-                if (button.ID == ID)
+                if (button.Value.ID == ID)
                 {
-                    return button;
+                    return button.Value;
                 }
             }
             return null;

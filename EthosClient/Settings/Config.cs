@@ -42,8 +42,8 @@ namespace EthosClient.Settings
 
         public bool DefaultLogToConsole = true;
 
-        public List<EthosVRButton> Buttons = new List<EthosVRButton>();
+        public Dictionary<string, EthosVRButton> Buttons = new Dictionary<string, EthosVRButton>();
 
-        public List<EthosKeybind> Keybinds = new List<EthosKeybind>();
+        public Dictionary<string, EthosKeybind> Keybinds = new Dictionary<string, EthosKeybind>();
     }
 }

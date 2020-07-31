@@ -27,10 +27,7 @@ namespace EthosClient.Patching
             TargetMethod = Target;
             Prefix = Before;
             Postfix = After;
-        }
 
-        public void ApplyPatch()
-        {
             if (!PatchIDs.ContainsKey(ID))
             {
                 HarmonyInstance instance = HarmonyInstance.Create(ID);

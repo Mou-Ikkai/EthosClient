@@ -383,7 +383,7 @@ namespace EthosClient
             ConsoleUtil.Info("================ KEYBINDS =================");
             foreach (var keybind in Configuration.GetConfig().Keybinds)
             {
-                ConsoleUtil.Info($"{keybind.FirstKey} & {keybind.SecondKey} = {keybind.Target} || Multi Key: {keybind.MultipleKeys}");
+                ConsoleUtil.Info($"{keybind.Value.FirstKey} & {keybind.Value.SecondKey} = {keybind.Value.Target} || Multi Key: {keybind.Value.MultipleKeys}");
             }
             ConsoleUtil.Info("===========================================");
             #endregion

@@ -23,17 +23,17 @@ namespace EthosClient.Menu
             {
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().GetUSpeaker().gameObject.SetActive(false);
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCAvatarManager().gameObject.SetActive(false);
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = false;
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = false; //disables the nameplate (always the first public boolean)
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().nameTag_old.gameObject.SetActive(false);
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().namePlate.gameObject.SetActive(false);
             }, "Local\nUnblock", delegate
             {
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().GetUSpeaker().gameObject.SetActive(true);
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = true;
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = true; //enables the nameplate (always the first public boolean)
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCAvatarManager().gameObject.SetActive(true);
             }, "Decide whether you want to block this user locally, meaning, the blocking doesn't effect them but it also makes them disappear to yourself.", Color.red, Color.white);
 
-            new QMToggleButton(this, 2, 1, "Can't\nHear", delegate
+            new QMToggleButton(this, 3, 0, "Can't\nHear", delegate
             {
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = false;
             }, "Can\nHear", delegate
@@ -42,6 +42,16 @@ namespace EthosClient.Menu
                 //canSpeak is 1 before it LOL
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = true;
             }, "Decide whether you want this user to be able to hear you or not", Color.red, Color.white);
+
+            new QMToggleButton(this, 3, 0, "Can\nHear Whitelist", delegate
+            {
+                if (GeneralUtils.CantHearOnNonFriends && !GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
+                    GeneralUtils.WhitelistedCanHearUsers.Add(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi
+            }, "Can't\nHear Blacklist", delegate
+            {
+                if (GeneralUtils.CantHearOnNonFriends && GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
+                    GeneralUtils.WhitelistedCanHearUsers.Remove(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi
+            }, "This is for when you enable can't hear on everyone but friends, but you also want to whitelist/blacklist this user from being able to hear you aswell. When Can't Hear on Non friends is disabled, this won't do anything when toggled.", Color.red, Color.white).setToggleState(GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName));
         }
     }
 }

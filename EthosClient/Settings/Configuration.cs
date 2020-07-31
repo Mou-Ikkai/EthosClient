@@ -61,19 +61,22 @@ namespace EthosClient.Settings
                 _Config.Keybinds.Add("Flight", new EthosKeybind(EthosFeature.Flight, KeyCode.LeftAlt, KeyCode.F, true));
 
             if (!_Config.Keybinds.ContainsKey("Autism"))
-                _Config.Keybinds.Add("Autism", new EthosKeybind(EthosFeature.Autism, KeyCode.LeftAlt, KeyCode.A, true));
+                _Config.Keybinds.Add("Autism", new EthosKeybind(EthosFeature.Autism, KeyCode.LeftAlt, KeyCode.U, true));
 
             if (!_Config.Keybinds.ContainsKey("SpinBot"))
-                _Config.Keybinds.Add("SpinBot", new EthosKeybind(EthosFeature.SpinBot, KeyCode.LeftAlt, KeyCode.S, true));
+                _Config.Keybinds.Add("SpinBot", new EthosKeybind(EthosFeature.SpinBot, KeyCode.LeftAlt, KeyCode.L, true));
 
             if (!_Config.Keybinds.ContainsKey("ESP"))
                 _Config.Keybinds.Add("ESP", new EthosKeybind(EthosFeature.ESP, KeyCode.LeftAlt, KeyCode.E, true));
 
             if (!_Config.Keybinds.ContainsKey("WorldTriggers"))
-                _Config.Keybinds.Add("WorldTriggers", new EthosKeybind(EthosFeature.WorldTriggers, KeyCode.LeftAlt, KeyCode.W, true));
+                _Config.Keybinds.Add("WorldTriggers", new EthosKeybind(EthosFeature.WorldTriggers, KeyCode.LeftAlt, KeyCode.O, true));
 
             if (!_Config.Keybinds.ContainsKey("ToggleAllTriggers"))
                 _Config.Keybinds.Add("ToggleAllTriggers", new EthosKeybind(EthosFeature.ToggleAllTriggers, KeyCode.LeftAlt, KeyCode.T, true));
+
+            if (!_Config.Keybinds.ContainsKey("AntiTriggers"))
+                _Config.Keybinds.Add("AntiTriggers", new EthosKeybind(EthosFeature.AntiTriggers, KeyCode.LeftAlt, KeyCode.P, true));
 
             #endregion
         }

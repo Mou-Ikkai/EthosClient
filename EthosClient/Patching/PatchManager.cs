@@ -99,6 +99,9 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
+            if (GeneralUtils.WhitelistedCanHearUsers.Contains(__0.displayName))
+                GeneralUtils.WhitelistedCanHearUsers.Remove(__0.displayName); //just to be sure they dont already exist (i could do this in the playereventshandler but this one is better and is called more)
+
             if (!PlayerCache.Contains(__0.displayName))
             {
                 for (var i = 0; i < GeneralUtils.Modules.Count; i++)

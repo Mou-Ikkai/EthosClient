@@ -36,6 +36,9 @@ namespace EthosClient.Modules
                 ConsoleUtil.Info($"An Ethos Admin+ || {player.GetAPIUser().displayName} has joined.");
             }
 
+            if (GeneralUtils.CantHearOnNonFriends)
+                if (!player.GetAPIUser().isFriend) player.GetVRCPlayer().field_Internal_Boolean_3 = false;
+
             if (Configuration.GetConfig().LogModerations)
                 GeneralUtils.InformHudText(Color.green, $"{player.GetAPIUser().displayName} has joined.");
 
@@ -56,6 +59,9 @@ namespace EthosClient.Modules
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
+            if (GeneralUtils.WhitelistedCanHearUsers.Contains(player.displayName))
+                GeneralUtils.WhitelistedCanHearUsers.Remove(player.displayName); //lol ok bud, so you leave as soon as we force mute, fun
+
             if (Configuration.GetConfig().LogModerations) 
                 GeneralUtils.InformHudText(Color.green, $"{player.displayName} has left.");
         }

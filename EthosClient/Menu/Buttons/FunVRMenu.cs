@@ -72,7 +72,7 @@ namespace EthosClient.Utils
             {
                 foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
                 {
-                    if (trigger.name.ToLower().Contains("mirror"))
+                    if (trigger.name.Contains("Mirror"))
                     {
                         trigger.Interact();
                     }

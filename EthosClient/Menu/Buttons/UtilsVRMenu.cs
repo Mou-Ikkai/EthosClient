@@ -33,6 +33,7 @@ namespace EthosClient.Utils
                 GeneralUtils.Flight = false;
                 GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
             }, "Toggle Flight and move around within the air with ease!", Color.red, Color.white).setToggleState(GeneralUtils.Flight);
+
             new QMToggleButton(this, 2, 0, "Enable\nESP", delegate
             {
                 GeneralUtils.ESP = true;
@@ -60,6 +61,7 @@ namespace EthosClient.Utils
                     }
                 }
             }, "Decide whether you want the upper game, get an advantage, and see all players anywhere within the world.", Color.red, Color.white).setToggleState(GeneralUtils.ESP);
+
             new QMSingleButton(this, 3, 0, "Avatar\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Avatar ID: ");
@@ -77,12 +79,14 @@ namespace EthosClient.Utils
                 }.ChangeToSelectedAvatar();
                 GeneralWrappers.GetVRCUiPopupManager().AlertPopup("<color=cyan>Success!</color>", "<color=green>Successfully cloned that avatar by It's Avatar ID.</color>");
             }, "Sets your current avatar using an avatar ID.", Color.red, Color.white);
+
             new QMSingleButton(this, 4, 0, "Join\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Instance ID: ");
                 string ID = Console.ReadLine();
                 Networking.GoToRoom(ID);
             }, "Joins an instance by It's ID.", Color.red, Color.white);
+
             new QMToggleButton(this, 1, 1, "Enable\nCustom Serialization", delegate
             {
                 GeneralUtils.CustomSerialization = true;
@@ -90,6 +94,28 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.CustomSerialization = false;
             }, "Enable/Disables custom serialization on your photon view, meaning with this enabled, no one can see you move around.", Color.red, Color.white).setToggleState(GeneralUtils.CustomSerialization);
+
+            new QMToggleButton(this, 2, 1, "Can't Hear\non Non Friends", delegate
+            {
+                GeneralUtils.CantHearOnNonFriends = true;
+                foreach (var player in GeneralWrappers.GetPlayerManager().GetAllPlayers())
+                {
+                    if (!player.GetAPIUser().isFriend)
+                    {
+                        player.GetVRCPlayer().field_Internal_Boolean_3 = false;
+                    }
+                }
+            }, "Can Hear\non Non Friends", delegate
+            {
+                GeneralUtils.CantHearOnNonFriends = false;
+                foreach (var player in GeneralWrappers.GetPlayerManager().GetAllPlayers())
+                {
+                    if (!player.GetAPIUser().isFriend)
+                    {
+                        player.GetVRCPlayer().field_Internal_Boolean_3 = true;
+                    }
+                }
+            }, "Decide whether you want your friends to only hear you in game or not.", Color.red, Color.white).setToggleState(GeneralUtils.CantHearOnNonFriends);
         }
     }
 }

@@ -39,6 +39,10 @@ namespace EthosClient.Utils
 
         public static bool CustomSerialization = false;
 
+        public static bool CantHearOnNonFriends = false;
+
+        public static List<string> WhitelistedCanHearUsers = new List<string>();
+
         public static Vector3 SavedGravity = Physics.gravity;
 
         public static List<VRCMod> Modules = new List<VRCMod>();

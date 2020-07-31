@@ -33,7 +33,7 @@ namespace EthosClient.Utils
 
         public static string Version = "1.8";
 
-        public static bool IsDevBranch = true;
+        public static bool IsDevBranch = false;
 
         public static bool InfiniteJump = false;
 

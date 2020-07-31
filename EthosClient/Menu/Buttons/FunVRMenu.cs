@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using VRC;
 using VRC.SDKBase;
 
 namespace EthosClient.Utils
@@ -47,13 +48,14 @@ namespace EthosClient.Utils
                 GeneralUtils.Autism = false;
             }), "Do some crazy shit idk", Color.red, Color.white).setToggleState(GeneralUtils.Autism);
 
-            new QMToggleButton(this, 2, 1, "Awful\nMicrophone", new Action(() =>
+            new QMToggleButton(this, 2, 1, "Infinite\nJump", delegate
             {
-                USpeaker.field_Internal_Static_Single_1 = float.MaxValue;
-            }), "Normal\nMicrophone", new Action(() =>
+                GeneralUtils.InfiniteJump = true;
+            }, "Finite\nJump", delegate
             {
-                USpeaker.field_Internal_Static_Single_1 = 1f;
-            }), "Make your microphone extremely awful to listen to", Color.red, Color.white);
+                GeneralUtils.InfiniteJump = false;
+                PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<VRCMotionState>().field_Private_Boolean_0 = false;
+            }, "Enable/Disable Infinite jumping, when this is enabled, it allows you to jump as much as possible >lol", Color.red, Color.white).setToggleState(GeneralUtils.InfiniteJump);
 
             new QMSingleButton(this, 1, 1, "Interact with\nAll Triggers", delegate
             {

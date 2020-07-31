@@ -2,6 +2,7 @@
 using EthosClient.Utils;
 using EthosClient.Wrappers;
 using Harmony;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -38,6 +39,11 @@ namespace EthosClient.Patching
             new Patch("Ethos_Extras", AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) }), GetLocalPatch("IL2CPPConsoleWriteLine"), null);
             new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null);
             new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null);
+            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_0"), GetLocalPatch("SerializeView"), null);
+            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_1"), GetLocalPatch("SerializeView"), null);
+            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_2"), GetLocalPatch("SerializeView"), null);
+            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_3"), GetLocalPatch("SerializeView"), null);
+            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_4"), GetLocalPatch("SerializeView"), null);
         }
 
         public static void ApplyPatches()
@@ -58,7 +64,7 @@ namespace EthosClient.Patching
                 "Box Capsule",
                 "Lounge",
                 "Camp",
-                "Skybox"
+                "Skybox"                        
             };
             bool isFiltered = false;
 
@@ -71,19 +77,24 @@ namespace EthosClient.Patching
             if (GeneralUtils.IsDevBranch)
                 Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
 
-            if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered || __1 == VrcBroadcastType.AlwaysBufferOne)
+            if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered)
             {
                 if (Configuration.GetConfig().AntiWorldTriggers && isFiltered)
-                    return GeneralUtils.WorldTriggers;
+                    return false;
 
                 else if (Configuration.GetConfig().AntiTriggers)
-                    return GeneralUtils.WorldTriggers;
+                    return false;
             }
 
             if (GeneralUtils.WorldTriggers)
                 __1 = VrcBroadcastType.Always;
 
             return true;
+        }
+
+        private static bool SerializeView()
+        {
+            return !GeneralUtils.CustomSerialization;
         }
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)

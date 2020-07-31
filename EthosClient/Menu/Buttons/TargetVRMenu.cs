@@ -22,14 +22,26 @@ namespace EthosClient.Menu
             new QMToggleButton(this, 2, 0, "Local\nBlock", delegate
             {
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().GetUSpeaker().gameObject.SetActive(false);
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().namePlate.gameObject.SetActive(false);
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCAvatarManager().gameObject.SetActive(false);
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = false;
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().nameTag_old.gameObject.SetActive(false);
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().namePlate.gameObject.SetActive(false);
             }, "Local\nUnblock", delegate
             {
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().GetUSpeaker().gameObject.SetActive(true);
-                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().namePlate.gameObject.SetActive(true);
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().prop_Boolean_0 = true;
                 PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCAvatarManager().gameObject.SetActive(true);
             }, "Decide whether you want to block this user locally, meaning, the blocking doesn't effect them but it also makes them disappear to yourself.", Color.red, Color.white);
+
+            new QMToggleButton(this, 2, 1, "Can't\nHear", delegate
+            {
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = false;
+            }, "Can\nHear", delegate
+            {
+                //canHear is always the second last internal boolean in the VRCPlayer class
+                //canSpeak is 1 before it LOL
+                PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = true;
+            }, "Decide whether you want this user to be able to hear you or not", Color.red, Color.white);
         }
     }
 }

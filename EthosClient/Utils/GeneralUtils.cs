@@ -35,11 +35,13 @@ namespace EthosClient.Utils
 
         public static bool IsDevBranch = true;
 
+        public static bool InfiniteJump = false;
+
+        public static bool CustomSerialize = false;
+
         public static Vector3 SavedGravity = Physics.gravity;
 
         public static List<VRCMod> Modules = new List<VRCMod>();
-
-        public static Color RainbowColor { get; set; }
 
         public static Dictionary<string, string> Authorities = new Dictionary<string, string>();
 

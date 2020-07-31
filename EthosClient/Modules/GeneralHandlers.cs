@@ -87,6 +87,12 @@ namespace EthosClient.Modules
                 if (GeneralUtils.SpinBot)
                     PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
 
+                if (GeneralUtils.InfiniteJump)
+                {
+                    if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
+                        PlayerWrappers.GetCurrentPlayer().GetComponent<VRCMotionState>().field_Private_Boolean_0 = true;
+                }
+
                 if (GeneralUtils.Autism)
                 {
                     var randomPlr = PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager())[new System.Random().Next(0, PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager()).Count())];

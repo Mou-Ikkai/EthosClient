@@ -46,11 +46,19 @@ namespace EthosClient.Menu
             new QMToggleButton(this, 4, 0, "Can\nHear Whitelist", delegate
             {
                 if (GeneralUtils.CantHearOnNonFriends && !GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
-                    GeneralUtils.WhitelistedCanHearUsers.Add(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi
+                {
+                    GeneralUtils.WhitelistedCanHearUsers.Add(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName);
+                    PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = true;
+                }
+                     //this is because you can't get the user id of a person who has left through their vrcplayerapi
             }, "Can't\nHear Blacklist", delegate
             {
                 if (GeneralUtils.CantHearOnNonFriends && GeneralUtils.WhitelistedCanHearUsers.Contains(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName))
-                    GeneralUtils.WhitelistedCanHearUsers.Remove(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName); //this is because you can't get the user id of a person who has left through their vrcplayerapi
+                {
+                    GeneralUtils.WhitelistedCanHearUsers.Remove(PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetAPIUser().displayName);
+                    PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).GetVRCPlayer().field_Internal_Boolean_3 = false;
+                }
+                     //this is because you can't get the user id of a person who has left through their vrcplayerapi
             }, "This is for when you enable can't hear on everyone but friends, but you also want to whitelist/blacklist this user from being able to hear you aswell. When Can't Hear on Non friends is disabled, this won't do anything when toggled.", Color.red, Color.white);
         }
     }

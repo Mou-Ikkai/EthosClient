@@ -24,7 +24,7 @@ namespace EthosClient.Menu
             }), "Open the github repository in a new browser window", Color.red, Color.white);
             new QMSingleButton(this, 2, 0, "Discord", new Action(() =>
             {
-                Process.Start("https://discord.gg/PwDdTcp");
+                Process.Start("https://discord.gg/7HzgRQJ");
             }), "Join the official discord", Color.red, Color.white);
             new QMSingleButton(this, 3, 0, "Credits", new Action(() =>
             {

@@ -37,7 +37,10 @@ namespace EthosClient.Modules
             }
 
             if (GeneralUtils.CantHearOnNonFriends)
-                if (!player.GetAPIUser().isFriend) player.GetVRCPlayer().field_Internal_Boolean_3 = false;
+            {
+                if (!player.GetAPIUser().isFriend) 
+                    player.GetVRCPlayer().field_Internal_Boolean_3 = false;
+            }
 
             if (Configuration.GetConfig().LogModerations)
                 GeneralUtils.InformHudText(Color.green, $"{player.GetAPIUser().displayName} has joined.");

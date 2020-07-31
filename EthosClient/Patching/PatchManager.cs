@@ -4,6 +4,7 @@ using EthosClient.Wrappers;
 using Harmony;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnhollowerBaseLib;
 using UnityEngine;
@@ -59,17 +60,38 @@ namespace EthosClient.Patching
         {
             List<string> FilteredStrings = new List<string>()
             {
-                "_InstantiateObject",
-                "SetTimerRPC",
-                "_DestroyObject",
-                "_SendOnSpawn",
-                "ConfigurePortal",
-                "SceneEventHandlerAndInstantiator",
-                "(Clone [100003] Portals/PortalInternalDynamic)"
+                "Mirror",
+                "Chair",
+                "Wall",
+                "Option",
+                "Box Capsule",
+                "Lounge",
+                "Camp",
+                "Skybox"
             };
-            if (GeneralUtils.IsDevBranch) Console.WriteLine(__0.ParameterObject.name);
-            if (GeneralUtils.WorldTriggers) __1 = VrcBroadcastType.Always;
-            if (Configuration.GetConfig().AntiWorldTriggers && !FilteredStrings.Contains(__0.ParameterObject.name.ToString())) return false;
+            bool isFiltered = false;
+
+            for (var i = 0; i < FilteredStrings.Count; i++)
+            {
+                if (FilteredStrings[i].ToLower().Contains(__0.ParameterObject.name.ToLower().ToString()))
+                    isFiltered = true;
+            }
+
+            if (GeneralUtils.IsDevBranch) 
+                Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
+
+            if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered || __1 == VrcBroadcastType.AlwaysBufferOne)
+            {
+                if (Configuration.GetConfig().AntiWorldTriggers && isFiltered)
+                    return GeneralUtils.WorldTriggers;
+
+                else if (Configuration.GetConfig().AntiTriggers)
+                    return GeneralUtils.WorldTriggers;
+            }
+
+            if (GeneralUtils.WorldTriggers)
+                __1 = VrcBroadcastType.Always;
+
             return true;
         }
 

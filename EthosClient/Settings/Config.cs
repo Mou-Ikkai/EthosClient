@@ -32,6 +32,8 @@ namespace EthosClient.Settings
 
         public bool AntiWorldTriggers = false;
 
+        public bool AntiTriggers = false;
+
         public bool UseRichPresence = true;
 
         public bool MenuRGB = false;

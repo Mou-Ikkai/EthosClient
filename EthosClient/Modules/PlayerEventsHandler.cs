@@ -32,7 +32,6 @@ namespace EthosClient.Modules
             if (GeneralUtils.Authorities.TryGetValue(player.GetAPIUser().id, out string what))
             {
                 //im gonna use the what for later ok
-                player.GetVRCPlayerApi().displayName = "[Ethos Team] " + player.GetVRCPlayerApi().displayName;
                 player.GetVRCPlayerApi().SetNamePlateColor(Color.cyan);
                 ConsoleUtil.Info($"An Ethos Admin+ || {player.GetAPIUser().displayName} has joined.");
             }
@@ -168,7 +167,7 @@ namespace EthosClient.Modules
                     if (isyou)
                         GeneralUtils.InformHudText(Color.red, $"You were {(state ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
                     else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} were {(state ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
+                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been {(state ? "muted" : "unmuted")} by {sender.GetAPIUser().displayName}");
                 });
             }
         }

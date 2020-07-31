@@ -77,7 +77,16 @@ namespace EthosClient.Utils
             {
                 Configuration.GetConfig().AntiWorldTriggers = false;
                 Configuration.SaveConfiguration();
-            }, "This feature, when enabled, prevents other people from using world triggers.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
+            }, "This feature, when enabled, prevents other people from using world triggers to enable/disable mirrors and do other malicious stuff.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
+            new QMToggleButton(this, 2, 2, "Enable\nAnti Triggers", delegate
+            {
+                Configuration.GetConfig().AntiTriggers = true;
+                Configuration.SaveConfiguration();
+            }, "Disable\nAnti Triggers", delegate
+            {
+                Configuration.GetConfig().AntiTriggers = false;
+                Configuration.SaveConfiguration();
+            }, "This feature, when enabled, prevents other people from using global triggers.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiTriggers);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace EthosClient.Utils
 
         public static string Version = "1.7";
 
-        public static bool IsDevBranch = false;
+        public static bool IsDevBranch = true;
 
         public static Vector3 SavedGravity = Physics.gravity;
 

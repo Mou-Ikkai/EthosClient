@@ -37,7 +37,7 @@ namespace EthosClient.Utils
 
         public static bool InfiniteJump = false;
 
-        public static bool CustomSerialize = false;
+        public static bool CustomSerialization = false;
 
         public static Vector3 SavedGravity = Physics.gravity;
 

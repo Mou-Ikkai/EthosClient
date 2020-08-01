@@ -392,7 +392,11 @@ namespace EthosClient
             #endregion
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) => ConsoleUtil.Exception(e.ExceptionObject as Exception);
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (GeneralUtils.IsDevBranch)
+                ConsoleUtil.Exception(e.ExceptionObject as Exception);
+        }
 
         public override void OnUpdate() 
         {

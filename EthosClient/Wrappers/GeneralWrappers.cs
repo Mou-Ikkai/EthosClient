@@ -34,7 +34,7 @@ namespace EthosClient.Wrappers
 
         public static void EnableOutline(this HighlightsFX instance, Renderer renderer, bool state) => instance.Method_Public_Void_Renderer_Boolean_0(renderer, state); //First method to take renderer, bool parameters
 
-        public static VRCUiPopupManager GetVRCUiPopupManager() { return Resources.FindObjectsOfTypeAll<VRCUiPopupManager>()[0]; }
+        public static VRCUiPopupManager GetVRCUiPopupManager() { return VRCUiPopupManager.prop_VRCUiPopupManager_0; }
 
         public static void AlertPopup(this VRCUiPopupManager manager, string title, string text) => manager.Method_Public_Void_String_String_Single_0(title, text, 10f);
 
@@ -52,8 +52,12 @@ namespace EthosClient.Wrappers
 
         public static void ClosePopup()
         {
-            VRCUiPopupManager vrcpopup = GetVRCUiPopupManager();
-            vrcpopup.inputPopup.gameObject.SetActive(false);
+            try
+            {
+                VRCUiPopupManager vrcpopup = GetVRCUiPopupManager();
+                vrcpopup.Method_Public_Void_1();
+            }
+            catch(Exception) { }
         }
     }
 }

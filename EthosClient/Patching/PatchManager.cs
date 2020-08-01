@@ -97,20 +97,24 @@ namespace EthosClient.Patching
 
         private static bool EnterPortalPatch(PortalInternal __instance)
         {
-            if (Configuration.GetConfig().PortalSafety)
+            try
             {
-                GeneralWrappers.AlertV2("Enter Portal", $"Instance: {__instance.field_Private_ApiWorld_0.name}{__instance.field_Private_ApiWorld_0.instanceId}\nAuthor: {__instance.field_Private_ApiWorld_0.authorName}\nWho Dropped: {__instance.GetPlayer().GetAPIUser().displayName}",
-                "Enter Portal", new Action(() =>
+                if (Configuration.GetConfig().PortalSafety)
                 {
-                    Networking.GoToRoom($"{__instance.field_Private_ApiWorld_0.id}{__instance.field_Private_ApiWorld_0.instanceId}");
-                }), "Delete Portal", new Action(() =>
-                {
-                    GeneralWrappers.ClosePopup();
-                    UnityEngine.Object.Destroy(__instance.gameObject);
-                }));
-                return false;
+                    GeneralWrappers.AlertV2("Enter Portal", $"Instance: {__instance.field_Private_ApiWorld_0.name}{__instance.field_Private_ApiWorld_0.instanceId}\nAuthor: {__instance.field_Private_ApiWorld_0.authorName}\nWho Dropped: {__instance.GetPlayer().GetAPIUser().displayName}",
+                    "Enter Portal", new Action(() =>
+                    {
+                        Networking.GoToRoom($"{__instance.field_Private_ApiWorld_0.id}{__instance.field_Private_ApiWorld_0.instanceId}");
+                    }), "Delete Portal", new Action(() =>
+                    {
+                        UnityEngine.Object.Destroy(__instance.gameObject);
+                        GeneralWrappers.ClosePopup();
+                    }));
+                    return false;
+                }
             }
-            else return true;
+            catch(Exception) { }
+            return true;
         }
 
         private static bool SerializeView()

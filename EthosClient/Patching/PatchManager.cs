@@ -126,17 +126,21 @@ namespace EthosClient.Patching
 
         private static bool AntiKick(ref string __0, ref string __1, ref string __2, ref string __3, ref Player __4)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerKicked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __4);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerKicked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __4);
+            }
             return !Configuration.GetConfig().AntiKick;
         }
 
         private static bool AntiBlock(ref string __0, bool __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerBlocked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerBlocked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+            }
             return !Configuration.GetConfig().AntiBlock;
         }
 
@@ -191,66 +195,82 @@ namespace EthosClient.Patching
 
         private static bool AntiLogout(ref string __0, ref Player __1)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerLoggedOut(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerLoggedOut(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
+            }
             return false;
         }
 
         private static bool AntiPublicBan(ref string __0, ref int __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerPublicBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerPublicBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
+            }
             return !Configuration.GetConfig().AntiPublicBan;
         }
 
         private static bool BanPatch(ref string __0, ref int __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
+            }
             return true;
         }
 
         private static bool FriendPatch(ref string __0, ref Player __1)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerFriended(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerFriended(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
+            }
             return true;
         }
 
         private static bool MutePatch(ref string __0, bool __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerMuted(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerMuted(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+            }
             return true;
         }
 
         private static bool AvatarShownPatch(ref string __0, bool __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerShown(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerShown(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
+            }
             return true;
         }
 
         private static bool WarnPatch(ref string __0, ref string __1, ref Player __2)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
-
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
+            }
             return true;
         }
 
         private static bool ModForceOffMicPatch(ref string __0, ref Player __1)
         {
-            for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
-
-            return false;
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            {
+                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                    GeneralUtils.Modules[i].OnPlayerWarned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
+            }
+            return true;
         }
     }
     #endregion

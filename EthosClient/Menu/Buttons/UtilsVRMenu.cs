@@ -100,7 +100,7 @@ namespace EthosClient.Utils
                 GeneralUtils.CantHearOnNonFriends = true;
                 foreach (var player in GeneralWrappers.GetPlayerManager().GetAllPlayers())
                 {
-                    if (!player.GetAPIUser().isFriend)
+                    if (!APIUser.IsFriendsWith(player.GetAPIUser().id))
                     {
                         player.GetVRCPlayer().field_Internal_Boolean_3 = false;
                     }
@@ -110,7 +110,7 @@ namespace EthosClient.Utils
                 GeneralUtils.CantHearOnNonFriends = false;
                 foreach (var player in GeneralWrappers.GetPlayerManager().GetAllPlayers())
                 {
-                    if (!player.GetAPIUser().isFriend)
+                    if (!APIUser.IsFriendsWith(player.GetAPIUser().id))
                     {
                         player.GetVRCPlayer().field_Internal_Boolean_3 = true;
                     }

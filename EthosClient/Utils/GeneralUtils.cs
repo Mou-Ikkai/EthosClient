@@ -3,6 +3,7 @@ using EthosClient.Menu;
 using EthosClient.Modules;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
+using MelonLoader.ICSharpCode.SharpZipLib.Zip;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace EthosClient.Utils
         public static bool CustomSerialization = false;
 
         public static bool CantHearOnNonFriends = false;
+
+        public static bool AutoDeleteNonFriendsPortals = false;
+
+        public static bool AutoDeleteEveryonesPortals = false;
+
+        public static List<string> WhitelistedCanDropPortals = new List<string>();
 
         public static List<string> WhitelistedCanHearUsers = new List<string>();
 

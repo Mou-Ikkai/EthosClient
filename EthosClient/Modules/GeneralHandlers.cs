@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC;
+using VRC.Core;
 using VRC.SDKBase;
 
 namespace EthosClient.Modules
@@ -32,11 +33,11 @@ namespace EthosClient.Modules
             {
                 if (StoredKeybinds.Count() == 0) StoredKeybinds.AddRange(Configuration.GetConfig().Keybinds.Values);
 
-                foreach(var keybind in StoredKeybinds)
+                foreach (var keybind in StoredKeybinds)
                 {
                     if (Input.GetKey(keybind.FirstKey) && Input.GetKeyDown(keybind.SecondKey))
                     {
-                        switch(keybind.Target)
+                        switch (keybind.Target)
                         {
                             default:
                                 break;
@@ -68,8 +69,8 @@ namespace EthosClient.Modules
                                 GeneralUtils.WorldTriggers = !GeneralUtils.WorldTriggers;
                                 break;
                             case EthosFeature.ToggleAllTriggers:
-                                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>()) 
-                                    if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair")) 
+                                foreach (VRC_Trigger trigger in Resources.FindObjectsOfTypeAll<VRC_Trigger>())
+                                    if (!trigger.name.Contains("Avatar") && !trigger.name.Contains("Chair"))
                                         trigger.Interact();
                                 break;
                             case EthosFeature.AntiWorldTriggers:
@@ -80,6 +81,25 @@ namespace EthosClient.Modules
                                 Configuration.GetConfig().AntiTriggers = !Configuration.GetConfig().AntiTriggers;
                                 Configuration.SaveConfiguration();
                                 break;
+                        }
+                    }
+                }
+
+                if (GeneralUtils.AutoDeleteEveryonesPortals)
+                {
+                    foreach (var portal in Resources.FindObjectsOfTypeAll<PortalInternal>())
+                        Networking.Destroy(portal.gameObject);
+                }
+
+                if (GeneralUtils.AutoDeleteNonFriendsPortals)
+                {
+                    foreach (var portal in Resources.FindObjectsOfTypeAll<PortalInternal>())
+                    {
+                        var player = GeneralWrappers.GetPlayerManager().GetPlayer(portal.field_Internal_Int32_0);
+                        if (player.GetAPIUser() != null)
+                        {
+                            if (!APIUser.IsFriendsWith(player.GetAPIUser().id))
+                                Networking.Destroy(portal.gameObject);
                         }
                     }
                 }

@@ -43,7 +43,7 @@ namespace EthosClient.Modules
 
             if (GeneralUtils.CantHearOnNonFriends)
             {
-                if (!apiuser.isFriend)
+                if (!APIUser.IsFriendsWith(apiuser.id))
                     _player.GetVRCPlayer().field_Internal_Boolean_3 = false;
             }
 

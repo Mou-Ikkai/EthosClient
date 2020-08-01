@@ -40,7 +40,7 @@ namespace EthosClient.Modules
 
         }
 
-        public virtual void OnPlayerJoin(Player player)
+        public virtual void OnPlayerJoin(VRCPlayerApi player)
         {
 
         }

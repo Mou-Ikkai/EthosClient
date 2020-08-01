@@ -99,7 +99,7 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
-            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
+            if (__0 != null)
             {
                 if (GeneralUtils.WhitelistedCanHearUsers.Contains(__0.displayName))
                     GeneralUtils.WhitelistedCanHearUsers.Remove(__0.displayName); //just to be sure they dont already exist (i could do this in the playereventshandler but this one is better and is called more)
@@ -107,7 +107,7 @@ namespace EthosClient.Patching
                 if (!PlayerCache.Contains(__0.displayName))
                 {
                     for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                        GeneralUtils.Modules[i].OnPlayerJoin(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+                        GeneralUtils.Modules[i].OnPlayerJoin(__0);
 
                     PlayerCache.Add(__0.displayName);
                 }

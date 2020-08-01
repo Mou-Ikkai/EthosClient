@@ -27,23 +27,28 @@ namespace EthosClient.Modules
 
         public override void OnUpdate() { }
 
-        public override void OnPlayerJoin(Player player)
+        public override void OnPlayerJoin(VRCPlayerApi player)
         {
-            if (GeneralUtils.Authorities.TryGetValue(player.GetAPIUser().id, out string what))
+            var _player = GeneralWrappers.GetPlayerManager().GetPlayer(player);
+            if (_player == null) return;
+            var apiuser = _player.GetAPIUser();
+            if (apiuser == null) return;
+
+            if (GeneralUtils.Authorities.TryGetValue(apiuser.id, out string what))
             {
                 //im gonna use the what for later ok
-                player.GetVRCPlayerApi().SetNamePlateColor(Color.cyan);
-                ConsoleUtil.Info($"An Ethos Admin+ || {player.GetAPIUser().displayName} has joined.");
+                player.SetNamePlateColor(Color.cyan);
+                ConsoleUtil.Info($"An Ethos Admin+ || {apiuser.displayName} has joined.");
             }
 
             if (GeneralUtils.CantHearOnNonFriends)
             {
-                if (!player.GetAPIUser().isFriend) 
-                    player.GetVRCPlayer().field_Internal_Boolean_3 = false;
+                if (!apiuser.isFriend)
+                    _player.GetVRCPlayer().field_Internal_Boolean_3 = false;
             }
 
             if (Configuration.GetConfig().LogModerations)
-                GeneralUtils.InformHudText(Color.green, $"{player.GetAPIUser().displayName} has joined.");
+                GeneralUtils.InformHudText(Color.green, $"{apiuser.displayName} has joined.");
 
             if (GeneralUtils.ESP)
             {

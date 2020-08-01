@@ -52,6 +52,13 @@ namespace EthosClient.Menu
             {
                 Configuration.GetConfig().DefaultLogToConsole = false;
             }, "Decide whether you want to log all moderation/other client information to your console or your hud ingame.", Color.red, Color.white).setToggleState(Configuration.GetConfig().DefaultLogToConsole);
+            new QMToggleButton(this, 1, 1, "Enable\nDiscord RPC", delegate
+            {
+                Configuration.GetConfig().UseRichPresence = true;
+            }, "Disable\nDiscord RPC", delegate
+            {
+                Configuration.GetConfig().UseRichPresence = false;
+            }, "Enable/Disable the discord rich presence.", Color.red, Color.white).setToggleState(Configuration.GetConfig().UseRichPresence);
         }
     }
 }

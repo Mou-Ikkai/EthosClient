@@ -6,6 +6,7 @@ using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using VRC;
 using VRC.SDKBase;
@@ -39,11 +40,12 @@ namespace EthosClient.Patching
             new Patch("Ethos_Extras", AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) }), GetLocalPatch("IL2CPPConsoleWriteLine"), null);
             new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null);
             new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null);
-            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_0"), GetLocalPatch("SerializeView"), null);
-            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_1"), GetLocalPatch("SerializeView"), null);
-            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_2"), GetLocalPatch("SerializeView"), null);
-            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_3"), GetLocalPatch("SerializeView"), null);
-            new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_4"), GetLocalPatch("SerializeView"), null);
+            //new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_0"), GetLocalPatch("SerializeView"), null);
+            //new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_1"), GetLocalPatch("SerializeView"), null);
+            //new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_2"), GetLocalPatch("SerializeView"), null);
+            //new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_3"), GetLocalPatch("SerializeView"), null);
+            //new Patch("Ethos_Extras", typeof(PhotonView).GetMethod("Method_Public_Void_ObjectPublicQu1ObByObBoInBoBoUnique_ValueTypePublicSealedInObPhDoInUnique_4"), GetLocalPatch("SerializeView"), null);
+            new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
         }
 
         public static void ApplyPatches()
@@ -55,45 +57,64 @@ namespace EthosClient.Patching
         #region Patches
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
-            List<string> FilteredStrings = new List<string>()
-            {
-                "Mirror",
-                "Chair",
-                "Wall",
-                "Option",
-                "Box Capsule",
-                "Lounge",
-                "Camp",
-                "Skybox"                        
-            };
-            bool isFiltered = false;
+            //List<string> FilteredStrings = new List<string>()
+            //{
+            //    "Mirror",
+            //    "Chair",
+            //    "Wall",
+            //    "Option",
+            //    "Box Capsule",
+            //    "Lounge",
+            //    "Camp",
+            //    "Skybox"                        
+            //};
+            //bool isFiltered = false;
 
-            for (var i = 0; i < FilteredStrings.Count; i++)
-            {
-                if (FilteredStrings[i].ToLower().Contains(__0.ParameterObject.name.ToLower().ToString()))
-                    isFiltered = true;
-            }
+            //for (var i = 0; i < FilteredStrings.Count; i++)
+            //{
+            //    if (FilteredStrings[i].ToLower().Contains(__0.ParameterObject.name.ToLower().ToString()))
+            //        isFiltered = true;
+            //}
 
-            if (GeneralUtils.IsDevBranch)
-                Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
+            //if (GeneralUtils.IsDevBranch)
+            //    Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
 
-            if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered)
-            {
-                if (Configuration.GetConfig().AntiWorldTriggers && isFiltered)
-                    return false;
+            //if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered)
+            //{
+            //    if (Configuration.GetConfig().AntiWorldTriggers && isFiltered)
+            //        return false;
 
-                else if (Configuration.GetConfig().AntiTriggers)
-                    return false;
-            }
+            //    else if (Configuration.GetConfig().AntiTriggers)
+            //        return false;
+            //}
 
             if (GeneralUtils.WorldTriggers)
                 __1 = VrcBroadcastType.Always;
 
+            //fix anti world triggers and anti triggers FOR FUCKS SAKE
             return true;
+        }
+
+        private static bool EnterPortalPatch(PortalInternal __instance)
+        {
+            if (Configuration.GetConfig().PortalSafety)
+            {
+                GeneralWrappers.AlertV2("Enter Portal", $"Instance: {__instance.field_Private_ApiWorld_0.name}{__instance.field_Private_ApiWorld_0.instanceId}\nAuthor: {__instance.field_Private_ApiWorld_0.authorName}\nWho Dropped: {__instance.GetPlayer().GetAPIUser().displayName}",
+                "Enter Portal", new Action(() =>
+                {
+                    Networking.GoToRoom($"{__instance.field_Private_ApiWorld_0.id}{__instance.field_Private_ApiWorld_0.instanceId}");
+                }), "Delete Portal", new Action(() =>
+                {
+                    UnityEngine.Object.Destroy(__instance.gameObject);
+                }));
+                return false;
+            }
+            else return true;
         }
 
         private static bool SerializeView()
         {
+            //wtf, fix this later
             return !GeneralUtils.CustomSerialization;
         }
 

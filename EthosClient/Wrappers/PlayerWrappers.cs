@@ -76,6 +76,8 @@ namespace EthosClient.Wrappers
             return GetPlayer(GeneralWrappers.GetPlayerManager(), VRCPlayerApi.GetPlayerByGameObject(gameObject).playerId);
         }
 
+        public static Player GetPlayer(this PortalInternal internalportal) { return internalportal.prop_Player_0; }
+
         public static ulong GetSteamID(this VRCPlayer player) { return player.field_Private_UInt64_0; }
 
         public static ObjectPublicObInBoStHaStBoObInHaUnique GetPhotonPlayer(this Player player) { return player.prop_ObjectPublicObInBoStHaStBoObInHaUnique_0; }

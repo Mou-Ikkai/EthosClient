@@ -94,7 +94,7 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.AutoDeleteNonFriendsPortals = false;
             }, "This feature, when enabled, auto deletes portals dropped by non friends.", Color.red, Color.white).setToggleState(GeneralUtils.AutoDeleteNonFriendsPortals);
-            new QMToggleButton(this, 3, 1, "Auto\nDelete Portals", delegate
+            new QMToggleButton(this, 3, 2, "Auto\nDelete Portals", delegate
             {
                 GeneralUtils.AutoDeleteEveryonesPortals = true;
             }, "Don't\nAuto Delete Portals", delegate

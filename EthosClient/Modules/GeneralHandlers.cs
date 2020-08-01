@@ -88,18 +88,18 @@ namespace EthosClient.Modules
                 if (GeneralUtils.AutoDeleteEveryonesPortals)
                 {
                     foreach (var portal in Resources.FindObjectsOfTypeAll<PortalInternal>())
-                        Networking.Destroy(portal.gameObject);
+                        UnityEngine.Object.Destroy(portal.gameObject);
                 }
 
                 if (GeneralUtils.AutoDeleteNonFriendsPortals)
                 {
                     foreach (var portal in Resources.FindObjectsOfTypeAll<PortalInternal>())
                     {
-                        var player = GeneralWrappers.GetPlayerManager().GetPlayer(portal.field_Internal_Int32_0);
+                        var player = portal.GetPlayer();
                         if (player.GetAPIUser() != null)
                         {
                             if (!APIUser.IsFriendsWith(player.GetAPIUser().id))
-                                Networking.Destroy(portal.gameObject);
+                                UnityEngine.Object.Destroy(portal.gameObject);
                         }
                     }
                 }

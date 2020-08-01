@@ -99,27 +99,33 @@ namespace EthosClient.Patching
 
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
-            if (GeneralUtils.WhitelistedCanHearUsers.Contains(__0.displayName))
-                GeneralUtils.WhitelistedCanHearUsers.Remove(__0.displayName); //just to be sure they dont already exist (i could do this in the playereventshandler but this one is better and is called more)
-
-            if (!PlayerCache.Contains(__0.displayName))
+            if (GeneralWrappers.GetPlayerManager().GetPlayer(__0) != null)
             {
-                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                    GeneralUtils.Modules[i].OnPlayerJoin(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+                if (GeneralUtils.WhitelistedCanHearUsers.Contains(__0.displayName))
+                    GeneralUtils.WhitelistedCanHearUsers.Remove(__0.displayName); //just to be sure they dont already exist (i could do this in the playereventshandler but this one is better and is called more)
 
-                PlayerCache.Add(__0.displayName);
+                if (!PlayerCache.Contains(__0.displayName))
+                {
+                    for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                        GeneralUtils.Modules[i].OnPlayerJoin(GeneralWrappers.GetPlayerManager().GetPlayer(__0));
+
+                    PlayerCache.Add(__0.displayName);
+                }
             }
             return true;
         }
 
         private static bool OnPlayerLeave(ref VRCPlayerApi __0)
         {
-            if (PlayerCache.Contains(__0.displayName))
+            if (__0 != null)
             {
-                for (var i = 0; i < GeneralUtils.Modules.Count; i++)
-                    GeneralUtils.Modules[i].OnPlayerLeft(__0);
+                if (PlayerCache.Contains(__0.displayName))
+                {
+                    for (var i = 0; i < GeneralUtils.Modules.Count; i++)
+                        GeneralUtils.Modules[i].OnPlayerLeft(__0);
 
-                PlayerCache.Remove(__0.displayName);
+                    PlayerCache.Remove(__0.displayName);
+                }
             }
             return true;
         }

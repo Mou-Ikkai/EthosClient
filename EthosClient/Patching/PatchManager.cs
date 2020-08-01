@@ -101,13 +101,12 @@ namespace EthosClient.Patching
             {
                 if (Configuration.GetConfig().PortalSafety)
                 {
-                    GeneralWrappers.AlertV2("Enter Portal", $"Instance: {__instance.field_Private_ApiWorld_0.name}{__instance.field_Private_ApiWorld_0.instanceId}\nAuthor: {__instance.field_Private_ApiWorld_0.authorName}\nWho Dropped: {__instance.GetPlayer().GetAPIUser().displayName}",
-                    "Enter Portal", new Action(() =>
+                    GeneralWrappers.AlertV2($"Portal: {__instance.field_Private_ApiWorld_0.name}", $"Instance: {(__instance.field_Private_ApiWorld_0.instanceId == null ? "Random Public Instance" : __instance.field_Private_ApiWorld_0.instanceId)}\nWorld Creator: {__instance.field_Private_ApiWorld_0.authorName}\nWho Dropped: {__instance.GetPlayer().GetAPIUser().displayName}",
+                    "Enter", new Action(() =>
                     {
                         Networking.GoToRoom($"{__instance.field_Private_ApiWorld_0.id}{__instance.field_Private_ApiWorld_0.instanceId}");
-                    }), "Delete Portal", new Action(() =>
+                    }), "Don't Enter", new Action(() =>
                     {
-                        UnityEngine.Object.Destroy(__instance.gameObject);
                         GeneralWrappers.ClosePopup();
                     }));
                     return false;

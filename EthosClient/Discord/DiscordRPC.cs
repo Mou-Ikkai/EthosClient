@@ -164,6 +164,7 @@ namespace EthosClient.Discord
                 presence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
                 presence.spectateSecret = "MTIzNDV8MTIzNDV8MTMyNDU0";
                 presence.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
+                presence.state += $" ({RoomManager.field_Internal_Static_ApiWorld_0.name})";
                 UpdatePresence(ref presence);
             }
         }

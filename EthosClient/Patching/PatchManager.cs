@@ -105,6 +105,7 @@ namespace EthosClient.Patching
                     Networking.GoToRoom($"{__instance.field_Private_ApiWorld_0.id}{__instance.field_Private_ApiWorld_0.instanceId}");
                 }), "Delete Portal", new Action(() =>
                 {
+                    GeneralWrappers.ClosePopup();
                     UnityEngine.Object.Destroy(__instance.gameObject);
                 }));
                 return false;

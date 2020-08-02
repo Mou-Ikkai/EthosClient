@@ -88,6 +88,7 @@ namespace EthosClient.Menu.Buttons
                 GeneralUtils.Autism = false;
                 GeneralUtils.SpinBot = false;
                 GeneralUtils.SpeedHax = false;
+                GeneralUtils.CustomSerialization = false;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.walkSpeed = GeneralUtils.WalkSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.runSpeed = GeneralUtils.RunSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.strafeSpeed = GeneralUtils.StrafeSpeed;

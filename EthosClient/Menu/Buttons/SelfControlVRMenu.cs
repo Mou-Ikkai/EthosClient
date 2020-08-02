@@ -92,10 +92,17 @@ namespace EthosClient.Menu.Buttons
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.runSpeed = GeneralUtils.RunSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.strafeSpeed = GeneralUtils.StrafeSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate = EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_64k;
-                GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
+                GeneralUtils.ToggleColliders(true);
                 Physics.gravity = GeneralUtils.SavedGravity;
-
             }, "Resets all options on here to default.", Color.red, Color.white);
+
+            new QMToggleButton(this, 5, -1, "Enable\nCustom Serialisation", delegate
+            {
+                GeneralUtils.CustomSerialization = true;
+            }, "Disable\nCustom Serialisation", delegate
+            {
+                GeneralUtils.CustomSerialization = false;
+            }, "Enable/Disable Custom Serialisation via OpRaiseEvent (Experimental)", Color.red, Color.white).setToggleState(GeneralUtils.CustomSerialization);
 
             new QMToggleButton(this, 1, 2, "Infinite\nJump", delegate
             {

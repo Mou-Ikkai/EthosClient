@@ -14,6 +14,7 @@ using System.Linq;
 using static VRC.SDKBase.VRC_EventHandler;
 using VRC.Core;
 using VRC.Udon.Serialization.OdinSerializer;
+using ExitGames.Client.Photon;
 
 namespace EthosClient.Patching
 {
@@ -49,6 +50,7 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
+                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
             }
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
@@ -82,6 +84,24 @@ namespace EthosClient.Patching
             return true;
         }
 
+        private static bool OpRaiseEventPrefix(ref byte __0, ref Il2CppSystem.Object __1, ref ObjectPublicObByObInByObObUnique __2, ref SendOptions __3)
+        {
+            try
+            {
+                if (GeneralUtils.IsDevBranch)
+                {
+                    ConsoleUtil.Info("Called OpRaiseEvent!");
+                    Console.WriteLine(__0);
+                }
+
+                if (__0 == 7 || __0 == 206 || __0 == 201)
+                    return !GeneralUtils.CustomSerialization;
+
+            }
+            catch { }
+            return true;
+        }
+
         private static bool IsBlockedEitherWayPatch(ref bool __result)
         {
             if (Configuration.GetConfig().AntiBlock)
@@ -101,8 +121,10 @@ namespace EthosClient.Patching
         private static bool VideoPlayerPatch(VRCSDK2.VRC_SyncVideoPlayer __instance)
         {
             if (__instance.Videos.Count() > 0)
-                if (!GeneralUtils.SuitableVideoURL(__instance.Videos.First().URL)) 
+            {
+                if (!GeneralUtils.SuitableVideoURL(__instance.Videos.First().URL))
                     return !Configuration.GetConfig().VideoPlayerSafety;
+            }
 
             return true;
         }

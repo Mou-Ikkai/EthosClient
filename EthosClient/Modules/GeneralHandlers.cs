@@ -88,9 +88,6 @@ namespace EthosClient.Modules
                                 Configuration.GetConfig().AntiWorldTriggers = !Configuration.GetConfig().AntiWorldTriggers;
                                 Configuration.SaveConfiguration();
                                 break;
-                            case EthosFeature.Serialization:
-                                GeneralUtils.CustomSerialization = !GeneralUtils.CustomSerialization;
-                                break;
                         }
                     }
                 }

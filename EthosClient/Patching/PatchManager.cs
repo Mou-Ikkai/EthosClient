@@ -13,6 +13,7 @@ using VRC.SDKBase;
 using System.Linq;
 using static VRC.SDKBase.VRC_EventHandler;
 using VRC.Core;
+using VRC.Udon.Serialization.OdinSerializer;
 
 namespace EthosClient.Patching
 {
@@ -28,6 +29,8 @@ namespace EthosClient.Patching
             {
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null);
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_0"), GetLocalPatch("IsKickedFromWorldPatch"), null);
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_8"), GetLocalPatch("IsBlockedEitherWayPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BlockStateChangeRPC"), GetLocalPatch("AntiBlock"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("ForceLogoutRPC"), GetLocalPatch("AntiLogout"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("BanPublicOnlyRPC"), GetLocalPatch("AntiPublicBan"), null);
@@ -47,7 +50,7 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
             }
-            catch { }
+            catch(Exception e) { Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
         }
 
@@ -76,6 +79,22 @@ namespace EthosClient.Patching
 
             }
             catch { }
+            return true;
+        }
+
+        private static bool IsBlockedEitherWayPatch(ref bool __result)
+        {
+            if (Configuration.GetConfig().AntiBlock)
+                __result = false;
+
+            return true;
+        }
+
+        private static bool IsKickedFromWorldPatch(ref bool __result)
+        {
+            if (Configuration.GetConfig().AntiKick)
+                __result = false;
+
             return true;
         }
 
@@ -159,9 +178,12 @@ namespace EthosClient.Patching
                     for (var i = 0; i < GeneralUtils.Modules.Count; i++)
                         GeneralUtils.Modules[i].OnPlayerKicked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __4);
                 }
+
+                if (__4.GetAPIUser().id == APIUser.CurrentUser.id)
+                    return !Configuration.GetConfig().AntiKick;
             }
-            catch { return true; }
-            return !Configuration.GetConfig().AntiKick;
+            catch { }
+            return true;
         }
 
         private static bool AntiBlock(ref string __0, bool __1, ref Player __2)
@@ -174,8 +196,8 @@ namespace EthosClient.Patching
                         GeneralUtils.Modules[i].OnPlayerBlocked(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2, __1);
                 }
             }
-            catch { return true; }
-            return !Configuration.GetConfig().AntiBlock;
+            catch { }
+            return true;
         }
 
         private static bool CloneAvatarPrefix(ref UserInteractMenu __instance)
@@ -208,28 +230,41 @@ namespace EthosClient.Patching
             return true;
         }
 
-        private static bool IL2CPPConsoleWriteLine(string __0) { return !Configuration.GetConfig().CleanConsole; }
+        private static bool IL2CPPConsoleWriteLine(ref string __0) { return !Configuration.GetConfig().CleanConsole; }
 
-        private static bool AntiIpLogImage(string __0)
+        private static bool AntiIpLogImage(ref string __0)
         {
             try
             {
-                if (__0.StartsWith("https://api.vrchat.cloud/api/1/file/") || __0.StartsWith("https://api.vrchat.cloud/api/1/image/") || __0.StartsWith("https://d348imysud55la.cloudfront.net/thumbnails/") || __0.StartsWith("https://files.vrchat.cloud/thumbnails/")) return true;
-                return !Configuration.GetConfig().PortalSafety;
+                if (!__0.StartsWith("https://api.vrchat.cloud/api/1/file/"))
+                    return !Configuration.GetConfig().PortalSafety;
+                else if (!__0.StartsWith("https://api.vrchat.cloud/api/1/image/"))
+                    return !Configuration.GetConfig().PortalSafety;
+                else if (!__0.StartsWith("https://d348imysud55la.cloudfront.net/thumbnails/"))
+                    return !Configuration.GetConfig().PortalSafety;
+                else if (!__0.StartsWith("https://files.vrchat.cloud/thumbnails/"))
+                    return !Configuration.GetConfig().PortalSafety;
             }
-            catch { return true; }
+            catch { }
+            return true;
         }
 
         private static bool AntiVideoPlayerHijacking(ref string __0)
         {
-            try { if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) __0 = ""; }
+            try 
+            { 
+                if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) 
+                    return false; 
+            }
             catch { }
             return true;
         }
 
         private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
         {
-            __result = true;
+            if (Configuration.GetConfig().AntiPublicBan)
+                __result = true;
+
             return true;
         }
 
@@ -242,6 +277,9 @@ namespace EthosClient.Patching
                     for (var i = 0; i < GeneralUtils.Modules.Count; i++)
                         GeneralUtils.Modules[i].OnPlayerLoggedOut(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __1);
                 }
+
+                if (__1.GetAPIUser().id == APIUser.CurrentUser.id)
+                    return false;
             }
             catch { }
             return true;
@@ -256,9 +294,12 @@ namespace EthosClient.Patching
                     for (var i = 0; i < GeneralUtils.Modules.Count; i++)
                         GeneralUtils.Modules[i].OnPlayerPublicBanned(GeneralWrappers.GetPlayerManager().GetPlayer(__0), __2);
                 }
+
+                if (__2.GetAPIUser().id == APIUser.CurrentUser.id)
+                    return !Configuration.GetConfig().AntiPublicBan;
             }
-            catch { return true; }
-            return !Configuration.GetConfig().AntiPublicBan;
+            catch { }
+            return true;
         }
 
         private static bool BanPatch(ref string __0, ref int __1, ref Player __2)

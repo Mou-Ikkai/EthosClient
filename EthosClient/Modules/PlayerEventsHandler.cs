@@ -81,7 +81,7 @@ namespace EthosClient.Modules
                 HudPrint(moderator, kicked, (sender, target, isyou) =>
                 {
                     if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt kicked by {sender.GetAPIUser().displayName}");
+                        GeneralUtils.InformHudText(Color.red, $"You were kicked by {sender.GetAPIUser().displayName}");
                     else
                         GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been kicked by {sender.GetAPIUser().displayName}");
                 });
@@ -95,9 +95,9 @@ namespace EthosClient.Modules
                 HudPrint(moderator, banned, (sender, target, isyou) =>
                 {
                     if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {sender.GetAPIUser().displayName}");
+                        GeneralUtils.InformHudText(Color.red, $"You were banned by {sender.GetAPIUser().displayName}");
                     else
-                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been public banned by {sender.GetAPIUser().displayName}");
+                        GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been banned by {sender.GetAPIUser().displayName}");
                 });
             }
         }
@@ -123,7 +123,7 @@ namespace EthosClient.Modules
                 HudPrint(moderator, banned, (sender, target, isyou) =>
                 {
                     if (isyou)
-                        GeneralUtils.InformHudText(Color.red, $"You were attempt public banned by {sender.GetAPIUser().displayName}");
+                        GeneralUtils.InformHudText(Color.red, $"You were public banned by {sender.GetAPIUser().displayName}");
                     else
                         GeneralUtils.InformHudText(Color.red, $"{target.GetAPIUser().displayName} has been public banned by {sender.GetAPIUser().displayName}");
                 });

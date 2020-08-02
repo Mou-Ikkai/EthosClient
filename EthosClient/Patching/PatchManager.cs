@@ -68,7 +68,7 @@ namespace EthosClient.Patching
                 {
                     if (Sender != null)
                     {
-                        if (Sender.GetAPIUser().id != PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                        if (Sender.GetAPIUser().id != APIUser.CurrentUser.id)
                         {
                             if (Configuration.GetConfig().AntiWorldTriggers)
                                 return false;
@@ -76,11 +76,12 @@ namespace EthosClient.Patching
                     }
                 }
 
-                if (GeneralUtils.WorldTriggers)
+                if (GeneralUtils.WorldTriggers && (__1 != VrcBroadcastType.Always || __1 != VrcBroadcastType.AlwaysBufferOne || __1 != VrcBroadcastType.AlwaysUnbuffered))
                     __1 = VrcBroadcastType.Always;
+                
 
             }
-            catch { }
+            catch(Exception c) { ConsoleUtil.Exception(c); }
             return true;
         }
 

@@ -48,7 +48,15 @@ namespace EthosClient.Wrappers
         public static Player GetPlayer(this PlayerManager instance, int Index)
         {
             var Players = instance.GetAllPlayers();
-            return Players[Index];
+            for (int i = 0; i < Players.Length; i++)
+            {
+                var player = Players[i];
+                if (player.GetVRCPlayerApi().playerId == Index)
+                {
+                    return player;
+                }
+            }
+            return null;
         }
         public static Player GetPlayer(this PlayerManager instance, VRCPlayerApi api)
         {

@@ -59,19 +59,6 @@ namespace EthosClient.Patching
             try
             {
                 Player Sender = GeneralWrappers.GetPlayerManager().GetPlayer(__2);
-
-                Il2CppSystem.Object[] array = VrcSdk2Interface.ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique.field_Public_Static_ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique_0.Method_Internal_ArrayOf_Object_ArrayOf_Byte_0(__0.ParameterBytes);
-                string Receiver = APIUser.CurrentUser.id;
-                if (array.Length >= 1 && Receiver.Length > 10 && Receiver != "0")
-                    Receiver = array[0].ToString();
-
-                string eventName = __0.Name;
-                if (eventName == "")
-                    eventName = __0.ParameterObject.name;
-
-                if (Configuration.GetConfig().LogModerations)
-                    ConsoleUtil.Info($"[Event] {Sender.GetAPIUser().displayName} sent {__1.ToString()} ({eventName}) [{__0.ParameterBytes.Length}] to {GeneralWrappers.GetPlayerManager().GetPlayer(Receiver).GetAPIUser().displayName}");
-
                 if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered || __1 == VrcBroadcastType.AlwaysBufferOne)
                 {
                     if (Sender != null)

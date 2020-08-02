@@ -12,6 +12,7 @@ using VRC;
 using VRC.SDKBase;
 using System.Linq;
 using static VRC.SDKBase.VRC_EventHandler;
+using VRC.Core;
 
 namespace EthosClient.Patching
 {
@@ -42,9 +43,9 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", AccessTools.Method(typeof(Il2CppSystem.Console), "WriteLine", new Type[] { typeof(string) }), GetLocalPatch("IL2CPPConsoleWriteLine"), null);
                 new Patch("Ethos_Extras", typeof(ImageDownloader).GetMethod("DownloadImage"), GetLocalPatch("AntiIpLogImage"), null);
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethod("AddURL"), GetLocalPatch("AntiVideoPlayerHijacking"), null);
+                new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
-                //new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
-                foreach (var method in typeof(PhotonView).GetMethods().ToList().Where(x => x.GetParameters().Count() == 3)) new Patch("Ethos_Extras", method, GetLocalPatch("SerializeView"), null);
+                new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
             }
             catch { }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
@@ -57,35 +58,30 @@ namespace EthosClient.Patching
         {
             try
             {
-                List<string> FilteredStrings = new List<string>()
+                Player Sender = GeneralWrappers.GetPlayerManager().GetPlayer(__2);
+
+                Il2CppSystem.Object[] array = VrcSdk2Interface.ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique.field_Public_Static_ObjectCompilerGeneratedNPrivateSealedObFu2VRBoAcFu2VRBoUnique_0.Method_Internal_ArrayOf_Object_ArrayOf_Byte_0(__0.ParameterBytes);
+                string Receiver = APIUser.CurrentUser.id;
+                if (array.Length >= 1 && Receiver.Length > 10 && Receiver != "0")
+                    Receiver = array[0].ToString();
+
+                string eventName = __0.Name;
+                if (eventName == "")
+                    eventName = __0.ParameterObject.name;
+
+                if (Configuration.GetConfig().LogModerations)
+                    ConsoleUtil.Info($"[Event] {Sender.GetAPIUser().displayName} sent {__1.ToString()} ({eventName}) [{__0.ParameterBytes.Length}] to {GeneralWrappers.GetPlayerManager().GetPlayer(Receiver).GetAPIUser().displayName}");
+
+                if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered || __1 == VrcBroadcastType.AlwaysBufferOne)
                 {
-                    "Mirror",
-                    "Chair",
-                    "Wall",
-                    "Option",
-                    "Box Capsule",
-                    "Lounge",
-                    "Camp",
-                    "Skybox"
-                };
-                bool isFiltered = false;
-
-                for (var i = 0; i < FilteredStrings.Count; i++)
-                {
-                    if (FilteredStrings[i].ToLower().Contains(__0.ParameterObject.name.ToLower().ToString()))
-                        isFiltered = true;
-                }
-
-                if (GeneralUtils.IsDevBranch)
-                    Console.WriteLine(__0.ParameterObject.name + " - " + __2 + " - " + __3);
-
-                if (__1 == VrcBroadcastType.Always || __1 == VrcBroadcastType.AlwaysUnbuffered)
-                {
-                    if (Configuration.GetConfig().AntiWorldTriggers && isFiltered)
-                        return false;
-
-                    else if (Configuration.GetConfig().AntiTriggers)
-                        return false;
+                    if (Sender != null)
+                    {
+                        if (Sender.GetAPIUser().id != PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                        {
+                            if (Configuration.GetConfig().AntiWorldTriggers)
+                                return false;
+                        }
+                    }
                 }
 
                 if (GeneralUtils.WorldTriggers)
@@ -93,6 +89,15 @@ namespace EthosClient.Patching
 
             }
             catch { }
+            return true;
+        }
+
+        private static bool VideoPlayerPatch(VRCSDK2.VRC_SyncVideoPlayer __instance)
+        {
+            if (__instance.Videos.Count() > 0)
+                if (!GeneralUtils.SuitableVideoURL(__instance.Videos.First().URL)) 
+                    return !Configuration.GetConfig().VideoPlayerSafety;
+
             return true;
         }
 
@@ -114,12 +119,6 @@ namespace EthosClient.Patching
                 }
             }
             catch(Exception) { }
-            return true;
-        }
-
-        private static bool SerializeView()
-        {
-            Console.WriteLine("wtf");
             return true;
         }
 

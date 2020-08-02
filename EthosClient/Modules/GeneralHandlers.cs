@@ -2,6 +2,7 @@
 using EthosClient.Settings;
 using EthosClient.Utils;
 using EthosClient.Wrappers;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,9 +78,8 @@ namespace EthosClient.Modules
                                 Configuration.GetConfig().AntiWorldTriggers = !Configuration.GetConfig().AntiWorldTriggers;
                                 Configuration.SaveConfiguration();
                                 break;
-                            case EthosFeature.AntiTriggers:
-                                Configuration.GetConfig().AntiTriggers = !Configuration.GetConfig().AntiTriggers;
-                                Configuration.SaveConfiguration();
+                            case EthosFeature.Serialization:
+                                GeneralUtils.CustomSerialization = !GeneralUtils.CustomSerialization;
                                 break;
                         }
                     }

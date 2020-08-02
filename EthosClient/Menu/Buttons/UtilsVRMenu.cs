@@ -87,15 +87,7 @@ namespace EthosClient.Utils
                 Networking.GoToRoom(ID);
             }, "Joins an instance by It's ID.", Color.red, Color.white);
 
-            new QMToggleButton(this, 1, 1, "Enable\nCustom Serialization", delegate
-            {
-                GeneralUtils.CustomSerialization = true;
-            }, "Disable\nCustom Serialization", delegate
-            {
-                GeneralUtils.CustomSerialization = false;
-            }, "Enable/Disables custom serialization on your photon view, meaning with this enabled, no one can see you move around.", Color.red, Color.white).setToggleState(GeneralUtils.CustomSerialization);
-
-            new QMToggleButton(this, 2, 1, "Can't Hear\non Non Friends", delegate
+            new QMToggleButton(this, 1, 1, "Can't Hear\non Non Friends", delegate
             {
                 GeneralUtils.CantHearOnNonFriends = true;
                 foreach (var player in GeneralWrappers.GetPlayerManager().GetAllPlayers())

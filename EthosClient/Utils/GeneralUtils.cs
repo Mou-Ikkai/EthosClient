@@ -90,7 +90,10 @@ namespace EthosClient.Utils
 
         public static FavoritedAvatar GetExtendedFavorite(string ID)
         {
-            foreach(var avatar in Configuration.GetConfig().ExtendedFavoritedAvatars) if (avatar.ID == ID) return avatar;
+            foreach(var avatar in Configuration.GetConfig().ExtendedFavoritedAvatars) 
+                if (avatar.ID == ID) 
+                    return avatar;
+
             return null;
         }
 
@@ -98,6 +101,7 @@ namespace EthosClient.Utils
         {
             if (url.Contains("youtube.com")) return true;
             else if (url.Contains("youtu.be")) return true;
+            else if (url.Contains("twitch.tv")) return true;
             return false;
         }
 

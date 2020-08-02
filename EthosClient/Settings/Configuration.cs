@@ -75,9 +75,6 @@ namespace EthosClient.Settings
             if (!_Config.Keybinds.ContainsKey("ToggleAllTriggers"))
                 _Config.Keybinds.Add("ToggleAllTriggers", new EthosKeybind(EthosFeature.ToggleAllTriggers, KeyCode.LeftAlt, KeyCode.T, true));
 
-            if (!_Config.Keybinds.ContainsKey("AntiTriggers"))
-                _Config.Keybinds.Add("AntiTriggers", new EthosKeybind(EthosFeature.AntiTriggers, KeyCode.LeftAlt, KeyCode.P, true));
-
             #endregion
         }
 

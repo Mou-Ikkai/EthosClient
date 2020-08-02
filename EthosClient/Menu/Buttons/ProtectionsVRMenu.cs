@@ -78,23 +78,14 @@ namespace EthosClient.Utils
                 Configuration.GetConfig().AntiWorldTriggers = false;
                 Configuration.SaveConfiguration();
             }, "This feature, when enabled, prevents other people from using world triggers to enable/disable mirrors and do other malicious stuff.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiWorldTriggers);
-            new QMToggleButton(this, 2, 2, "Enable\nAnti Triggers", delegate
-            {
-                Configuration.GetConfig().AntiTriggers = true;
-                Configuration.SaveConfiguration();
-            }, "Disable\nAnti Triggers", delegate
-            {
-                Configuration.GetConfig().AntiTriggers = false;
-                Configuration.SaveConfiguration();
-            }, "This feature, when enabled, prevents other people from using global triggers.", Color.red, Color.white).setToggleState(Configuration.GetConfig().AntiTriggers);
-            new QMToggleButton(this, 3, 1, "Auto\nDelete Non Friends\nPortals", delegate
+            new QMToggleButton(this, 2, 2, "Auto\nDelete Non Friends\nPortals", delegate
             {
                 GeneralUtils.AutoDeleteNonFriendsPortals = true;
             }, "Don't Auto\nDelete Non Friends\nPortals", delegate
             {
                 GeneralUtils.AutoDeleteNonFriendsPortals = false;
             }, "This feature, when enabled, auto deletes portals dropped by non friends.", Color.red, Color.white).setToggleState(GeneralUtils.AutoDeleteNonFriendsPortals);
-            new QMToggleButton(this, 3, 2, "Auto\nDelete Portals", delegate
+            new QMToggleButton(this, 3, 1, "Auto\nDelete Portals", delegate
             {
                 GeneralUtils.AutoDeleteEveryonesPortals = true;
             }, "Don't\nAuto Delete Portals", delegate

@@ -15,6 +15,7 @@ namespace EthosClient.EthosInput
         WorldTriggers,
         ToggleAllTriggers,
         AntiWorldTriggers,
-        AntiTriggers
+        AntiTriggers,
+        Serialization
     }
 }

@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC;
 using VRC.Core;
 using VRC.SDKBase;
@@ -22,19 +24,7 @@ namespace EthosClient.Utils
     {
         public UtilsVRMenu(QMNestedButton parent, EthosVRButton config) : base(parent, config.X, config.Y, config.Name, config.Tooltip, GeneralUtils.GetColor(config.ColorScheme.Colors[0]), GeneralUtils.GetColor(config.ColorScheme.Colors[1]), GeneralUtils.GetColor(config.ColorScheme.Colors[2]), GeneralUtils.GetColor(config.ColorScheme.Colors[3]))
         {
-            new QMToggleButton(this, 1, 0, "Enable\nFlight", delegate
-            {
-                Physics.gravity = Vector3.zero;
-                GeneralUtils.Flight = true;
-                GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
-            }, "Disable\nFlight", delegate
-            {
-                Physics.gravity = GeneralUtils.SavedGravity;
-                GeneralUtils.Flight = false;
-                GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
-            }, "Toggle Flight and move around within the air with ease!", Color.red, Color.white).setToggleState(GeneralUtils.Flight);
-
-            new QMToggleButton(this, 2, 0, "Enable\nESP", delegate
+            new QMToggleButton(this, 1, 0, "Enable\nESP", delegate
             {
                 GeneralUtils.ESP = true;
                 GameObject[] array = GameObject.FindGameObjectsWithTag("Player");
@@ -47,6 +37,16 @@ namespace EthosClient.Utils
                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                     }
                 }
+
+                foreach (VRCSDK2.VRC_Interactable vrc_Interactable in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Interactable>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Interactable.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                foreach (VRCSDK2.VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Pickup>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Pickup.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                foreach (PortalInternal portalInternal in Resources.FindObjectsOfTypeAll<PortalInternal>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
             }, "Disable\nESP", delegate
             {
                 GeneralUtils.ESP = false;
@@ -60,9 +60,19 @@ namespace EthosClient.Utils
                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                     }
                 }
+
+                foreach (VRCSDK2.VRC_Interactable vrc_Interactable in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Interactable>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Interactable.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                foreach (VRCSDK2.VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Pickup>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Pickup.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                foreach (PortalInternal portalInternal in Resources.FindObjectsOfTypeAll<PortalInternal>())
+                    GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
             }, "Decide whether you want the upper game, get an advantage, and see all players anywhere within the world.", Color.red, Color.white).setToggleState(GeneralUtils.ESP);
 
-            new QMSingleButton(this, 3, 0, "Avatar\nBy\nID", delegate
+            new QMSingleButton(this, 2, 0, "Avatar\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Avatar ID: ");
                 string ID = Console.ReadLine();
@@ -80,12 +90,17 @@ namespace EthosClient.Utils
                 GeneralWrappers.GetVRCUiPopupManager().AlertPopup("<color=cyan>Success!</color>", "<color=green>Successfully cloned that avatar by It's Avatar ID.</color>");
             }, "Sets your current avatar using an avatar ID.", Color.red, Color.white);
 
-            new QMSingleButton(this, 4, 0, "Join\nBy\nID", delegate
+            new QMSingleButton(this, 3, 0, "Join\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Instance ID: ");
                 string ID = Console.ReadLine();
                 Networking.GoToRoom(ID);
             }, "Joins an instance by It's ID.", Color.red, Color.white);
+
+            new QMSingleButton(this, 4, 0, "Copy\nRoom\nID", delegate
+            {
+                Clipboard.SetText(RoomManager.field_Internal_Static_ApiWorld_0.currentInstanceIdWithTags);
+            }, "Copies the current instance's ID.", Color.red, Color.white);
 
             new QMToggleButton(this, 1, 1, "Can't Hear\non Non Friends", delegate
             {

@@ -59,6 +59,16 @@ namespace EthosClient.Modules
                                         GeneralWrappers.GetHighlightsFX().EnableOutline(array[i].transform.Find("SelectRegion").GetComponent<Renderer>(), GeneralUtils.ESP);
                                     }
                                 }
+
+                                foreach (VRCSDK2.VRC_Interactable vrc_Interactable in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Interactable>())
+                                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Interactable.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                                foreach (VRCSDK2.VRC_Pickup vrc_Pickup in Resources.FindObjectsOfTypeAll<VRCSDK2.VRC_Pickup>())
+                                    GeneralWrappers.GetHighlightsFX().EnableOutline(vrc_Pickup.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
+                                foreach (PortalInternal portalInternal in Resources.FindObjectsOfTypeAll<PortalInternal>())
+                                    GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
+
                                 break;
                             case EthosFeature.Autism:
                                 GeneralUtils.Autism = !GeneralUtils.Autism;
@@ -102,6 +112,12 @@ namespace EthosClient.Modules
                                 UnityEngine.Object.Destroy(portal.gameObject);
                         }
                     }
+                }
+
+                if (GeneralUtils.AutoDeleteAllPickups)
+                {
+                    foreach (var pickup in Resources.FindObjectsOfTypeAll<VRC_Pickup>())
+                        UnityEngine.Object.Destroy(pickup.gameObject);
                 }
 
                 if (GeneralUtils.SpinBot)

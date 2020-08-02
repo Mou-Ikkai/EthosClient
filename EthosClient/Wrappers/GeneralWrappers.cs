@@ -42,11 +42,13 @@ namespace EthosClient.Wrappers
 
         public static void AlertV2(string title, string Content, string buttonname, Action action, string button2, Action action2) => VRCUiPopupManager.field_Private_Static_VRCUiPopupManager_0.Method_Public_Void_String_String_String_Action_String_Action_Action_1_VRCUiPopup_0(title, Content, buttonname, action, button2, action2, null);
 
+        public static bool IsInVr() { return !VRCTrackingManager.Method_Public_Static_Boolean_9(); }
+
         public static void ShowInputKeyBoard(Il2CppSystem.Action<string, Il2CppSystem.Collections.Generic.List<KeyCode>, Text> InputAction)
         {
             VRCUiPopupManager vrcpopup = GetVRCUiPopupManager();
             vrcpopup.inputPopup.gameObject.SetActive(true);
-            vrcpopup.inputPopup.Method_Public_Void_String_InputType_String_Action_3_String_List_1_KeyCode_Text_Boolean_0("", InputField.InputType.Standard, "", InputAction, true);
+            vrcpopup.inputPopup.Method_Public_Void_String_InputType_String_Action_3_String_List_1_KeyCode_Text_Boolean_0("Enter Input", InputField.InputType.Standard, "Enter text", InputAction, true);
             GameObject.Find("UserInterface/MenuContent/Popups/InputKeypadPopup").SetActive(true);
         }
 

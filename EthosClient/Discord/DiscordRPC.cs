@@ -159,7 +159,7 @@ namespace EthosClient.Discord
                     presence.largeImageKey = "ethos_logo";
                     presence.smallImageKey = "small_ethos";
                 }
-                presence.largeImageText = $"As {((APIUser.CurrentUser != null) ? APIUser.CurrentUser.displayName : "")} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(!VRCTrackingManager.Method_Public_Static_Boolean_9() ? "VR" : "Desktop")}]";
+                presence.largeImageText = $"As {((APIUser.CurrentUser != null) ? APIUser.CurrentUser.displayName : "")} {(GeneralUtils.IsDevBranch ? "(Developer)" : "(User)")} [{(GeneralWrappers.IsInVr() ? "VR" : "Desktop")}]";
                 presence.smallImageText = GeneralUtils.Version + " (By Yaekith/404)";
                 presence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM=";
                 presence.spectateSecret = "MTIzNDV8MTIzNDV8MTMyNDU0";

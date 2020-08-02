@@ -20,35 +20,37 @@ namespace EthosClient.Utils
 {
     public static class GeneralUtils
     {
-        public static bool WorldTriggers = false;
+        public static bool 
+            WorldTriggers = false, 
+            Flight = false, 
+            Autism = false, 
+            ESP = false, 
+            SpinBot = false, 
+            ForceClone = false, 
+            IsDevBranch = false, 
+            InfiniteJump = false, 
+            SpeedHax = false, 
+            CustomSerialization = false, 
+            AutoDeleteNonFriendsPortals = false, 
+            CantHearOnNonFriends = false, 
+            AutoDeleteEveryonesPortals, 
+            AutoDeleteAllPickups = false,
+            VoiceMod = false;
 
-        public static bool Flight = false;
+        public static string 
+            Version = "2.0";
 
-        public static bool Autism = false;
+        public static float
+            WalkSpeed = 2f,
+            RunSpeed = 4f,
+            StrafeSpeed = 2f,
+            MicrophoneVolume = 1f;
 
-        public static bool ESP = false;
+        public static List<string> 
+            WhitelistedCanDropPortals = new List<string>(), 
+            WhitelistedCanHearUsers = new List<string>();
 
-        public static bool SpinBot = false;
-
-        public static bool ForceClone = false;
-
-        public static string Version = "2.0";
-
-        public static bool IsDevBranch = false;
-
-        public static bool InfiniteJump = false;
-
-        public static bool CustomSerialization = false;
-
-        public static bool CantHearOnNonFriends = false;
-
-        public static bool AutoDeleteNonFriendsPortals = false;
-
-        public static bool AutoDeleteEveryonesPortals = false;
-
-        public static List<string> WhitelistedCanDropPortals = new List<string>();
-
-        public static List<string> WhitelistedCanHearUsers = new List<string>();
+        public static EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique BitRate = EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_64k;
 
         public static Vector3 SavedGravity = Physics.gravity;
 

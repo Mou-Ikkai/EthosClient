@@ -92,6 +92,13 @@ namespace EthosClient.Utils
             {
                 GeneralUtils.AutoDeleteEveryonesPortals = false;
             }, "This feature, when enabled, auto deletes portals dropped by everyone.", Color.red, Color.white).setToggleState(GeneralUtils.AutoDeleteEveryonesPortals);
+            new QMToggleButton(this, 3, 2, "Auto\nDelete Pickups", delegate
+            {
+                GeneralUtils.AutoDeleteEveryonesPortals = true;
+            }, "Don't\nAuto Delete Pickups", delegate
+            {
+                GeneralUtils.AutoDeleteEveryonesPortals = false;
+            }, "This feature, when enabled, automatically locally deletes all pickups in the world. (This should prevent Love's shitty Desync V5 bullshit)", Color.red, Color.white).setToggleState(GeneralUtils.AutoDeleteAllPickups);
         }
     }
 }

@@ -41,6 +41,10 @@ namespace EthosClient.Menu.Buttons
             }, "Disable\nVoice Mod", delegate
             {
                 GeneralUtils.VoiceMod = false;
+                if (!PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>())
+                    PlayerWrappers.GetCurrentPlayer().GetVRC_Player().gameObject.AddComponent<PlayerModComponentVoice>();
+
+                PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate = EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_64k;
             }, "Enable/Disable Voice Modification, allowing you to increase the bitrate and volume of your microphone at please.", Color.red, Color.white).setToggleState(GeneralUtils.VoiceMod);
 
             new QMToggleButton(this, 4, 1, "Go\nAutistic", new Action(() =>
@@ -87,6 +91,7 @@ namespace EthosClient.Menu.Buttons
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.walkSpeed = GeneralUtils.WalkSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.runSpeed = GeneralUtils.RunSpeed;
                 PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentSpeed>().field_Private_LocomotionInputController_0.strafeSpeed = GeneralUtils.StrafeSpeed;
+                PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate = EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_64k;
                 GeneralUtils.ToggleColliders(!GeneralUtils.Flight);
                 Physics.gravity = GeneralUtils.SavedGravity;
 

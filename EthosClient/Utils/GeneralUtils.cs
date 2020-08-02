@@ -38,7 +38,7 @@ namespace EthosClient.Utils
             VoiceMod = false;
 
         public static string 
-            Version = "2.0";
+            Version = "2.1";
 
         public static float
             WalkSpeed = 2f,
@@ -49,8 +49,6 @@ namespace EthosClient.Utils
         public static List<string> 
             WhitelistedCanDropPortals = new List<string>(), 
             WhitelistedCanHearUsers = new List<string>();
-
-        public static EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique BitRate = EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_64k;
 
         public static Vector3 SavedGravity = Physics.gravity;
 

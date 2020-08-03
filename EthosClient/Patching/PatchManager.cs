@@ -69,6 +69,8 @@ namespace EthosClient.Patching
                     if (Sender != null)
                     {
                         if (Sender.GetAPIUser().id != APIUser.CurrentUser.id)
+                        Console.WriteLine(Sender.GetAPIUser().id);
+                        if (Sender.GetAPIUser().id != PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
                         {
                             if (Configuration.GetConfig().AntiWorldTriggers)
                                 return false;
@@ -89,10 +91,11 @@ namespace EthosClient.Patching
         {
             try
             {
-                if (GeneralUtils.IsDevBranch)
+                if (__0 == 202)
                 {
-                    ConsoleUtil.Info("Called OpRaiseEvent!");
-                    Console.WriteLine(__0);
+                    Console.WriteLine("Blocked Instantiation Data on Event Code 202");
+                    Console.WriteLine(!GeneralUtils.Invisible);
+                    return !GeneralUtils.Invisible;
                 }
 
                 if (__0 == 7 || __0 == 206 || __0 == 201)

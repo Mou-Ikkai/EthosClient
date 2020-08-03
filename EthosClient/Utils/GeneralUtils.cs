@@ -20,22 +20,23 @@ namespace EthosClient.Utils
 {
     public static class GeneralUtils
     {
-        public static bool 
-            WorldTriggers = false, 
-            Flight = false, 
-            Autism = false, 
-            ESP = false, 
-            SpinBot = false, 
-            ForceClone = false, 
-            IsDevBranch = false, 
-            InfiniteJump = false, 
-            SpeedHax = false, 
-            CustomSerialization = false, 
-            AutoDeleteNonFriendsPortals = false, 
-            CantHearOnNonFriends = false, 
-            AutoDeleteEveryonesPortals, 
+        public static bool
+            WorldTriggers = false,
+            Flight = false,
+            Autism = false,
+            ESP = false,
+            SpinBot = false,
+            ForceClone = false,
+            IsDevBranch = true,
+            InfiniteJump = false,
+            SpeedHax = false,
+            CustomSerialization = false,
+            AutoDeleteNonFriendsPortals = false,
+            CantHearOnNonFriends = false,
+            AutoDeleteEveryonesPortals,
             AutoDeleteAllPickups = false,
-            VoiceMod = false;
+            VoiceMod = false,
+            Invisible = false;
 
         public static string 
             Version = "2.1";

@@ -92,11 +92,7 @@ namespace EthosClient.Patching
             try
             {
                 if (__0 == 202)
-                {
-                    Console.WriteLine("Blocked Instantiation Data on Event Code 202");
-                    Console.WriteLine(!GeneralUtils.Invisible);
                     return !GeneralUtils.Invisible;
-                }
 
                 if (__0 == 7 || __0 == 206 || __0 == 201)
                     return !GeneralUtils.CustomSerialization;
@@ -262,13 +258,7 @@ namespace EthosClient.Patching
         {
             try
             {
-                if (!__0.StartsWith("https://api.vrchat.cloud/api/1/file/"))
-                    return !Configuration.GetConfig().PortalSafety;
-                else if (!__0.StartsWith("https://api.vrchat.cloud/api/1/image/"))
-                    return !Configuration.GetConfig().PortalSafety;
-                else if (!__0.StartsWith("https://d348imysud55la.cloudfront.net/thumbnails/"))
-                    return !Configuration.GetConfig().PortalSafety;
-                else if (!__0.StartsWith("https://files.vrchat.cloud/thumbnails/"))
+                if (__0.Contains("vrchat.cloud"))
                     return !Configuration.GetConfig().PortalSafety;
             }
             catch { }

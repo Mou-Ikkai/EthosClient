@@ -50,10 +50,6 @@ namespace EthosClient.Menu
             {
                 PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
             }), "Hide/Unhide yourself, for safety reasons maybe, who knows.", Color.red, Color.white);
-            //new QMSingleButton(this, 2, 2, "Force\nQuit", new Action(() =>
-            //{
-            //    Application.Quit();
-            //}), "Force closes the game.", Color.red, Color.white);
         }
     }
 }

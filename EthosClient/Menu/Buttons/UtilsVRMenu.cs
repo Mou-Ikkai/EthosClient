@@ -99,7 +99,7 @@ namespace EthosClient.Utils
 
             new QMSingleButton(this, 4, 0, "Copy\nRoom\nID", delegate
             {
-                Clipboard.SetText(RoomManager.field_Internal_Static_ApiWorld_0.currentInstanceIdOnly + RoomManager.field_Internal_Static_ApiWorld_0.currentInstanceIdWithTags);
+                Clipboard.SetText($"{RoomManagerBase.field_Internal_Static_ApiWorld_0.id}:{RoomManagerBase.field_Internal_Static_ApiWorld_0.instanceId}");
             }, "Copies the current instance's ID.", Color.red, Color.white);
 
             new QMToggleButton(this, 1, 1, "Can't Hear\non Non Friends", delegate

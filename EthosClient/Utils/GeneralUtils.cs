@@ -3,10 +3,12 @@ using EthosClient.Menu;
 using EthosClient.Modules;
 using EthosClient.Settings;
 using EthosClient.Wrappers;
+using Il2CppSystem.Threading;
 using MelonLoader.ICSharpCode.SharpZipLib.Zip;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.SDKBase;
 using VRCSDK2;
 
 namespace EthosClient.Utils
@@ -121,5 +124,29 @@ namespace EthosClient.Utils
         public static EthosColor GetEthosColor(Color color) { return new EthosColor(color.r, color.g, color.b); }
 
         public static Color GetColor(EthosColor color) { return new Color(color.R, color.G, color.B); }
+
+        public static GameObject DropPortal(string ID, int playerCount, UnityEngine.Vector3 pos, UnityEngine.Quaternion rotation)
+        {
+            GameObject portal = Networking.Instantiate(VRC.SDKBase.VRC_EventHandler.VrcBroadcastType.Always, "Portals/PortalInternalDynamic", pos, rotation);
+            Networking.RPC(VRC.SDKBase.RPC.Destination.AllBufferOne, portal, "ConfigurePortal", new Il2CppSystem.Object[]
+            {
+                (Il2CppSystem.String)ID.Split(':')[0],
+                (Il2CppSystem.String)ID.Split(':')[1],
+                new Il2CppSystem.Int32
+                {
+                    m_value = playerCount
+                }.BoxIl2CppObject()
+            });
+            return portal;
+        }
+
+        public static bool ForceToInstance(VRCPlayer who, string instanceID)
+        {
+            var gameObject = DropPortal(instanceID, 0, who.prop_VRCAvatarManager_0.prop_VRC_AvatarDescriptor_0.ViewPosition, Quaternion.FromToRotation(Vector3.forward, who.transform.forward));
+            Thread.Sleep(1500);
+            Networking.Destroy(gameObject);
+            Process.Start("https://www.youtube.com/watch?v=Vqnqa0Vb_kw");
+            return true;
+        }
     }
 }

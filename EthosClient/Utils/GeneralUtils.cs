@@ -139,14 +139,5 @@ namespace EthosClient.Utils
             });
             return portal;
         }
-
-        public static bool ForceToInstance(VRCPlayer who, string instanceID)
-        {
-            var gameObject = DropPortal(instanceID, 0, who.prop_VRCAvatarManager_0.prop_VRC_AvatarDescriptor_0.ViewPosition, Quaternion.FromToRotation(Vector3.forward, who.transform.forward));
-            Thread.Sleep(1500);
-            Networking.Destroy(gameObject);
-            Process.Start("https://www.youtube.com/watch?v=Vqnqa0Vb_kw");
-            return true;
-        }
     }
 }

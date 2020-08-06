@@ -68,8 +68,6 @@ namespace EthosClient.Patching
                 {
                     if (Sender != null)
                     {
-                        if (Sender.GetAPIUser().id != APIUser.CurrentUser.id)
-                        Console.WriteLine(Sender.GetAPIUser().id);
                         if (Sender.GetAPIUser().id != PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
                         {
                             if (Configuration.GetConfig().AntiWorldTriggers)

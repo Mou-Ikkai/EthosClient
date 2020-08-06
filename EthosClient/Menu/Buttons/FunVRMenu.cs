@@ -121,7 +121,7 @@ namespace EthosClient.Utils
 
             }, "Speeds up the current video on the video player", Color.red, Color.white);
 
-            new QMSingleButton(this, 2, 3, "Slow down\nVideo on Player", delegate
+            new QMSingleButton(this, 4, 2, "Slow down\nVideo on Player", delegate
             {
                 var videoPlayers = Resources.FindObjectsOfTypeAll<VRC_SyncVideoPlayer>();
 

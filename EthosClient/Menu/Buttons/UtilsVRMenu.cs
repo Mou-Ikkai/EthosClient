@@ -131,11 +131,6 @@ namespace EthosClient.Utils
             //{
             //    GeneralUtils.Invisible = false;
             //}, "Decide whether you want people to see you in game.", Color.red, Color.white).setToggleState(GeneralUtils.Invisible);
-
-            new QMSingleButton(this, 4, 0, "Copy\nRoom\nID", delegate
-            {
-                Clipboard.SetText($"{RoomManagerBase.field_Internal_Static_ApiWorld_0.id}:{RoomManagerBase.field_Internal_Static_ApiWorld_0.instanceId}");
-            }, "Copies the current instance's ID.", Color.red, Color.white);
         }
     }
 }

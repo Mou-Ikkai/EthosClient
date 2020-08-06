@@ -50,6 +50,7 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
+                new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null); 
                 new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
             }
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
@@ -59,6 +60,12 @@ namespace EthosClient.Patching
         public static void ApplyPatches() => RetrievePatches();
 
         #region Patches
+
+        private static bool SettledPatch(ref bool __result)
+        {
+            __result = true;
+            return false;
+        }
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
             try
@@ -267,7 +274,7 @@ namespace EthosClient.Patching
         {
             try 
             { 
-                if (Configuration.GetConfig().VideoPlayerSafety && GeneralUtils.SuitableVideoURL(__0)) 
+                if (Configuration.GetConfig().VideoPlayerSafety && !GeneralUtils.SuitableVideoURL(__0)) 
                     return false; 
             }
             catch { }

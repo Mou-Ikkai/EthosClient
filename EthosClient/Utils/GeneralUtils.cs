@@ -30,7 +30,7 @@ namespace EthosClient.Utils
             ESP = false,
             SpinBot = false,
             ForceClone = false,
-            IsDevBranch = true,
+            IsDevBranch = false,
             InfiniteJump = false,
             SpeedHax = false,
             CustomSerialization = false,
@@ -42,7 +42,7 @@ namespace EthosClient.Utils
             Invisible = false;
 
         public static string 
-            Version = "2.1";
+            Version = "2.2";
 
         public static float
             WalkSpeed = 2f,

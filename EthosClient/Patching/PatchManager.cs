@@ -256,7 +256,7 @@ namespace EthosClient.Patching
         {
             try
             {
-                if (__0.Contains("vrchat.cloud"))
+                if (!__0.Contains("vrchat.cloud"))
                     return !Configuration.GetConfig().PortalSafety;
             }
             catch { }

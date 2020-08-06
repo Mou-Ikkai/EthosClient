@@ -14,22 +14,16 @@ namespace EthosClient.Menu.Buttons
     {
         public SelfControlVRMenu(QMNestedButton parent) : base(parent, 1, 1, "Self\nControl", "Controls stuff on your own player.", Color.red, Color.white, Color.red, Color.white)
         {
-            new QMSingleButton(this, 0, 0, "Increase\nUSpeaker Bitrate", delegate
+            new QMSingleButton(this, 0, 0, "Increase\nUSpeaker Volume", delegate
             {
                 if (!GeneralUtils.VoiceMod) return;
+                PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.field_Private_Single_0 = PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.field_Private_Single_0 * 2f;
+            }, "Increase your own uspeaker's volume", Color.red, Color.white);
 
-                if (PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate != EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_512k)
-                    PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate = PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate + 1;
-
-            }, "Increase your own uspeaker's bitrate", Color.red, Color.white);
-
-            new QMSingleButton(this, 0, 1, "Decrease\nUSpeaker Bitrate", delegate
+            new QMSingleButton(this, 0, 1, "Decrease\nUSpeaker Volume", delegate
             {
                 if (!GeneralUtils.VoiceMod) return;
-
-                if (PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate != EnumPublicSealedvaBi15BiBiBiBiBiBiBiUnique.BitRate_8K)
-                    PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate = PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.CurrentBitrate - 1;
-
+                PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.field_Private_Single_0 = PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetComponent<PlayerModComponentVoice>().field_Private_USpeaker_0.field_Private_Single_0 / 2f;
             }, "Decrease your own uspeaker's bitrate", Color.red, Color.white);
 
             new QMToggleButton(this, 4, 2, "Enable\nVoice Mod", delegate

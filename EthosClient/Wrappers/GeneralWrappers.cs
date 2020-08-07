@@ -14,7 +14,7 @@ namespace EthosClient.Wrappers
 {
     public static class GeneralWrappers
     {
-        public static PlayerManager GetPlayerManager() { return PlayerManager.Method_Public_Static_PlayerManager_0(); }
+        public static PlayerManager GetPlayerManager() { return PlayerManager.field_Private_Static_PlayerManager_0; }
 
         public static QuickMenu GetQuickMenu() { return QuickMenu.prop_QuickMenu_0; }
 
@@ -57,7 +57,7 @@ namespace EthosClient.Wrappers
             try
             {
                 VRCUiPopupManager vrcpopup = GetVRCUiPopupManager();
-                vrcpopup.Method_Public_Void_1();
+                vrcpopup.Method_Public_Void_0();
             }
             catch(Exception) { }
         }

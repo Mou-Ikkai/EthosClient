@@ -124,13 +124,13 @@ namespace EthosClient.Utils
                 }
             }, "Decide whether you want your friends to only hear you in game or not.", Color.red, Color.white).setToggleState(GeneralUtils.CantHearOnNonFriends);
 
-            //new QMToggleButton(this, 2, 1, "Invisible\nOn", delegate
-            //{
-            //    GeneralUtils.Invisible = true;
-            //}, "Invisible\nOff", delegate
-            //{
-            //    GeneralUtils.Invisible = false;
-            //}, "Decide whether you want people to see you in game.", Color.red, Color.white).setToggleState(GeneralUtils.Invisible);
+            new QMToggleButton(this, 2, 1, "Invisible\nOn", delegate
+            {
+                GeneralUtils.Invisible = true;
+            }, "Invisible\nOff", delegate
+            {
+                GeneralUtils.Invisible = false;
+            }, "Decide whether you want people to see you in game.", Color.red, Color.white).setToggleState(GeneralUtils.Invisible);
         }
     }
 }

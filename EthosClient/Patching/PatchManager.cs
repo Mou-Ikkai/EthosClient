@@ -50,8 +50,11 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
-                new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null); 
+                new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null);
+                new Patch("Ethos_Extras", typeof(PhotonPeerPublicTyDi2ByObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
                 new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
+                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_1"), GetLocalPatch("OpRaiseEventPrefix"), null);
+                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_2"), GetLocalPatch("OpRaiseEventPrefix"), null);
             }
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
@@ -97,7 +100,11 @@ namespace EthosClient.Patching
             try
             {
                 if (__0 == 202)
-                    return !GeneralUtils.Invisible;
+                {
+                    __2 = new ObjectPublicObByObInByObObUnique();
+                    __2.field_Public_ArrayOf_Int32_0 = new UnhollowerBaseLib.Il2CppStructArray<int>(0); //block our instantiation data from being sent LOL
+                    return true;
+                }
 
                 if (__0 == 7 || __0 == 206 || __0 == 201)
                     return !GeneralUtils.CustomSerialization;

@@ -57,7 +57,7 @@ namespace EthosClient.Wrappers
             try
             {
                 VRCUiPopupManager vrcpopup = GetVRCUiPopupManager();
-                vrcpopup.Method_Public_Void_0();
+                vrcpopup.Method_Private_Void_0();
             }
             catch(Exception) { }
         }

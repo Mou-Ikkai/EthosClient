@@ -15,6 +15,7 @@ using static VRC.SDKBase.VRC_EventHandler;
 using VRC.Core;
 using VRC.Udon.Serialization.OdinSerializer;
 using ExitGames.Client.Photon;
+using System.ComponentModel;
 
 namespace EthosClient.Patching
 {
@@ -99,11 +100,10 @@ namespace EthosClient.Patching
         {
             try
             {
-                if (__0 == 202 && GeneralUtils.Invisible)
+                if (__0 == 202)
                 {
                     __2 = new ObjectPublicObByObInByObObUnique();
-                    __2.field_Public_ArrayOf_Int32_0 = new UnhollowerBaseLib.Il2CppStructArray<int>(0); //block our instantiation data from being sent LOL
-                    return true;
+                    __2.field_Public_ArrayOf_Int32_0 = new UnhollowerBaseLib.Il2CppStructArray<int>(0);
                 }
 
                 if (__0 == 7 || __0 == 206 || __0 == 201)

@@ -3,12 +3,15 @@ using EthosClient.Wrappers;
 using RubyButtonAPI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using VRC.Networking;
 using VRC.SDKBase;
+using VRC.Udon;
 using VRCSDK2;
 
 namespace EthosClient.Menu

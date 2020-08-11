@@ -1,4 +1,4 @@
-﻿using EthosClient.Settings;
+using EthosClient.Settings;
 using EthosClient.Utils;
 using EthosClient.Wrappers;
 using Harmony;
@@ -30,6 +30,7 @@ namespace EthosClient.Patching
             try
             {
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null);
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Private_Void_Boolean_0"), GetLocalPatch("VoidPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_0"), GetLocalPatch("IsKickedFromWorldPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_8"), GetLocalPatch("IsBlockedEitherWayPatch"), null);
@@ -68,6 +69,10 @@ namespace EthosClient.Patching
         private static bool SettledPatch(ref bool __result)
         {
             __result = true;
+            return false;
+        }
+        private static bool VoidPatch()
+        {
             return false;
         }
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)

@@ -30,7 +30,7 @@ namespace EthosClient.Patching
             try
             {
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("KickUserRPC"), GetLocalPatch("AntiKick"), null);
-                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Private_Void_Boolean_0"), GetLocalPatch("VoidPatch"), null);
+                new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Private_Void_Boolean_0"), GetLocalPatch("KickPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_1"), GetLocalPatch("CanEnterPublicWorldsPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_String_String_0"), GetLocalPatch("IsKickedFromWorldPatch"), null);
                 new Patch("Ethos_Moderation", typeof(ModerationManager).GetMethod("Method_Public_Boolean_String_8"), GetLocalPatch("IsBlockedEitherWayPatch"), null);
@@ -52,11 +52,8 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
-                new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null);
-                new Patch("Ethos_Extras", typeof(PhotonPeerPublicTyDi2ByObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
+                //new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null);
                 new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
-                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_1"), GetLocalPatch("OpRaiseEventPrefix"), null);
-                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_2"), GetLocalPatch("OpRaiseEventPrefix"), null);
             }
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
@@ -71,10 +68,12 @@ namespace EthosClient.Patching
             __result = true;
             return false;
         }
-        private static bool VoidPatch()
+
+        private static bool KickPatch()
         {
-            return false;
+            return !Configuration.GetConfig().AntiKick;
         }
+
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
             try
@@ -105,12 +104,6 @@ namespace EthosClient.Patching
         {
             try
             {
-                if (__0 == 202)
-                {
-                    __2 = new ObjectPublicObByObInByObObUnique();
-                    __2.field_Public_ArrayOf_Int32_0 = new UnhollowerBaseLib.Il2CppStructArray<int>(0);
-                }
-
                 if (__0 == 7 || __0 == 206 || __0 == 201)
                     return !GeneralUtils.CustomSerialization;
 

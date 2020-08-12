@@ -42,7 +42,7 @@ namespace EthosClient.Utils
             Invisible = false;
 
         public static string 
-            Version = "2.2";
+            Version = "2.3";
 
         public static float
             WalkSpeed = 2f,
@@ -113,9 +113,9 @@ namespace EthosClient.Utils
         {
             foreach(var button in Configuration.GetConfig().Buttons)
             {
-                if (button.Value.ID == ID)
+                if (button.ID == ID)
                 {
-                    return button.Value;
+                    return button;
                 }
             }
             return null;

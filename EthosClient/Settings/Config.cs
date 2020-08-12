@@ -13,24 +13,26 @@ namespace EthosClient.Settings
 {
     public class Config
     {
-        public bool 
-            CleanConsole = true, 
-            Optimization = false, 
-            LogModerations = false, 
-            AntiPublicBan = true, 
-            AntiKick = true, 
-            VideoPlayerSafety = true, 
-            AntiBlock = true, 
-            PortalSafety = true, 
-            AntiWorldTriggers = true, 
-            UseRichPresence = true, 
-            MenuRGB = false, 
+        public bool
+            CleanConsole = true,
+            Optimization = false,
+            LogModerations = false,
+            AntiPublicBan = true,
+            AntiKick = true,
+            VideoPlayerSafety = true,
+            AntiBlock = true,
+            PortalSafety = true,
+            AntiWorldTriggers = true,
+            UseRichPresence = true,
+            MenuRGB = false,
             DefaultLogToConsole = true;
+
+        public string ClientVersion = "2.3";
 
         public List<FavoritedAvatar> ExtendedFavoritedAvatars = new List<FavoritedAvatar>();
 
-        public Dictionary<string, EthosVRButton> Buttons = new Dictionary<string, EthosVRButton>();
+        public List<EthosVRButton> Buttons = new List<EthosVRButton>();
 
-        public Dictionary<string, EthosKeybind> Keybinds = new Dictionary<string, EthosKeybind>();
+        public List<EthosKeybind> Keybinds = new List<EthosKeybind>();
     }
 }

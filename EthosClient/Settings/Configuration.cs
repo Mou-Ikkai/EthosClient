@@ -40,8 +40,7 @@ namespace EthosClient.Settings
                 config.Keybinds.Add(new EthosKeybind(EthosFeature.ToggleAllTriggers, KeyCode.LeftAlt, KeyCode.T, true));
                 File.WriteAllText(ConfigLocation, JsonConvert.SerializeObject(config, Formatting.Indented));
             }
-            else 
-                LoadConfiguration();
+            LoadConfiguration();
         }
 
         public static void LoadConfiguration()

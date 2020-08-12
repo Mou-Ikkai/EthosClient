@@ -460,7 +460,7 @@ namespace RubyButtonAPI
                     shortcutMenu = quickmenu.transform.Find("UserInteractMenu").gameObject;
 
 
-                FieldInfo[] fis = Il2CppType.Of<QuickMenu>().GetFields(BindingFlags.Public).Where((fi) => fi.FieldType == Il2CppType.Of<GameObject>()).ToArray();
+                FieldInfo[] fis = Il2CppType.Of<QuickMenu>().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where((fi) => fi.FieldType == Il2CppType.Of<GameObject>()).ToArray();
                 //MelonLoader.MelonModLogger.Log("[QMStuff] GameObject Fields in QuickMenu:");
                 int count = 0;
                 foreach (FieldInfo fi in fis)

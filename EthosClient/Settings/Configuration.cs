@@ -49,7 +49,6 @@ namespace EthosClient.Settings
         {
             _Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigLocation));
             if (_Config.ClientVersion != GeneralUtils.Version)
-                File.Delete(ConfigLocation);
                 ConsoleUtil.Info("YOU ARE USING AN OUTDATED VERSION OF ETHOS. THINGS MAY BE UNSTABLE AND CRASH, DEPENDING ON YOUR VRCHAT BUILD. PLEASE UPGRADE ASAP IF POSSIBLE FROM: https://github.com/Yaekith/EthosClient/releases");
                 CheckExistence();
         }

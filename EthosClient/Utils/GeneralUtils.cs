@@ -42,7 +42,7 @@ namespace EthosClient.Utils
             Invisible = false;
 
         public static string 
-            Version = "2.3";
+            Version = "2.3.1";
 
         public static float
             WalkSpeed = 2f,

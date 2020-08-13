@@ -42,7 +42,8 @@ namespace EthosClient.Utils
             Invisible = false;
 
         public static string 
-            Version = "2.3.1";
+            Version = "2.3.2";
+        //its soon 6 am so i am not changing this rn.. But why is there 2 strings (Version and ClientVersion) for the Version?
 
         public static float
             WalkSpeed = 2f,

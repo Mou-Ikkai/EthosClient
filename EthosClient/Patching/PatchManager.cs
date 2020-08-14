@@ -52,8 +52,7 @@ namespace EthosClient.Patching
                 new Patch("Ethos_Extras", typeof(VRCSDK2.VRC_SyncVideoPlayer).GetMethods().FirstOrDefault(x => x.Name == "Play" && x.GetParameters().Count() == 0), GetLocalPatch("VideoPlayerPatch"), null);
                 new Patch("Ethos_Extras", typeof(PortalInternal).GetMethod("Method_Public_Void_3"), GetLocalPatch("EnterPortalPatch"), null);
                 new Patch("Ethos_Extras", typeof(VRC_EventHandler).GetMethod("InternalTriggerEvent"), GetLocalPatch("TriggerEvent"), null);
-                //new Patch("Ethos_Poggers", typeof(VRC.SDKBase.Networking).GetProperty("IsNetworkSettled").GetGetMethod(), GetLocalPatch("SettledPatch"), null);
-                new Patch("Ethos_Extras", typeof(ObjectPublicIPhotonPeerListenerObStBoStObCoDiBo2ObUnique).GetMethod("Method_Public_Virtual_New_Boolean_Byte_Object_ObjectPublicObByObInByObObUnique_SendOptions_0"), GetLocalPatch("OpRaiseEventPrefix"), null);
+                new Patch("Ethos_Extras", typeof(PhotonPeer).GetMethod("SendOperation"), GetLocalPatch("SendOperationPatch"), null);
             }
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
@@ -63,16 +62,7 @@ namespace EthosClient.Patching
 
         #region Patches
 
-        private static bool SettledPatch(ref bool __result)
-        {
-            __result = true;
-            return false;
-        }
-
-        private static bool KickPatch()
-        {
-            return !Configuration.GetConfig().AntiKick;
-        }
+        private static bool KickPatch() { return !Configuration.GetConfig().AntiKick; }
 
         private static bool TriggerEvent(ref VrcEvent __0, ref VrcBroadcastType __1, ref int __2, ref float __3)
         {
@@ -100,11 +90,11 @@ namespace EthosClient.Patching
             return true;
         }
 
-        private static bool OpRaiseEventPrefix(ref byte __0, ref Il2CppSystem.Object __1, ref ObjectPublicObByObInByObObUnique __2, ref SendOptions __3)
+        private static bool SendOperationPatch(ref byte __0, ref Dictionary<byte, Il2CppSystem.Object> __1, ref SendOptions __2)
         {
             try
             {
-                if (__0 == 7 || __0 == 206 || __0 == 201)
+                if (__0 == 7)
                     return !GeneralUtils.CustomSerialization;
 
             }

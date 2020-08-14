@@ -14,7 +14,7 @@ namespace EthosClient.Wrappers
 {
     public static class PlayerWrappers
     {
-        public static VRCPlayer GetCurrentPlayer() { return VRCPlayer.field_Internal_Static_VRCPlayer_0; }
+        public static VRCPlayer GetCurrentPlayer(this PlayerManager instance) { return VRCPlayer.field_Internal_Static_VRCPlayer_0; }
 
         public static Player[] GetAllPlayers(this PlayerManager instance) { return instance.prop_ArrayOf_Player_0;  }
 

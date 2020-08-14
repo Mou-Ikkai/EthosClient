@@ -27,7 +27,7 @@ namespace EthosClient.Settings
             MenuRGB = false,
             DefaultLogToConsole = true;
 
-        public string ClientVersion = "2.3.2";
+        public string ClientVersion = "2.4";
 
         public List<FavoritedAvatar> ExtendedFavoritedAvatars = new List<FavoritedAvatar>();
 

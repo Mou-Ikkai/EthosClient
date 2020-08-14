@@ -22,7 +22,7 @@ namespace EthosClient.Menu
         {
             new QMSingleButton(this, 1, 0, "Teleport", new Action(() =>
             {
-                PlayerWrappers.GetCurrentPlayer().transform.position = PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).transform.position;
+                GeneralWrappers.GetPlayerManager().GetCurrentPlayer().transform.position = PlayerWrappers.GetSelectedPlayer(GeneralWrappers.GetQuickMenu()).transform.position;
             }), "Teleports you to the selected player.", Color.red, Color.white);
 
             new QMToggleButton(this, 2, 0, "Local\nBlock", delegate

@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: MelonModGame("VRChat", "VRChat")]
-[assembly:MelonModInfo(typeof(EthosClient.EthosClient), "EthosClient", "2.3", "Yaekith#1337", "https://github.com/Yaekith/EthosClient/releases/latest")]
+[assembly:MelonModInfo(typeof(EthosClient.EthosClient), "EthosClient", "2.4", "Yaekith#1337", "https://github.com/Yaekith/EthosClient/releases/latest")]
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.  

@@ -38,17 +38,16 @@ namespace EthosClient.Menu
             new SettingsVRMenu(this, GeneralUtils.GetEthosVRButton("Settings"));
             new KeybindVRMenu(this, GeneralUtils.GetEthosVRButton("Keybinds"));
             new VRUtilsMenu(this, GeneralUtils.GetEthosVRButton("VRUtils"));
-            if (GeneralUtils.IsDevBranch) new DeveloperVRMenu(GeneralUtils.GetEthosVRButton("Developer"));
             new QMSingleButton(this, 4, 0, "Select\nYourself", new Action(() =>
             {
-                GeneralWrappers.GetQuickMenu().SelectPlayer(PlayerWrappers.GetCurrentPlayer());
+                GeneralWrappers.GetQuickMenu().SelectPlayer(GeneralWrappers.GetPlayerManager().GetCurrentPlayer());
             }), "Select your own current player and do some stuff to yourself, I don't know lol.", Color.red, Color.white);
             new QMToggleButton(this, 1, 2, "Hide\nYourself", new Action(() =>
             {
-                PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(false);
+                GeneralWrappers.GetPlayerManager().GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(false);
             }), "Unhide\nYourself", new Action(() =>
             {
-                PlayerWrappers.GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
+                GeneralWrappers.GetPlayerManager().GetCurrentPlayer().prop_VRCAvatarManager_0.gameObject.SetActive(true);
             }), "Hide/Unhide yourself, for safety reasons maybe, who knows.", Color.red, Color.white);
         }
     }

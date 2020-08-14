@@ -118,25 +118,25 @@ namespace EthosClient.Modules
                 }
 
                 if (GeneralUtils.SpinBot)
-                    PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
+                    PlayerWrappers.GetVRC_Player(GeneralWrappers.GetPlayerManager().GetCurrentPlayer()).gameObject.transform.Rotate(0f, 20f, 0f);
 
                 if (GeneralUtils.InfiniteJump)
                 {
                     if (VRCInputManager.Method_Public_Static_ObjectPublicStSiBoSiObBoSiObStSiUnique_String_0("Jump").prop_Boolean_0)
-                        PlayerWrappers.GetCurrentPlayer().GetComponent<VRCMotionState>().field_Private_Boolean_0 = true;
+                        GeneralWrappers.GetPlayerManager().GetCurrentPlayer().GetComponent<VRCMotionState>().field_Private_Boolean_0 = true;
                 }
 
                 if (GeneralUtils.Autism)
                 {
                     var randomPlr = PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager())[new System.Random().Next(0, PlayerWrappers.GetAllPlayers(GeneralWrappers.GetPlayerManager()).Count())];
-                    PlayerWrappers.GetVRC_Player(PlayerWrappers.GetCurrentPlayer()).gameObject.transform.position = randomPlr.transform.position;
+                    PlayerWrappers.GetVRC_Player(GeneralWrappers.GetPlayerManager().GetCurrentPlayer()).gameObject.transform.position = randomPlr.transform.position;
                 }
 
                 if (GeneralUtils.Flight)
                 {
                     GameObject gameObject = GeneralWrappers.GetPlayerCamera();
                     var currentSpeed = (Input.GetKey(KeyCode.LeftShift) ? 16f : 8f);
-                    var player = PlayerWrappers.GetCurrentPlayer();
+                    var player = GeneralWrappers.GetPlayerManager().GetCurrentPlayer();
 
                     if (Input.GetKey(KeyCode.W)) player.transform.position += gameObject.transform.forward * currentSpeed * Time.deltaTime;
 

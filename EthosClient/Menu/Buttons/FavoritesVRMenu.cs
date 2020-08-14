@@ -38,7 +38,7 @@ namespace EthosClient.Utils
 
             new QMSingleButton(this, 5, 0, "Add\nCurrent Avatar", delegate
             {
-                var currentAvatar = PlayerWrappers.GetCurrentPlayer().GetAPIAvatar();
+                var currentAvatar = GeneralWrappers.GetPlayerManager().GetCurrentPlayer().GetAPIAvatar();
                 Configuration.GetConfig().ExtendedFavoritedAvatars.Add(new FavoritedAvatar(currentAvatar.name, currentAvatar.id, currentAvatar.authorName, currentAvatar.authorId));
                 Configuration.SaveConfiguration();
                 GeneralWrappers.GetVRCUiPopupManager().AlertPopup("<color=cyan>Success!</color>", "<color=green>Successfully added your current Avatar to extended favorites</color>");
@@ -46,7 +46,7 @@ namespace EthosClient.Utils
 
             new QMSingleButton(this, 5, 1, "Remove\nCurrent Avatar", delegate
             {
-                var currentAvatar = GeneralUtils.GetExtendedFavorite(PlayerWrappers.GetCurrentPlayer().GetAPIAvatar().id);
+                var currentAvatar = GeneralUtils.GetExtendedFavorite(GeneralWrappers.GetPlayerManager().GetCurrentPlayer().GetAPIAvatar().id);
                 Configuration.GetConfig().ExtendedFavoritedAvatars.Remove(currentAvatar);
                 Configuration.SaveConfiguration();
                 GeneralWrappers.GetVRCUiPopupManager().AlertPopup("<color=cyan>Success!</color>", "<color=green>Successfully removed your current Avatar from extended favorites</color>");

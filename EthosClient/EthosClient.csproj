@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=3.7.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
@@ -246,7 +247,6 @@
     <Compile Include="EthosInput\EthosKeybind.cs" />
     <Compile Include="Menu\Buttons\AudioVRMenu.cs" />
     <Compile Include="Menu\Buttons\ButtonRepositionVRMenu.cs" />
-    <Compile Include="Menu\Buttons\DeveloperVRMenu.cs" />
     <Compile Include="Menu\Buttons\KeybindVRMenu.cs" />
     <Compile Include="Menu\Buttons\ProgramVRMenu.cs" />
     <Compile Include="Menu\Buttons\SelfControlVRMenu.cs" />

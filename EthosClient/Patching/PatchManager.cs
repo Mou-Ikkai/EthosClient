@@ -16,6 +16,7 @@ using VRC.Core;
 using VRC.Udon.Serialization.OdinSerializer;
 using ExitGames.Client.Photon;
 using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace EthosClient.Patching
 {
@@ -73,7 +74,7 @@ namespace EthosClient.Patching
                 {
                     if (Sender != null)
                     {
-                        if (Sender.GetAPIUser().id != PlayerWrappers.GetCurrentPlayer().GetVRC_Player().GetAPIUser().id)
+                        if (Sender.GetVRCPlayerApi().playerId != GeneralWrappers.GetPlayerManager().GetCurrentPlayer().GetVRC_Player().GetVRCPlayerApi().playerId)
                         {
                             if (Configuration.GetConfig().AntiWorldTriggers)
                                 return false;
@@ -94,6 +95,21 @@ namespace EthosClient.Patching
         {
             try
             {
+                if (GeneralUtils.IsDevBranch)
+                {
+                    ConsoleUtil.Info("==========================================");
+                    ConsoleUtil.Info($"Event: {__0}");
+                    ConsoleUtil.Info($"Parameters:");
+                    ConsoleUtil.Info("===========================================");
+                    foreach(var parameter in __1)
+                    {
+                        ConsoleUtil.Info($"Byte Index: {parameter.Key}\nValue: {parameter.Value.ToString()}");
+                    }
+                    ConsoleUtil.Info("===========================================");
+                    ConsoleUtil.Info($"Send Options:\nChannel: {__2.Channel}\nDelivery Mode: {__2.DeliveryMode}\nEncrypt: {__2.Encrypt}\nReliable: {__2.Reliability}");
+                    ConsoleUtil.Info("=========================================");
+                }
+
                 if (__0 == 7)
                     return !GeneralUtils.CustomSerialization;
 

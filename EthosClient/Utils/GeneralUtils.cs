@@ -30,7 +30,7 @@ namespace EthosClient.Utils
             ESP = false,
             SpinBot = false,
             ForceClone = false,
-            IsDevBranch = false,
+            IsDevBranch = true,
             InfiniteJump = false,
             SpeedHax = false,
             CustomSerialization = false,
@@ -42,8 +42,7 @@ namespace EthosClient.Utils
             Invisible = false;
 
         public static string 
-            Version = "2.3.2";
-        //its soon 6 am so i am not changing this rn.. But why is there 2 strings (Version and ClientVersion) for the Version?
+            Version = "2.4";
 
         public static float
             WalkSpeed = 2f,
@@ -76,7 +75,7 @@ namespace EthosClient.Utils
         public static void ToggleColliders(bool toggle)
         {
             Collider[] array = UnityEngine.Object.FindObjectsOfType<Collider>();
-            Component component = PlayerWrappers.GetCurrentPlayer().GetComponents<Collider>().FirstOrDefault<Component>();
+            Component component = GeneralWrappers.GetPlayerManager().GetCurrentPlayer().GetComponents<Collider>().FirstOrDefault<Component>();
 
             for (int i = 0; i < array.Length; i++)
             {

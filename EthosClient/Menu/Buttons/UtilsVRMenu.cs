@@ -46,7 +46,6 @@ namespace EthosClient.Utils
 
                 foreach (PortalInternal portalInternal in Resources.FindObjectsOfTypeAll<PortalInternal>())
                     GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
-
             }, "Disable\nESP", delegate
             {
                 GeneralUtils.ESP = false;
@@ -71,7 +70,6 @@ namespace EthosClient.Utils
                     GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
 
             }, "Decide whether you want the upper game, get an advantage, and see all players anywhere within the world.", Color.red, Color.white).setToggleState(GeneralUtils.ESP);
-
             new QMSingleButton(this, 2, 0, "Avatar\nBy\nID", delegate
             {
                 ConsoleUtil.Info("Enter Avatar ID: ");

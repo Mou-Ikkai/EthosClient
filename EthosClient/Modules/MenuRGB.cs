@@ -143,7 +143,6 @@ namespace EthosClient.Modules
                                 quickmenuStuff.Add(img);
                             }
                         }
-
                     }
                     catch { }
                 }

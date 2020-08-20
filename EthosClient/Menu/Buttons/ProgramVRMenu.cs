@@ -12,7 +12,6 @@ namespace EthosClient.Menu.Buttons
     {
         public ProgramVRMenu(QMNestedButton parent) : base(parent, 1, 1, "Programs", "Easily control programs on your computer and launch some.", Color.red, Color.white, Color.red, Color.white)
         {
-
         }
     }
 }

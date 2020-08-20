@@ -64,7 +64,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Play", new Il2CppSystem.Object[0]);
-
             }, "Plays the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 0, 0, "Pause\nVideo on Player", delegate
@@ -73,7 +72,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Pause", new Il2CppSystem.Object[0]);
-
             }, "Stops the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 2, 1, "Stop\nVideo on Player", delegate
@@ -82,7 +80,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Stop", new Il2CppSystem.Object[0]);
-
             }, "Pauses the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 2, 2, "Next\nVideo on Player", delegate
@@ -91,7 +88,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Next", new Il2CppSystem.Object[0]);
-
             }, "Skips the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 0, 1, "Previous\nVideo on Player", delegate
@@ -100,7 +96,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Previous", new Il2CppSystem.Object[0]);
-
             }, "Rewinds the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 3, 1, "Clear\nVideos on Player", delegate
@@ -109,7 +104,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "Clear", new Il2CppSystem.Object[0]);
-
             }, "Clears the video in queue on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 3, 2, "Speed up\nVideo on Player", delegate
@@ -118,7 +112,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "SpeedUp", new Il2CppSystem.Object[0]);
-
             }, "Speeds up the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 4, 2, "Slow down\nVideo on Player", delegate
@@ -127,7 +120,6 @@ namespace EthosClient.Utils
 
                 if (videoPlayers.Count() > 0)
                     Networking.RPC(RPC.Destination.Owner, videoPlayers[0].gameObject, "SpeedDown", new Il2CppSystem.Object[0]);
-
             }, "Slows down the current video on the video player", Color.red, Color.white);
 
             new QMSingleButton(this, 4, 1, "Add\nVideo to Player", delegate

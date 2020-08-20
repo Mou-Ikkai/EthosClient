@@ -286,7 +286,6 @@ namespace RubyButtonAPI
             Text[] btnTextsOff = btnOff.GetComponentsInChildren<Text>();
             btnTextsOff[1].text = buttonOffText;
         }
-
     }
 
     public class QMNestedButton

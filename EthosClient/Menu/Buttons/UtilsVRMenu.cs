@@ -47,7 +47,6 @@ namespace EthosClient.Utils
                 foreach (PortalInternal portalInternal in Resources.FindObjectsOfTypeAll<PortalInternal>())
                     GeneralWrappers.GetHighlightsFX().EnableOutline(portalInternal.GetComponentInChildren<Renderer>(), GeneralUtils.ESP);
 
-
             }, "Disable\nESP", delegate
             {
                 GeneralUtils.ESP = false;

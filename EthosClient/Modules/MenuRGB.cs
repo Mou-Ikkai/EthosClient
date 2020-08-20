@@ -148,7 +148,6 @@ namespace EthosClient.Modules
                     catch { }
                 }
 
-
                 foreach (Button btn in UserInterface.GetComponentsInChildren<Button>(true))
                 {
                     try

@@ -58,7 +58,7 @@ namespace EthosClient.Patching
             catch(Exception e) { if (GeneralUtils.IsDevBranch) Console.WriteLine(e.ToString()); }
             finally { ConsoleUtil.Info("All Patches have been applied successfully."); }
         }
-
+        
         public static void ApplyPatches() => RetrievePatches();
 
         #region Patches
@@ -84,13 +84,10 @@ namespace EthosClient.Patching
 
                 if (GeneralUtils.WorldTriggers && (__1 != VrcBroadcastType.Always || __1 != VrcBroadcastType.AlwaysBufferOne || __1 != VrcBroadcastType.AlwaysUnbuffered))
                     __1 = VrcBroadcastType.Always;
-                
-
             }
             catch(Exception c) { ConsoleUtil.Exception(c); }
             return true;
         }
-
         private static bool SendOperationPatch(ref byte __0, ref Dictionary<byte, Il2CppSystem.Object> __1, ref SendOptions __2)
         {
             try
@@ -112,12 +109,10 @@ namespace EthosClient.Patching
 
                 if (__0 == 7)
                     return !GeneralUtils.CustomSerialization;
-
             }
             catch { }
             return true;
         }
-
         private static bool IsBlockedEitherWayPatch(ref bool __result)
         {
             if (Configuration.GetConfig().AntiBlock)
@@ -125,7 +120,6 @@ namespace EthosClient.Patching
 
             return true;
         }
-
         private static bool IsKickedFromWorldPatch(ref bool __result)
         {
             if (Configuration.GetConfig().AntiKick)
@@ -133,7 +127,6 @@ namespace EthosClient.Patching
 
             return true;
         }
-
         private static bool VideoPlayerPatch(VRCSDK2.VRC_SyncVideoPlayer __instance)
         {
             if (__instance.Videos.Count() > 0)
@@ -141,10 +134,8 @@ namespace EthosClient.Patching
                 if (!GeneralUtils.SuitableVideoURL(__instance.Videos.First().URL))
                     return !Configuration.GetConfig().VideoPlayerSafety;
             }
-
             return true;
         }
-
         private static bool EnterPortalPatch(PortalInternal __instance)
         {
             try
@@ -165,7 +156,6 @@ namespace EthosClient.Patching
             catch(Exception) { }
             return true;
         }
-
         private static bool OnPlayerJoin(ref VRCPlayerApi __0)
         {
             try
@@ -187,7 +177,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool OnPlayerLeave(ref VRCPlayerApi __0)
         {
             try
@@ -206,7 +195,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool AntiKick(ref string __0, ref string __1, ref string __2, ref string __3, ref Player __4)
         {
             try
@@ -223,7 +211,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool AntiBlock(ref string __0, bool __1, ref Player __2)
         {
             try
@@ -237,7 +224,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool CloneAvatarPrefix(ref UserInteractMenu __instance)
         {
             try
@@ -267,7 +253,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool IL2CPPConsoleWriteLine(ref string __0) { return !Configuration.GetConfig().CleanConsole; }
 
         private static bool AntiIpLogImage(ref string __0)
@@ -280,7 +265,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool AntiVideoPlayerHijacking(ref string __0)
         {
             try 
@@ -291,7 +275,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool CanEnterPublicWorldsPatch(ref bool __result, ref string __0, ref string __1, ref string __2)
         {
             if (Configuration.GetConfig().AntiPublicBan)
@@ -299,7 +282,6 @@ namespace EthosClient.Patching
 
             return true;
         }
-
         private static bool AntiLogout(ref string __0, ref Player __1)
         {
             try
@@ -316,7 +298,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool AntiPublicBan(ref string __0, ref int __1, ref Player __2)
         {
             try
@@ -333,7 +314,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool BanPatch(ref string __0, ref int __1, ref Player __2)
         {
             try
@@ -347,7 +327,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool FriendPatch(ref string __0, ref Player __1)
         {
             try
@@ -361,7 +340,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool MutePatch(ref string __0, bool __1, ref Player __2)
         {
             try
@@ -375,7 +353,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool AvatarShownPatch(ref string __0, bool __1, ref Player __2)
         {
             try
@@ -389,7 +366,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool WarnPatch(ref string __0, ref string __1, ref Player __2)
         {
             try
@@ -403,7 +379,6 @@ namespace EthosClient.Patching
             catch { }
             return true;
         }
-
         private static bool ModForceOffMicPatch(ref string __0, ref Player __1)
         {
             try

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
 namespace EthosClient.Discord
 {
     internal class DiscordRpc
@@ -110,7 +109,6 @@ namespace EthosClient.Discord
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void SpectateCallback(string secret);
-
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void RequestCallback(ref DiscordRpc.JoinRequest request);

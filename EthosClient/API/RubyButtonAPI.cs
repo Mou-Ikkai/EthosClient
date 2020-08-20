@@ -121,7 +121,6 @@ namespace RubyButtonAPI
             setToolTip(btnToolTip);
             setAction(btnAction);
 
-
             if (btnBackgroundColor != null)
                 setBackgroundColor((Color)btnBackgroundColor);
             else
@@ -244,7 +243,6 @@ namespace RubyButtonAPI
                 }
             })));
         }
-
 
         public void setToggleState(bool toggleOn, bool shouldInvoke = false)
         {
@@ -387,8 +385,6 @@ namespace RubyButtonAPI
         // Internal cache of the VRCUiManager
         private static VRCUiManager vrcuimInstance;
 
-
-
         // Fetch the background from the Quick Menu
         public static BoxCollider QuickMenuBackground()
         {
@@ -458,7 +454,6 @@ namespace RubyButtonAPI
                 GameObject shortcutMenu = quickmenu.transform.Find("ShortcutMenu").gameObject;
                 if (!shortcutMenu.activeInHierarchy)
                     shortcutMenu = quickmenu.transform.Find("UserInteractMenu").gameObject;
-
 
                 FieldInfo[] fis = Il2CppType.Of<QuickMenu>().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where((fi) => fi.FieldType == Il2CppType.Of<GameObject>()).ToArray();
                 //MelonLoader.MelonModLogger.Log("[QMStuff] GameObject Fields in QuickMenu:");
